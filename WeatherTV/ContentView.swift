@@ -9,8 +9,41 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        ZStack {
+            VStack {
+                HStack(alignment: .bottom) {
+                    Spacer()
+                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
+                        Image(systemName: "gearshape")
+                    }
+                    .font(.title2)
+                    .buttonStyle(CardButtonStyle())
+                    
+                }
+                Spacer()
+            }
+            
+            
+            HStack {
+                Spacer()
+                Image(systemName: "sun.haze")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 400, height: 400, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                
+                Spacer()
+                
+                VStack {
+                    Text("Оренбург")
+                        .bold()
+                    Text("Сейчас")
+                    Text("-8º")
+                  
+                }
+                .font(.title)
+                Spacer()
+            }
+        }
     }
 }
 

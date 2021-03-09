@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import WeatherTV
+//@testable import WeatherTV
 
 class WeatherTVTests: XCTestCase {
 
