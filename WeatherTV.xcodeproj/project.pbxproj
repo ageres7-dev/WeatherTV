@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A531DFE625F7642F00AB91E1 /* Current Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = A531DFE525F7642F00AB91E1 /* Current Weather.swift */; };
+		A531DFFA25F7F6BB00AB91E1 /* Network Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A531DFF925F7F6BB00AB91E1 /* Network Manager.swift */; };
+		A531E00A25F88B5F00AB91E1 /* Key API.swift in Sources */ = {isa = PBXBuildFile; fileRef = A531E00925F88B5F00AB91E1 /* Key API.swift */; };
 		A597C24825F63169002940BF /* WeatherTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A597C24725F63169002940BF /* WeatherTVApp.swift */; };
 		A597C24A25F63169002940BF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A597C24925F63169002940BF /* ContentView.swift */; };
 		A597C24C25F6316B002940BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A597C24B25F6316B002940BF /* Assets.xcassets */; };
@@ -35,6 +37,8 @@
 
 /* Begin PBXFileReference section */
 		A531DFE525F7642F00AB91E1 /* Current Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Current Weather.swift"; sourceTree = "<group>"; };
+		A531DFF925F7F6BB00AB91E1 /* Network Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Network Manager.swift"; sourceTree = "<group>"; };
+		A531E00925F88B5F00AB91E1 /* Key API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Key API.swift"; sourceTree = "<group>"; };
 		A597C24425F63169002940BF /* WeatherTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A597C24725F63169002940BF /* WeatherTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTVApp.swift; sourceTree = "<group>"; };
 		A597C24925F63169002940BF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -82,6 +86,32 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		A531DFED25F79F4600AB91E1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A597C24925F63169002940BF /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A531DFF325F7F41600AB91E1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A597C25025F6316B002940BF /* Info.plist */,
+				A597C24B25F6316B002940BF /* Assets.xcassets */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A531DFF825F7F69800AB91E1 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A531DFF925F7F6BB00AB91E1 /* Network Manager.swift */,
+				A531E00925F88B5F00AB91E1 /* Key API.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		A597C23B25F63169002940BF = {
 			isa = PBXGroup;
 			children = (
@@ -105,11 +135,11 @@
 		A597C24625F63169002940BF /* WeatherTV */ = {
 			isa = PBXGroup;
 			children = (
+				A531DFF825F7F69800AB91E1 /* Services */,
+				A531DFF325F7F41600AB91E1 /* Supporting Files */,
+				A531DFED25F79F4600AB91E1 /* Views */,
 				A531DFE425F7640200AB91E1 /* Models */,
 				A597C24725F63169002940BF /* WeatherTVApp.swift */,
-				A597C24925F63169002940BF /* ContentView.swift */,
-				A597C24B25F6316B002940BF /* Assets.xcassets */,
-				A597C25025F6316B002940BF /* Info.plist */,
 				A597C24D25F6316B002940BF /* Preview Content */,
 			);
 			path = WeatherTV;
@@ -271,6 +301,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A531DFE625F7642F00AB91E1 /* Current Weather.swift in Sources */,
+				A531E00A25F88B5F00AB91E1 /* Key API.swift in Sources */,
+				A531DFFA25F7F6BB00AB91E1 /* Network Manager.swift in Sources */,
 				A597C24A25F63169002940BF /* ContentView.swift in Sources */,
 				A597C24825F63169002940BF /* WeatherTVApp.swift in Sources */,
 			);
@@ -433,7 +465,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"WeatherTV/Preview Content\"";
 				DEVELOPMENT_TEAM = RNER64Q73Y;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = WeatherTV/Info.plist;
+				INFOPLIST_FILE = "WeatherTV/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -455,7 +487,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"WeatherTV/Preview Content\"";
 				DEVELOPMENT_TEAM = RNER64Q73Y;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = WeatherTV/Info.plist;
+				INFOPLIST_FILE = "WeatherTV/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
