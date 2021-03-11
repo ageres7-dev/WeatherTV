@@ -15,7 +15,7 @@
 import Foundation
 
 // MARK: - CurrentWeather
-struct CurrentWeather: Codable {
+struct CurrentWeather: Decodable {
     let coord: Coord?
     let weather: [Weather]?
 //    let base: String?
@@ -34,13 +34,13 @@ struct CurrentWeather: Codable {
 }
 
 // MARK: - Coord
-struct Coord: Codable {
+struct Coord: Decodable {
     let lon: Double?
     let lat: Double?
 }
 
 // MARK: - Weather
-struct Weather: Codable {
+struct Weather: Decodable {
     let id: Int?
     let main: String?
     let description: String?
@@ -48,7 +48,7 @@ struct Weather: Codable {
 }
 
 // MARK: - Main
-struct Main: Codable {
+struct Main: Decodable {
     let temp: Double?
     let feelsLike: Double?
     let pressure: Double?
@@ -72,19 +72,19 @@ struct Main: Codable {
 }
 
 // MARK: - Wind
-struct Wind: Codable {
+struct Wind: Decodable {
     let speed: Double?
     let deg: Double?
     let gust: Double?
 }
 
 // MARK: - Clouds
-struct Clouds: Codable {
+struct Clouds: Decodable {
     let all: Double?
 }
 
 // MARK: - Rain
-struct Rain: Codable {
+struct Rain: Decodable {
     let oneHours: Double? //Объем дождя за последний 1 час, мм
     let threeHours: Double? //Объем дождя за последние 3 часа, мм
     enum CodingKeys: String, CodingKey {
@@ -94,7 +94,7 @@ struct Rain: Codable {
 }
 
 // MARK: - Snow
-struct Snow: Codable {
+struct Snow: Decodable {
     let oneHours: Double?
     let threeHours: Double?
     enum CodingKeys: String, CodingKey {
@@ -105,7 +105,7 @@ struct Snow: Codable {
 
 
 // MARK: - Sys
-struct Sys: Codable {
+struct Sys: Decodable {
 //    let type, id: Int?
 //    let message: Double?
     let country: String?

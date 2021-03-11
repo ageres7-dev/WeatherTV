@@ -12,13 +12,28 @@ class NetworkManager {
     
     private init() {}
     
-    func fetchCurrentWeather(completion: @escaping (_ weather: CurrentWeather)->()) {
+    func fetchCurrentWeather(from url: String, completion: @escaping (_ weather: CurrentWeather)->()) {
+        guard let weatherURL = URL(string: url) else { return }
+        
+        URLSession.shared.dataTask(with: weatherURL) { (data, _, error) in
+            if let error = error {
+                print(error)
+                return
+            }
+            guard let data = data else { return }
+            
+            do {
+                let decode = JSONDecoder()
+                let weather = try decode.decode(CurrentWeather.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(weather)
+                }
+            } catch let error {
+                print("Error serialization json", error.localizedDescription)
+            }
+        }.resume()
         
     }
     
-}
-
-
-enum Constans: String {
-    case testURL = ""
 }
