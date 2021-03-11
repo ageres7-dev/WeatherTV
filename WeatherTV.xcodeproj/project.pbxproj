@@ -11,6 +11,9 @@
 		A531DFFA25F7F6BB00AB91E1 /* Network Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A531DFF925F7F6BB00AB91E1 /* Network Manager.swift */; };
 		A531E00A25F88B5F00AB91E1 /* Key API.swift in Sources */ = {isa = PBXBuildFile; fileRef = A531E00925F88B5F00AB91E1 /* Key API.swift */; };
 		A531E01B25F93FBB00AB91E1 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A531E01A25F93FBB00AB91E1 /* WeatherViewModel.swift */; };
+		A531E02925FA8BFD00AB91E1 /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = A531E02825FA8BFD00AB91E1 /* Forecast.swift */; };
+		A531E02F25FA929300AB91E1 /* ForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A531E02E25FA929300AB91E1 /* ForecastView.swift */; };
+		A531E03425FA92C500AB91E1 /* ForecastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A531E03325FA92C500AB91E1 /* ForecastViewModel.swift */; };
 		A597C24825F63169002940BF /* WeatherTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A597C24725F63169002940BF /* WeatherTVApp.swift */; };
 		A597C24A25F63169002940BF /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A597C24925F63169002940BF /* WeatherView.swift */; };
 		A597C24C25F6316B002940BF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A597C24B25F6316B002940BF /* Assets.xcassets */; };
@@ -41,6 +44,9 @@
 		A531DFF925F7F6BB00AB91E1 /* Network Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Network Manager.swift"; sourceTree = "<group>"; };
 		A531E00925F88B5F00AB91E1 /* Key API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Key API.swift"; sourceTree = "<group>"; };
 		A531E01A25F93FBB00AB91E1 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
+		A531E02825FA8BFD00AB91E1 /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
+		A531E02E25FA929300AB91E1 /* ForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastView.swift; sourceTree = "<group>"; };
+		A531E03325FA92C500AB91E1 /* ForecastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewModel.swift; sourceTree = "<group>"; };
 		A597C24425F63169002940BF /* WeatherTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A597C24725F63169002940BF /* WeatherTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTVApp.swift; sourceTree = "<group>"; };
 		A597C24925F63169002940BF /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
@@ -84,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				A531DFE525F7642F00AB91E1 /* Current Weather.swift */,
+				A531E02825FA8BFD00AB91E1 /* Forecast.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -91,6 +98,7 @@
 		A531DFED25F79F4600AB91E1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A531E02D25FA927500AB91E1 /* ForecastView */,
 				A531E01925F93F8100AB91E1 /* WeatherView */,
 			);
 			path = Views;
@@ -121,6 +129,15 @@
 				A531E01A25F93FBB00AB91E1 /* WeatherViewModel.swift */,
 			);
 			path = WeatherView;
+			sourceTree = "<group>";
+		};
+		A531E02D25FA927500AB91E1 /* ForecastView */ = {
+			isa = PBXGroup;
+			children = (
+				A531E02E25FA929300AB91E1 /* ForecastView.swift */,
+				A531E03325FA92C500AB91E1 /* ForecastViewModel.swift */,
+			);
+			path = ForecastView;
 			sourceTree = "<group>";
 		};
 		A597C23B25F63169002940BF = {
@@ -311,12 +328,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A531E03425FA92C500AB91E1 /* ForecastViewModel.swift in Sources */,
 				A531DFE625F7642F00AB91E1 /* Current Weather.swift in Sources */,
 				A531E01B25F93FBB00AB91E1 /* WeatherViewModel.swift in Sources */,
+				A531E02925FA8BFD00AB91E1 /* Forecast.swift in Sources */,
 				A531E00A25F88B5F00AB91E1 /* Key API.swift in Sources */,
 				A531DFFA25F7F6BB00AB91E1 /* Network Manager.swift in Sources */,
 				A597C24A25F63169002940BF /* WeatherView.swift in Sources */,
 				A597C24825F63169002940BF /* WeatherTVApp.swift in Sources */,
+				A531E02F25FA929300AB91E1 /* ForecastView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

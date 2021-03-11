@@ -26,16 +26,20 @@ struct WeatherView: View {
             }
             
             HStack{
-                Image(systemName: "sun.haze")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 300, height: 300)
-                
+                VStack{
+                    Image(systemName: viewModel.icon)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 240, height: 240)
+//                    Text(viewModel.main)
+//                        .font(.title3)
+                    Text(viewModel.discription)
+                        .font(.title3)
+                }
                 Spacer()
                 
                 Text(viewModel.temp)
-                    .font(.system(size: 120))
-                    .bold()
+                    .font(.system(size: 160))
                 
                 Spacer()
                 
@@ -44,11 +48,13 @@ struct WeatherView: View {
                     Text(viewModel.humidity)
                     Text(viewModel.pressure)
                 }.font(.body)
-            }
+                
+            }.padding()
             
             Spacer()
             
         }.onAppear(perform: viewModel.fetchCurrentWeather)
+        
         
     }
         /*

@@ -8,5 +8,11 @@
 import Foundation
 
 enum KeyAPI: String {
-    case openWeatherMap = ""
+    case openWeatherMap = "5dd2b561e08cf36d5726459eecfe7bd7"
+    
+}
+
+enum Constant: String {
+    case testOneCallURL = "https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&appid=5dd2b561e08cf36d5726459eecfe7bd7"
+    case testCurrentWeatherURL = "https://api.openweathermap.org/data/2.5/weather?q=orenburg&appid=5dd2b561e08cf36d5726459eecfe7bd7&units=metric" //&lang=ru
 }

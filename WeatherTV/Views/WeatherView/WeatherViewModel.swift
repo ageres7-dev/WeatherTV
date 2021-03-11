@@ -24,6 +24,10 @@ class WeatherViewModel: ObservableObject {
         currenWeather?.weather?.first?.description ?? "N/A"
     }
     
+    var main: String {
+        currenWeather?.weather?.first?.main ?? "N/A"
+    }
+    
     var temp: String {
         guard let temp = currenWeather?.main?.temp else { return "N/A" }
         return "\(lround(temp))ºc"
@@ -47,18 +51,42 @@ class WeatherViewModel: ObservableObject {
         return "Pressure: \(lround(pressure)) hPa"
     }
     
-    /*
-    
-    Text("\(viewModel.currenWeather?.name ?? "")")
-        .bold()
-    Text("\(viewModel.currenWeather?.weather?.first?.main ?? "")")
-    Text("\(viewModel.currenWeather?.weather?.first?.description ?? "")")
-//                    Text("\(viewModel.currenWeather?.rain?.oneHours)")
-    Text("\( lround(viewModel.currenWeather?.main?.temp ?? 0) )º")
-    */
+    var icon: String {
+        guard let icon = currenWeather?.weather?.first?.icon else { return "thermometer" }
+        return convert(iconName: icon)
+    }
+   
     func fetchCurrentWeather() {
         NetworkManager.shared.fetchCurrentWeather(from: Constant.testCurrentWeatherURL.rawValue) { currentWeather in
             self.currenWeather = currentWeather
         }
+    }
+    
+    private func convert(iconName:String) -> String {
+        var result = ""
+        
+        switch iconName {
+        case "01d": result = "sun.max"
+        case "01n": result = "moon"
+        case "02d": result = "cloud.sun"
+        case "02n": result = "cloud.moon"
+        case "03d": result = "cloud"
+        case "03n": result = "cloud"
+        case "04d": result = "smoke"
+        case "04n": result = "smoke"
+        case "09d": result = "cloud.rain"
+        case "09n": result = "cloud.rain"
+        case "10d": result = "cloud.sun.rain"
+        case "10n": result = "cloud.moon.rain"
+        case "11d": result = "cloud.bolt.rain"
+        case "11n": result = "cloud.bolt.rain"
+        case "13d": result = "snow"
+        case "13n": result = "snow"
+        case "50d": result = "smoke"
+        case "50n": result = "smoke"
+        default: result = "thermometer"
+        }
+        
+        return result
     }
 }
