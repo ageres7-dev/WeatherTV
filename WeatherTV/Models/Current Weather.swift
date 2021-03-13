@@ -15,7 +15,7 @@
 import Foundation
 
 // MARK: - CurrentWeather
-struct CurrentWeather: Decodable {
+struct CurrentWeather: Decodable, Hashable {
     let coord: Coord?
     let weather: [Weather]?
 //    let base: String?
@@ -30,17 +30,17 @@ struct CurrentWeather: Decodable {
     let timezone: Int? //Сдвиг в секундах от UTC
     let id: Int?
     let name: String?
-    //    let cod: Int?
+//        let cod: Int?
 }
 
 // MARK: - Coord
-struct Coord: Decodable {
+struct Coord: Decodable, Hashable {
     let lon: Double?
     let lat: Double?
 }
 
 // MARK: - Weather
-struct Weather: Decodable {
+struct Weather: Decodable, Hashable  {
     let id: Int?
     let main: String?
     let description: String?
@@ -48,7 +48,7 @@ struct Weather: Decodable {
 }
 
 // MARK: - Main
-struct Main: Decodable {
+struct Main: Decodable, Hashable  {
     let temp: Double?
     let feelsLike: Double?
     let pressure: Double?
@@ -72,19 +72,19 @@ struct Main: Decodable {
 }
 
 // MARK: - Wind
-struct Wind: Decodable {
+struct Wind: Decodable, Hashable  {
     let speed: Double?
     let deg: Double?
     let gust: Double?
 }
 
 // MARK: - Clouds
-struct Clouds: Decodable {
+struct Clouds: Decodable, Hashable {
     let all: Double?
 }
 
 // MARK: - Rain
-struct Rain: Decodable {
+struct Rain: Decodable, Hashable {
     let oneHours: Double? //Объем дождя за последний 1 час, мм
     let threeHours: Double? //Объем дождя за последние 3 часа, мм
     enum CodingKeys: String, CodingKey {
@@ -94,7 +94,7 @@ struct Rain: Decodable {
 }
 
 // MARK: - Snow
-struct Snow: Decodable {
+struct Snow: Decodable, Hashable {
     let oneHours: Double?
     let threeHours: Double?
     enum CodingKeys: String, CodingKey {
@@ -105,7 +105,7 @@ struct Snow: Decodable {
 
 
 // MARK: - Sys
-struct Sys: Decodable {
+struct Sys: Decodable, Hashable {
 //    let type, id: Int?
 //    let message: Double?
     let country: String?

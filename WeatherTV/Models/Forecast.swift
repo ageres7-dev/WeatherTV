@@ -9,15 +9,16 @@ import Foundation
 
 
 // MARK: - Forecast
-struct Forecast: Decodable {
-    let cod: Int?
-    let message: String?
+struct Forecast: Decodable, Hashable {
+    let cod: String?
     let cnt: Int? //Количество временных меток, возвращенных в ответе API
     let list: [List]?
     let city: City?
+    
 }
 // MARK: - List
-struct List: Decodable {
+struct List: Decodable, Hashable {
+//    let id: Int
     let dt: Int?
     let main: Main?
     let weather: [Weather]?
@@ -35,7 +36,7 @@ struct List: Decodable {
 
 
 // MARK: - City
-struct City: Decodable {
+struct City: Decodable, Hashable {
     let id: Int?
     let name: String?
     let coord: Coord?
@@ -45,7 +46,7 @@ struct City: Decodable {
 
 
 // MARK: - Sys
-struct SysForecast: Decodable {
+struct SysForecast: Decodable, Hashable {
     let pod: Pod?
 }
 

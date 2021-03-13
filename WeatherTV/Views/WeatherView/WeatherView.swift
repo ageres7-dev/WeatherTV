@@ -53,6 +53,7 @@ struct WeatherView: View {
             
             Spacer()
             
+            ForecastView()
         }.onAppear(perform: viewModel.fetchCurrentWeather)
         
         
