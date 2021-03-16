@@ -7,6 +7,7 @@
 
 import Foundation
 
+//Данные прогноза на 5 дней / 3 часа
 
 // MARK: - Forecast
 struct Forecast: Decodable, Hashable {
@@ -24,12 +25,20 @@ struct List: Decodable, Hashable {
     let weather: [Weather]?
     let clouds: Clouds?
     let wind: Wind?
-    let visibility, pop: Int?
+    let visibility: Double?
+    let pop: Double?
     let sys: SysForecast?
     let dtTxt: String?
 
     enum CodingKeys: String, CodingKey {
-        case dt, main, weather, clouds, wind, visibility, pop, sys
+        case dt
+        case main
+        case weather
+        case clouds
+        case wind
+        case visibility
+        case pop
+        case sys
         case dtTxt = "dt_txt"
     }
 }

@@ -4,7 +4,7 @@
 //
 //  Created by Сергей on 11.03.2021.
 //
-
+/*
 import Foundation
 
 class ForecastViewModel: ObservableObject {
@@ -25,9 +25,11 @@ class ForecastViewModel: ObservableObject {
         NetworkManager.shared.fetchForecast(from: Constant.testForecast.rawValue) { forecast in
             self.forecast = forecast
             print("dsdfsf")
+            print("\(self.forecast?.list?.count ?? 0)")
         }
         
         
         
     }
 }
+*/

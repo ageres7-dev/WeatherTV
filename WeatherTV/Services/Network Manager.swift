@@ -30,7 +30,7 @@ class NetworkManager {
                     completion(weather)
                 }
             } catch let error {
-                print("Error serialization json", error.localizedDescription)
+                print("CurrentWeather Error serialization json", error.localizedDescription)
             }
         }.resume()
 
@@ -55,7 +55,35 @@ class NetworkManager {
                     completion(forecast)
                 }
             } catch let error {
-                print("Error serialization json", error.localizedDescription)
+                print("Forecast Error serialization json", error.localizedDescription)
+                print(data)
+            }
+        }.resume()
+    
+    }
+    
+    
+    func fetchForecastSevenDays(from url: String, completion: @escaping (_ forecast: ForecastOneCalAPI)->()) {
+        guard let forecastURL = URL(string: url) else { return }
+        
+        URLSession.shared.dataTask(with: forecastURL) { (data, _, error) in
+            if let error = error {
+                print(error)
+                return
+            }
+            guard let data = data else { return }
+            
+            do {
+                let decode = JSONDecoder()
+                decode.keyDecodingStrategy = .convertFromSnakeCase
+                decode.dateDecodingStrategy = .secondsSince1970
+                let forecast = try decode.decode(ForecastOneCalAPI.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(forecast)
+                }
+            } catch let error {
+                print("Forecast Error serialization json", error.localizedDescription)
                 print(data)
             }
         }.resume()

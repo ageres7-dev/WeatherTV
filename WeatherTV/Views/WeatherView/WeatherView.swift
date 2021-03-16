@@ -11,50 +11,61 @@ struct WeatherView: View {
     @StateObject private var viewModel = WeatherViewModel()
     
     var body: some View {
-        VStack{
-            
-            HStack{
-                Spacer()
-                Text(viewModel.locationName)
-                    .font(.largeTitle)
-                Spacer()
-                Button(action: {viewModel.fetchCurrentWeather()}) {
-                    Image(systemName: "arrow.clockwise")
+        
+            VStack{
+                /*
+                HStack{
+                    Spacer()
+                    Button(action: {viewModel.fetchCurrentWeather()}) {
+                        Image(systemName: "arrow.clockwise")
+                    }
                 }
-//                    .font(.title2)
-//                    .buttonStyle(CardButtonStyle())
+                */
+                HStack{
+                    VStack{
+                        Image(systemName: viewModel.icon)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 240, height: 240)
+                        
+                        Text(viewModel.discription)
+                            .font(.title3)
+                            .frame(width: 240)
+                    }
+                    Spacer()
+                    
+                    Text(viewModel.temp)
+                        .font(.system(size: 160))
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .leading) {
+                        Text(viewModel.feelsLike)
+                        Text(viewModel.humidity)
+                        Text(viewModel.pressure)
+                    }.font(.body)
+                    
+                }
+                .padding()
+                
+//                ForecastSevenDaysView()
+                LazyHStack {
+                    ForEach((viewModel.dailyForecasts), id: \.self) { day in
+                        DayForecastView(viewModel: DayForecastViewModel(daily: day))
+                    }
+                }
+                .onAppear(perform: viewModel.fetchForecast)
+
+//                ForecastSevenDaysView()
+              
+            }
+            .onAppear(perform: viewModel.fetchCurrentWeather)
+            .tabItem {
+                Text(viewModel.locationName)
             }
             
-            HStack{
-                VStack{
-                    Image(systemName: viewModel.icon)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 240, height: 240)
-//                    Text(viewModel.main)
-//                        .font(.title3)
-                    Text(viewModel.discription)
-                        .font(.title3)
-                }
-                Spacer()
-                
-                Text(viewModel.temp)
-                    .font(.system(size: 160))
-                
-                Spacer()
-                
-                VStack(alignment: .leading) {
-                    Text(viewModel.feelsLike)
-                    Text(viewModel.humidity)
-                    Text(viewModel.pressure)
-                }.font(.body)
-                
-            }.padding()
-            
-            Spacer()
-            
-            ForecastView()
-        }.onAppear(perform: viewModel.fetchCurrentWeather)
+
+        
         
         
     }

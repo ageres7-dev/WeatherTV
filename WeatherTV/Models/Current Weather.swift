@@ -40,7 +40,7 @@ struct Coord: Decodable, Hashable {
 }
 
 // MARK: - Weather
-struct Weather: Decodable, Hashable  {
+struct Weather: Codable, Hashable  {
     let id: Int?
     let main: String?
     let description: String?
