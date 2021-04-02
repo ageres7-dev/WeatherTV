@@ -10,6 +10,8 @@ import Foundation
 class WeatherViewModel: ObservableObject {
     
     @Published var currenWeather: CurrentWeather?
+    @Published var forecastOneCalAPI: ForecastOneCalAPI?
+    
     var dailyForecasts: [Daily] {
         guard var daily = forecastOneCalAPI?.daily else { return [] }
         
@@ -69,8 +71,11 @@ class WeatherViewModel: ObservableObject {
     }
     
     
-
-    private var forecastOneCalAPI: ForecastOneCalAPI?
+    
+    func fechWeather() {
+        fetchForecast()
+        fetchCurrentWeather()
+    }
     
     func fetchForecast() {
         NetworkManager.shared.fetchForecastSevenDays(from: Constant.testForecastSevenDays.rawValue) { forecast in
@@ -84,7 +89,6 @@ class WeatherViewModel: ObservableObject {
         NetworkManager.shared.fetchCurrentWeather(from: Constant.testCurrentWeatherURL.rawValue) { currentWeather in
             self.currenWeather = currentWeather
             print("fetchCurrentWeather")
-            self.fetchForecast()
         }
     }
     

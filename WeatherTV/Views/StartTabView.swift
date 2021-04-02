@@ -15,6 +15,12 @@ struct StartTabView: View {
                 WeatherView()
                 //                .tabItem { Image(systemName: "Weather") }
                 
+                SettingsView()
+                    .tabItem {
+                        Label("Settings", systemImage: "gearshape")
+                    }
+                
+                
                 VStack{
                     Text("Search")
                 }

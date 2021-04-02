@@ -48,18 +48,19 @@ struct WeatherView: View {
                 }
                 .padding()
                 
+                Spacer()
 //                ForecastSevenDaysView()
                 LazyHStack {
                     ForEach((viewModel.dailyForecasts), id: \.self) { day in
                         DayForecastView(viewModel: DayForecastViewModel(daily: day))
                     }
                 }
-                .onAppear(perform: viewModel.fetchForecast)
+//                .onAppear(perform: viewModel.fetchForecast)
 
 //                ForecastSevenDaysView()
               
             }
-            .onAppear(perform: viewModel.fetchCurrentWeather)
+            .onAppear(perform: viewModel.fechWeather)
             .tabItem {
                 Text(viewModel.locationName)
             }
