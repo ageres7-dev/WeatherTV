@@ -12,6 +12,7 @@ struct WeatherTVApp: App {
     var body: some Scene {
         WindowGroup {
             StartTabView()
+                .environmentObject(LocationManager.shared)
         }
     }
 }

@@ -2,85 +2,88 @@
 //  Location Manager.swift
 //  WeatherTV
 //
-//  Created by Сергей on 17.03.2021.
+//  Created by Сергей on 01.04.2021.
 //
-
-/*
-
 import Foundation
 import CoreLocation
-import Combine
 
-class LocationManager: NSObject, ObservableObject {
-    private let locationManager = CLLocationManager()
-    let objectWillChange = PassthroughSubject<Void, Never>()
+class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+    @Published var location: CLLocation?
+    @Published var status: CLAuthorizationStatus?
     
-    @Published var status: CLAuthorizationStatus? {
-        willSet { objectWillChange.send() }
+    
+    static let shared = LocationManager()
+    
+    private let manager = CLLocationManager()
+    
+//    var complition: ((CLLocation) -> Void)?
+    
+    override private init() {
+        super .init()
+        manager.requestWhenInUseAuthorization()
+        manager.delegate = self
+        manager.requestLocation()
     }
     
-    @Published var location: CLLocation? {
-        willSet { objectWillChange.send() }
+//    public func getLocation(complition: @escaping ((CLLocation) -> Void)) {
+//        self.complition = complition
+//        manager.requestWhenInUseAuthorization()
+//        manager.delegate = self
+////        manager.startUpdatingLocation()
+//        manager.requestLocation()
+//    }
+    
+//    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+//        self.status = status
+//    }
+    
+    internal func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        status = manager.authorizationStatus
+        
     }
     
+    internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.first else { return }
+        self.location = location
+        
+    }
+    
+    
+    internal func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to find location: \(error.localizedDescription)")
+    }
+}
+
+
+
+
+
+
+
+
+/*
+import CoreLocation
+
+class LocationFetcher: NSObject, CLLocationManagerDelegate, ObservableObject {
+    let manager = CLLocationManager()
+    @Published var lastKnownLocation: CLLocationCoordinate2D?
+
     override init() {
         super.init()
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+    }
+
+    func start() {
+        manager.requestWhenInUseAuthorization()
+//        manager.startUpdatingLocation()
+        manager.requestLocation()
         
-        self.locationManager.delegate = self
-//        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager.requestWhenInUseAuthorization()
-//            self.locationManager.startUpdatingLocation()
-        self.locationManager.requestLocation()
     }
-    
-    
-    
-    
-    private let geocoder = CLGeocoder()
-    
-    // Rest of the class
-    
-    @Published var placemark: CLPlacemark? {
-        willSet { objectWillChange.send() }
-    }
-    
-    private func geocode() {
-        guard let location = self.location else { return }
-        geocoder.reverseGeocodeLocation(location, completionHandler: { (places, error) in
-            if error == nil {
-                self.placemark = places?[0]
-            } else {
-                self.placemark = nil
-            }
-        })
-    }
-    
-    
-}
 
-
-
-extension LocationManager: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        self.status = status
-    }
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
-        self.location = location
-        self.geocode()
-    }
-}
-
-
-
-extension CLLocation {
-    var latitude: Double {
-        return self.coordinate.latitude
-    }
-    
-    var longitude: Double {
-        return self.coordinate.longitude
+       
+        lastKnownLocation = locations.first?.coordinate
     }
 }
 */

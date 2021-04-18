@@ -13,6 +13,8 @@ enum KeyAPI: String {
 }
 
 enum Constant: String {
+    case key = "5dd2b561e08cf36d5726459eecfe7bd7"
+    
     case testOneCallURL = "https://api.openweathermap.org/data/2.5/onecall?lat=33.441792&lon=-94.037689&appid=5dd2b561e08cf36d5726459eecfe7bd7"
     case testCurrentWeatherURL = "https://api.openweathermap.org/data/2.5/weather?q=orenburg&appid=5dd2b561e08cf36d5726459eecfe7bd7&units=metric" //&lang=ru
     
@@ -23,3 +25,18 @@ enum Constant: String {
 }
 
 //https://api.openweathermap.org/data/2.5/forecast?q=orenburg&appid=5dd2b561e08cf36d5726459eecfe7bd7&units=metric
+
+
+class URLManager {
+    static let shared = URLManager()
+    private init() {}
+    
+    func urlOneCallFrom(latitude: String, longitude: String) -> String {
+        "https://api.openweathermap.org/data/2.5/onecall?lat=\(latitude)&lon=\(longitude)&appid=\(Constant.key.rawValue)&units=metric"
+    }
+    
+    
+    func urlCurrentWeatherFrom(latitude: String, longitude: String) -> String {
+        "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\(Constant.key.rawValue)&units=metric"
+    }
+}

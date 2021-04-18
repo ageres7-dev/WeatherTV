@@ -21,10 +21,8 @@ struct StartTabView: View {
                     }
                 
                 
-                VStack{
-                    Text("Search")
-                }
-                .tabItem { Image(systemName: "magnifyingglass") }
+                SearchView()
+                    .tabItem { Image(systemName: "magnifyingglass") }
                 
             }
             VStack(spacing: 0) {

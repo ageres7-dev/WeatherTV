@@ -6,11 +6,24 @@
 //
 
 import Foundation
+import CoreLocation
 
 class WeatherViewModel: ObservableObject {
     
     @Published var currenWeather: CurrentWeather?
     @Published var forecastOneCalAPI: ForecastOneCalAPI?
+
+    var latitude: String = ""
+    var longitude: String = ""
+    
+//    var coordinate: (latitude: String, longitude: String) = ("", "") {
+//        didSet {
+//            guard coordinate.latitude != "", coordinate.longitude != "" else { return }
+//            fechWeather()
+//        }
+//    }
+    
+
     
     var dailyForecasts: [Daily] {
         guard var daily = forecastOneCalAPI?.daily else { return [] }
@@ -78,7 +91,15 @@ class WeatherViewModel: ObservableObject {
     }
     
     func fetchForecast() {
-        NetworkManager.shared.fetchForecastSevenDays(from: Constant.testForecastSevenDays.rawValue) { forecast in
+//        guard let location = locationManager.location  else { return }
+        
+        
+        let url = URLManager.shared.urlOneCallFrom(
+            latitude: latitude,
+            longitude: longitude
+        )
+        
+        NetworkManager.shared.fetchForecastSevenDays(from: url) { forecast in
             self.forecastOneCalAPI = forecast
             print("fetchForecastSevenDays")
         }
@@ -86,7 +107,14 @@ class WeatherViewModel: ObservableObject {
     
    
     func fetchCurrentWeather() {
-        NetworkManager.shared.fetchCurrentWeather(from: Constant.testCurrentWeatherURL.rawValue) { currentWeather in
+//        guard let location = locationManager.location  else { return }
+        
+        let url = URLManager.shared.urlCurrentWeatherFrom(
+            latitude: latitude,
+            longitude: longitude
+        )
+        
+        NetworkManager.shared.fetchCurrentWeather(from: url) { currentWeather in
             self.currenWeather = currentWeather
             print("fetchCurrentWeather")
         }

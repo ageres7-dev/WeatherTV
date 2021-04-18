@@ -9,18 +9,47 @@ import SwiftUI
 
 struct WeatherView: View {
     @StateObject private var viewModel = WeatherViewModel()
+    @EnvironmentObject var location: LocationManager
+    
+//    var status: String    { return("\(String(location.status ?? ""))") }
     
     var body: some View {
         
             VStack{
-                /*
+                
+                if let status = location.status {
+                    if status == .denied {
+                        Text("Please allow access to the location")
+                    }
+                }
+                
+                if let currentLocation = location.location {
+//                    Text("\()")
+                    
+//                    EmptyView()
+                    Text("\(currentLocation.coordinate.latitude)")
+                        .onAppear(perform: {
+                            
+                            viewModel.latitude = String(currentLocation.coordinate.latitude)
+                            print(currentLocation.coordinate.latitude)
+                            viewModel.longitude = String(currentLocation.coordinate.longitude)
+                            viewModel.fechWeather()
+                        })
+                }
+                
+                if location.location == nil {
+                    Text("Finding a location")
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                }
+                
                 HStack{
                     Spacer()
-                    Button(action: {viewModel.fetchCurrentWeather()}) {
+                    Button(action: {viewModel.fechWeather()}) {
                         Image(systemName: "arrow.clockwise")
                     }
                 }
-                */
+                
                 HStack{
                     VStack{
                         Image(systemName: viewModel.icon)
@@ -60,7 +89,7 @@ struct WeatherView: View {
 //                ForecastSevenDaysView()
               
             }
-            .onAppear(perform: viewModel.fechWeather)
+//            .onAppear(perform: viewModel.fechWeather)
             .tabItem {
                 Text(viewModel.locationName)
             }
