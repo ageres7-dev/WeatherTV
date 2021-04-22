@@ -11,20 +11,23 @@ struct StartTabView: View {
     var body: some View {
         
         ZStack {
-            TabView{
-                WeatherView()
-                //                .tabItem { Image(systemName: "Weather") }
-                
-                SettingsView()
-                    .tabItem {
-                        Label("Settings", systemImage: "gearshape")
-                    }
-                
-                
-                SearchView()
-                    .tabItem { Image(systemName: "magnifyingglass") }
-                
-            }
+            NavigationView {
+//                TabView {
+                    WeatherView()
+                    //                .tabItem { Image(systemName: "Weather") }
+                    
+//                    SettingsView()
+//                        .tabItem {
+//                            Label("Settings", systemImage: "gearshape")
+//                        }
+//                    
+//                    
+//                    SearchView()
+//                        .tabItem { Image(systemName: "magnifyingglass") }
+                    
+//                }
+                }
+            
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     Spacer()

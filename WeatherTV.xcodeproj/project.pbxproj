@@ -27,11 +27,13 @@
 		A597C25A25F6316B002940BF /* WeatherTVTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A597C25925F6316B002940BF /* WeatherTVTests.swift */; };
 		A597C26525F6316B002940BF /* WeatherTVUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A597C26425F6316B002940BF /* WeatherTVUITests.swift */; };
 		A5BF6EF6262B634900522AE5 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF6EF5262B634900522AE5 /* SearchView.swift */; };
+		A5DA9741262C614B00EC34E8 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA9740262C614B00EC34E8 /* SearchController.swift */; };
 		A5E9FCAA25FD4832001D3317 /* StartTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9FCA925FD4832001D3317 /* StartTabView.swift */; };
 		A5E9FCAF25FE81E3001D3317 /* ForecastOneCalAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9FCAE25FE81E3001D3317 /* ForecastOneCalAPI.swift */; };
 		A5E9FCB825FE871C001D3317 /* ForecastSevenDaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9FCB725FE871C001D3317 /* ForecastSevenDaysView.swift */; };
 		A5E9FCC025FE87BC001D3317 /* ForecastSevenDaysViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9FCBF25FE87BC001D3317 /* ForecastSevenDaysViewModel.swift */; };
 		A5E9FCC825FE891E001D3317 /* Data Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E9FCC725FE891E001D3317 /* Data Manager.swift */; };
+		A5EEA13C262F6FBE0002EF8D /* serash.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EEA13B262F6FBE0002EF8D /* serash.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,11 +80,13 @@
 		A597C26425F6316B002940BF /* WeatherTVUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTVUITests.swift; sourceTree = "<group>"; };
 		A597C26625F6316B002940BF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A5BF6EF5262B634900522AE5 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		A5DA9740262C614B00EC34E8 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		A5E9FCA925FD4832001D3317 /* StartTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartTabView.swift; sourceTree = "<group>"; };
 		A5E9FCAE25FE81E3001D3317 /* ForecastOneCalAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastOneCalAPI.swift; sourceTree = "<group>"; };
 		A5E9FCB725FE871C001D3317 /* ForecastSevenDaysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastSevenDaysView.swift; sourceTree = "<group>"; };
 		A5E9FCBF25FE87BC001D3317 /* ForecastSevenDaysViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastSevenDaysViewModel.swift; sourceTree = "<group>"; };
 		A5E9FCC725FE891E001D3317 /* Data Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data Manager.swift"; sourceTree = "<group>"; };
+		A5EEA13B262F6FBE0002EF8D /* serash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = serash.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +133,8 @@
 				A5E9FCA925FD4832001D3317 /* StartTabView.swift */,
 				A540D1C42614F17700B477B2 /* SettingsView.swift */,
 				A5BF6EF5262B634900522AE5 /* SearchView.swift */,
+				A5DA9740262C614B00EC34E8 /* SearchController.swift */,
+				A5EEA13B262F6FBE0002EF8D /* serash.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -399,12 +405,14 @@
 				A5412A6225FFDCA400B2FE64 /* DayForecastView.swift in Sources */,
 				A531E02925FA8BFD00AB91E1 /* Forecast.swift in Sources */,
 				A5BF6EF6262B634900522AE5 /* SearchView.swift in Sources */,
+				A5DA9741262C614B00EC34E8 /* SearchController.swift in Sources */,
 				A54831402615A87C001E7F76 /* Location Manager.swift in Sources */,
 				A5E9FCAF25FE81E3001D3317 /* ForecastOneCalAPI.swift in Sources */,
 				A531E00A25F88B5F00AB91E1 /* Key API.swift in Sources */,
 				A531DFFA25F7F6BB00AB91E1 /* Network Manager.swift in Sources */,
 				A597C24A25F63169002940BF /* WeatherView.swift in Sources */,
 				A5E9FCC025FE87BC001D3317 /* ForecastSevenDaysViewModel.swift in Sources */,
+				A5EEA13C262F6FBE0002EF8D /* serash.swift in Sources */,
 				A5412A6825FFDD5300B2FE64 /* DayForecastViewModel.swift in Sources */,
 				A51698772602652000C3FC26 /* Location Manager???.swift in Sources */,
 				A597C24825F63169002940BF /* WeatherTVApp.swift in Sources */,

@@ -13,22 +13,29 @@ struct SearchView: View {
     @State private var citys: [City] = []
     
     var body: some View {
-        VStack {
-            
-//            SearchBar
-            Button("Get") {
-                NetworkManager.shared.fetchCitys { citys in
-                    self.citys = citys
+        VStack(spacing: 0) {
+            SearchController(searchString: $search)
+            ScrollView(.vertical, showsIndicators: false) {
+                
+                Button("Get") {
+                    NetworkManager.shared.fetchCitys { citys in
+                        self.citys = citys
+                    }
+                }
+                
+                
+                LazyVStack {
+                    ForEach(citys, id: \.self) { city in
+                        Button(city.name ?? "-", action: {} )
+                    }
                 }
             }
-            Text(citys.first?.name ?? "hh" )
         }
-        
     }
 }
 
-struct SearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchView()
-    }
-}
+//struct SearchView_Previews: PreviewProvider {
+//    static var previews: some View {
+////        SearchController(searchString: .constant("99"))
+//    }
+//}
