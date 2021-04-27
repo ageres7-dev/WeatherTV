@@ -13,17 +13,50 @@ class WeatherViewModel: ObservableObject {
     @Published var currenWeather: CurrentWeather?
     @Published var forecastOneCalAPI: ForecastOneCalAPI?
 
-    var latitude: String = ""
-    var longitude: String = ""
+    let location: LocationManager
+ 
     
-//    var coordinate: (latitude: String, longitude: String) = ("", "") {
-//        didSet {
-//            guard coordinate.latitude != "", coordinate.longitude != "" else { return }
-//            fechWeather()
-//        }
-//    }
+    let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+        print("Timer fired!")
+//        fechWeather()
+    }
     
+    init() {
+        location = LocationManager.shared
+    }
 
+    
+    var latitude: String {
+        guard let coordinate = location.location?.coordinate else { return "" }
+        return String(coordinate.latitude)
+    }
+    
+    
+    
+    var longitude: String {
+        guard let coordinate = location.location?.coordinate else { return "" }
+        return String(coordinate.longitude)
+    }
+    
+    
+    var todayForecasts: String {
+        var todayForecasts = ""
+        
+        guard var daily = forecastOneCalAPI?.daily else { return  "" }
+        
+        daily.sort {
+            guard let first = $0.dt, let second = $1.dt else { return false }
+            return first < second
+        }
+        
+        
+        if let dayTemp = daily.first?.temp?.day,
+           let nightTemp = daily.first?.temp?.night {
+            todayForecasts = "\(lround(dayTemp)) / \(lround(nightTemp))ºС"
+        }
+        return todayForecasts
+        
+    }
     
     var dailyForecasts: [Daily] {
         guard var daily = forecastOneCalAPI?.daily else { return [] }
@@ -41,22 +74,22 @@ class WeatherViewModel: ObservableObject {
            let country = currenWeather?.sys?.country {
             return "\(city), \(country)"
         } else {
-            return "N/A"
+            return ""
         }
  
     }
     
     var discription: String {
-        currenWeather?.weather?.first?.description ?? "N/A"
+        currenWeather?.weather?.first?.description ?? "-"
     }
     
     var main: String {
-        currenWeather?.weather?.first?.main ?? "N/A"
+        currenWeather?.weather?.first?.main ?? "-"
     }
     
-    var temp: String {
-        guard let temp = currenWeather?.main?.temp else { return "N/A" }
-        return "\(lround(temp))ºc"
+    var temp: String? {
+        guard let temp = currenWeather?.main?.temp else { return nil }
+        return "\(lround(temp))ºC"
     }
     
     var humidity: String {
@@ -68,12 +101,12 @@ class WeatherViewModel: ObservableObject {
     }
     
     var feelsLike: String {
-        guard let feelsLike = currenWeather?.main?.feelsLike else { return "N/A" }
-        return "Feels like: \(lround(feelsLike))ºc"
+        guard let feelsLike = currenWeather?.main?.feelsLike else { return "-" }
+        return "Feels like: \(lround(feelsLike))ºC"
     }
     
     var pressure: String {
-        guard let pressure = currenWeather?.main?.pressure else { return "N/A" }
+        guard let pressure = currenWeather?.main?.pressure else { return "-" }
         return "Pressure: \(lround(pressure)) hPa"
     }
     

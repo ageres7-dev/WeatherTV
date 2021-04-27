@@ -5,12 +5,12 @@
 //  Created by Сергей on 17.03.2021.
 //
 
-/*
+
 
 import Foundation
 import CoreLocation
 import Combine
-
+/*
 class LocationManager: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
     let objectWillChange = PassthroughSubject<Void, Never>()
@@ -83,4 +83,5 @@ extension CLLocation {
         return self.coordinate.longitude
     }
 }
+
 */

@@ -8,15 +8,19 @@ import Foundation
 import CoreLocation
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-    @Published var location: CLLocation?
-    @Published var status: CLAuthorizationStatus?
+    @Published var location: CLLocation? {
+        willSet { objectWillChange.send() }
+    }
+    
+    @Published var status: CLAuthorizationStatus? {
+        willSet { objectWillChange.send() }
+    }
     
     
     static let shared = LocationManager()
     
     private let manager = CLLocationManager()
     
-//    var complition: ((CLLocation) -> Void)?
     
     override private init() {
         super .init()

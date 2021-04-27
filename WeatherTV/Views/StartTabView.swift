@@ -12,8 +12,10 @@ struct StartTabView: View {
         
         ZStack {
             NavigationView {
+                FindingLocationView()
+                
 //                TabView {
-                    WeatherView()
+//                    WeatherView()
                     //                .tabItem { Image(systemName: "Weather") }
                     
 //                    SettingsView()
@@ -39,6 +41,7 @@ struct StartTabView: View {
                             .opacity(0.8)
                             .frame(height: 60)
                             .offset(x: -90, y: 0)
+                            .shadow(radius: 30)
                         
                         Spacer()
                     }

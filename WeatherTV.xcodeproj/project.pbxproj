@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A51698772602652000C3FC26 /* Location Manager???.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51698762602652000C3FC26 /* Location Manager???.swift */; };
+		A51CA0D52638874C00582369 /* FindingLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51CA0D42638874C00582369 /* FindingLocationView.swift */; };
 		A531DFE625F7642F00AB91E1 /* CurrentWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = A531DFE525F7642F00AB91E1 /* CurrentWeather.swift */; };
 		A531DFFA25F7F6BB00AB91E1 /* Network Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A531DFF925F7F6BB00AB91E1 /* Network Manager.swift */; };
 		A531E00A25F88B5F00AB91E1 /* Key API.swift in Sources */ = {isa = PBXBuildFile; fileRef = A531E00925F88B5F00AB91E1 /* Key API.swift */; };
@@ -55,6 +56,7 @@
 
 /* Begin PBXFileReference section */
 		A51698762602652000C3FC26 /* Location Manager???.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location Manager???.swift"; sourceTree = "<group>"; };
+		A51CA0D42638874C00582369 /* FindingLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindingLocationView.swift; sourceTree = "<group>"; };
 		A531DFE525F7642F00AB91E1 /* CurrentWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
 		A531DFF925F7F6BB00AB91E1 /* Network Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Network Manager.swift"; sourceTree = "<group>"; };
 		A531E00925F88B5F00AB91E1 /* Key API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Key API.swift"; sourceTree = "<group>"; };
@@ -114,6 +116,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A51CA0D32638870500582369 /* FindingLocationView */ = {
+			isa = PBXGroup;
+			children = (
+				A51CA0D42638874C00582369 /* FindingLocationView.swift */,
+			);
+			path = FindingLocationView;
+			sourceTree = "<group>";
+		};
 		A531DFE425F7640200AB91E1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +137,7 @@
 		A531DFED25F79F4600AB91E1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A51CA0D32638870500582369 /* FindingLocationView */,
 				A5412A6625FFDCBB00B2FE64 /* DailyForecastView */,
 				A5E9FCB625FE86E1001D3317 /* ForecastSevenDaysView */,
 				A531E01925F93F8100AB91E1 /* WeatherView */,
@@ -405,6 +416,7 @@
 				A5412A6225FFDCA400B2FE64 /* DayForecastView.swift in Sources */,
 				A531E02925FA8BFD00AB91E1 /* Forecast.swift in Sources */,
 				A5BF6EF6262B634900522AE5 /* SearchView.swift in Sources */,
+				A51CA0D52638874C00582369 /* FindingLocationView.swift in Sources */,
 				A5DA9741262C614B00EC34E8 /* SearchController.swift in Sources */,
 				A54831402615A87C001E7F76 /* Location Manager.swift in Sources */,
 				A5E9FCAF25FE81E3001D3317 /* ForecastOneCalAPI.swift in Sources */,
