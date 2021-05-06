@@ -79,6 +79,7 @@ struct WeatherView: View {
         }
         .onAppear {
             viewModel.fechWeather()
+            viewModel.startAutoUpdateWeather()
 //            viewModel.timer
         }
     }

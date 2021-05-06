@@ -14,24 +14,11 @@ class WeatherViewModel: ObservableObject {
     @Published var forecastOneCalAPI: ForecastOneCalAPI?
 
     let location: LocationManager
- 
-    
-    let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-        print("Timer fired!")
-//        fechWeather()
-    }
-    
-    init() {
-        location = LocationManager.shared
-    }
-
     
     var latitude: String {
         guard let coordinate = location.location?.coordinate else { return "" }
         return String(coordinate.latitude)
     }
-    
-    
     
     var longitude: String {
         guard let coordinate = location.location?.coordinate else { return "" }
@@ -113,9 +100,28 @@ class WeatherViewModel: ObservableObject {
     var icon: String {
         guard let icon = currenWeather?.weather?.first?.icon else { return "thermometer" }
         return DataManager.shared.convert(iconName: icon)
-        //"arrow.clockwise"
     }
     
+    private var timerUpdateCurrentWeather: Timer?
+    private var timerUpdateForecast: Timer?
+    
+    
+    init() {
+        location = LocationManager.shared
+    }
+    
+    
+    func startAutoUpdateWeather() {
+        timerUpdateCurrentWeather = Timer.scheduledTimer(withTimeInterval: 900, repeats: true) { _ in
+            self.fetchCurrentWeather()
+            print("UpdateCurrentWeather \(self.getCurrentDate())")
+        }
+        
+        timerUpdateForecast = Timer.scheduledTimer(withTimeInterval: 3600, repeats: true) { _ in
+            self.fetchForecast()
+            print("UpdateForecast \(self.getCurrentDate())")
+        }
+    }
     
     
     func fechWeather() {
@@ -140,8 +146,6 @@ class WeatherViewModel: ObservableObject {
     
    
     func fetchCurrentWeather() {
-//        guard let location = locationManager.location  else { return }
-        
         let url = URLManager.shared.urlCurrentWeatherFrom(
             latitude: latitude,
             longitude: longitude
@@ -151,6 +155,13 @@ class WeatherViewModel: ObservableObject {
             self.currenWeather = currentWeather
             print("fetchCurrentWeather")
         }
+    }
+    
+    private func getCurrentDate() -> String {
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss E, d MMM y"
+        return dateFormatter.string(from: date)
     }
     
 }
