@@ -15,10 +15,20 @@ struct FindingLocationView: View {
     var body: some View {
         VStack {
             if isShowAllowAccess {
-                Text("Please allow access to the location")
+                
+                VStack {
+                    Text("Please allow access to the location")
+                        .font(.title2)
+                    Button("Open in settings") {
+                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+                    }
+                }
+                
+                
             } else if isFindingCurrentLocation {
                 
                 Text("Finding a location")
+                    .font(.title2)
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
                 
@@ -43,5 +53,6 @@ extension FindingLocationView {
 struct FindingLocaationView_Previews: PreviewProvider {
     static var previews: some View {
         FindingLocationView()
+            .environmentObject(LocationManager.shared)
     }
 }

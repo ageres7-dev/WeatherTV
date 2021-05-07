@@ -56,6 +56,10 @@ class WeatherViewModel: ObservableObject {
         return daily
     }
     
+    var locationName: String? {
+        currenWeather?.name
+    }
+    /*
     var locationName: String {
         if let city = currenWeather?.name,
            let country = currenWeather?.sys?.country {
@@ -63,9 +67,8 @@ class WeatherViewModel: ObservableObject {
         } else {
             return ""
         }
- 
     }
-    
+    */
     var discription: String {
         currenWeather?.weather?.first?.description ?? "-"
     }
@@ -76,7 +79,7 @@ class WeatherViewModel: ObservableObject {
     
     var temp: String? {
         guard let temp = currenWeather?.main?.temp else { return nil }
-        return "\(lround(temp))ºC"
+        return "\(lround(temp))º"
     }
     
     var humidity: String {

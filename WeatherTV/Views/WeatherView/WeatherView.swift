@@ -15,16 +15,19 @@ struct WeatherView: View {
         VStack {
             HStack{
                 Spacer()
-                Text(viewModel.locationName)
+                if let locationName = viewModel.locationName {
+                Image(systemName: "location")
+                    .font(.title3)
+                Text(locationName)
                     .font(.largeTitle)
-                
-                Spacer()
-                NavigationLink(destination: SettingsView()) {
-                    Image(systemName: "gearshape")
                 }
                 
+                Spacer()
+//                NavigationLink(destination: SettingsView()) {
+//                    Image(systemName: "gearshape")
+//                }
                 
-                Button(action: {viewModel.fechWeather()}) {
+                Button(action: { viewModel.fechWeather() }) {
                     Image(systemName: "arrow.clockwise")
                 }
             }
@@ -76,11 +79,12 @@ struct WeatherView: View {
                 }
             }
             .frame(height: 130)
+            .offset(x: 0, y: -60)
+//            Spacer()
         }
         .onAppear {
             viewModel.fechWeather()
             viewModel.startAutoUpdateWeather()
-//            viewModel.timer
         }
     }
 }

@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct StartTabView: View {
+    @Environment(\.colorScheme) private var colorScheme
+    
     var body: some View {
         
         ZStack {
             NavigationView {
                 FindingLocationView()
+                    
                 
 //                TabView {
 //                    WeatherView()
@@ -35,7 +38,7 @@ struct StartTabView: View {
                     Spacer()
                     
                     HStack(spacing: 0){
-                        Image("logo_white_cropped")
+                        Image(colorScheme == .dark ? "logo_white" : "logo_dark" )
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .opacity(0.8)
