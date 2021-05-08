@@ -102,8 +102,8 @@ struct Sys: Decodable, Hashable {
 //    let type, id: Int?
 //    let message: Double?
     let country: String?
-    let sunrise: Int?
-    let sunset: Int?
+    let sunrise: Date?
+    let sunset: Date?
 }
 
 

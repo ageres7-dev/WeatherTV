@@ -35,7 +35,7 @@ class NetworkManager {
     
     func fetchForecastSevenDays(from url: URL?, completion: @escaping (_ forecast: ForecastOneCalAPI)->()) {
         guard let url = url else { return }
-        
+        print(url)
         fetchObject(ForecastOneCalAPI.self, from: url) { forecast in
             completion(forecast)
         }

@@ -13,14 +13,17 @@ struct WeatherView: View {
     var body: some View {
         
         VStack {
-            HStack{
+            HStack(spacing: 8) {
+                Text("")
+                    .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 Spacer()
                 if let locationName = viewModel.locationName {
                 Image(systemName: "location")
-                    .font(.title3)
+                    .font(.body)
                 Text(locationName)
-                    .font(.largeTitle)
+                    .font(.title3)
                 }
+                
                 
                 Spacer()
 //                NavigationLink(destination: SettingsView()) {
@@ -41,7 +44,7 @@ struct WeatherView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 240, height: 240)
                     
-                    Text(viewModel.discription)
+                    Text(viewModel.description)
                         .font(.title3)
                         .frame(width: 340)
                 }
@@ -52,6 +55,7 @@ struct WeatherView: View {
                         Text(temp)
                             .font(.system(size: 160))
                         Text(viewModel.todayForecasts)
+                        Text(viewModel.todayDate)
                     }
                 } else {
                     ProgressView()
@@ -65,6 +69,15 @@ struct WeatherView: View {
                     Text(viewModel.feelsLike)
                     Text(viewModel.humidity)
                     Text(viewModel.pressure)
+                    Text("")
+                    Divider()
+                    if let sunriseTime = viewModel.sunriseTime {
+                        Text(sunriseTime)
+                    }
+                    
+                    if let sunsetTime = viewModel.sunsetTime {
+                        Text(sunsetTime)
+                    }
                 }
                 .frame(width: 340)
                 .font(.body)

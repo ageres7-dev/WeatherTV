@@ -10,7 +10,7 @@ import CoreLocation
 
 class WeatherViewModel: ObservableObject {
     
-    @Published var currenWeather: CurrentWeather?
+    @Published var currentWeather: CurrentWeather?
     @Published var forecastOneCalAPI: ForecastOneCalAPI?
 
     private let location: LocationManager
@@ -84,7 +84,7 @@ class WeatherViewModel: ObservableObject {
         )
         
         NetworkManager.shared.fetchCurrentWeather(from: url) { currentWeather in
-            self.currenWeather = currentWeather
+            self.currentWeather = currentWeather
             print("fetchCurrentWeather")
         }
     }
@@ -118,6 +118,13 @@ extension WeatherViewModel {
         return "\(lround(dayTemp)) / \(lround(nightTemp))ºС"
     }
     
+    var todayDate: String {
+        guard let dt = dailyForecasts.first?.dt else { return "" }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E, d MMM"
+        return formatter.string(from: dt)
+    }
+    
     var dailyForecasts: [Daily] {
         guard var daily = forecastOneCalAPI?.daily else { return [] }
         guard !daily.isEmpty else { return [] }
@@ -138,51 +145,68 @@ extension WeatherViewModel {
     
     
     var locationName: String? {
-        currenWeather?.name
+        currentWeather?.name
     }
     /*
     var locationName: String {
-        if let city = currenWeather?.name,
-           let country = currenWeather?.sys?.country {
+        if let city = currentWeather?.name,
+           let country = currentWeather?.sys?.country {
             return "\(city), \(country)"
         } else {
             return ""
         }
     }
     */
-    var discription: String {
-        currenWeather?.weather?.first?.description ?? "-"
+    var description: String {
+        currentWeather?.weather?.first?.description ?? "-"
     }
     
     var main: String {
-        currenWeather?.weather?.first?.main ?? "-"
+        currentWeather?.weather?.first?.main ?? "-"
     }
     
     var temp: String? {
-        guard let temp = currenWeather?.main?.temp else { return nil }
-        return "\(lround(temp))º"
+        guard let temp = currentWeather?.main?.temp else { return nil }
+        return " \(lround(temp))º"
     }
     
     var humidity: String {
         var result = ""
-        if let humidity = currenWeather?.main?.humidity {
+        if let humidity = currentWeather?.main?.humidity {
             result = "Humidity: \(lround(humidity))%"
         }
         return result
     }
     
     var feelsLike: String {
-        guard let feelsLike = currenWeather?.main?.feelsLike else { return "-" }
+        guard let feelsLike = currentWeather?.main?.feelsLike else { return "" }
         return "Feels like: \(lround(feelsLike))ºC"
     }
     
     var pressure: String {
-        guard let pressure = currenWeather?.main?.pressure else { return "-" }
+        guard let pressure = currentWeather?.main?.pressure else { return "" }
         return "Pressure: \(lround(pressure)) hPa"
     }
     
     var icon: String {
-        guard let icon = currenWeather?.weather?.first?.icon else { return "thermometer" }
+        guard let icon = currentWeather?.weather?.first?.icon else { return "thermometer" }
         return DataManager.shared.convert(iconName: icon)
+    }
+    
+    var sunsetTime: String? {
+        guard let date = currentWeather?.sys?.sunset else { return nil }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+//        return formatter.string(from: date)
+        return "Sunset time: \(formatter.string(from: date))"
+    }
+    
+    var sunriseTime: String? {
+        guard let date = currentWeather?.sys?.sunrise else { return nil }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+//        return formatter.string(from: date)
+        
+        return "Sunrise time: \(formatter.string(from: date))"
     }
 }
