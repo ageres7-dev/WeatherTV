@@ -27,7 +27,7 @@ struct WeatherView: View {
 //                    Image(systemName: "gearshape")
 //                }
                 
-                Button(action: { viewModel.fechWeather() }) {
+                Button(action: { viewModel.actionUpdateButton() }) {
                     Image(systemName: "arrow.clockwise")
                 }
             }

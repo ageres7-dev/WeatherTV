@@ -7,10 +7,10 @@
 
 import Foundation
 
-enum KeyAPI: String {
-    case openWeatherMap = "5dd2b561e08cf36d5726459eecfe7bd7"
-    
-}
+//enum KeyAPI: String {
+//    case openWeatherMap = "5dd2b561e08cf36d5726459eecfe7bd7"
+//    
+//}
 
 enum Constant: String {
     case key = "5dd2b561e08cf36d5726459eecfe7bd7"

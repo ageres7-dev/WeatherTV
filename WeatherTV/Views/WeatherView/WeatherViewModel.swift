@@ -13,7 +13,94 @@ class WeatherViewModel: ObservableObject {
     @Published var currenWeather: CurrentWeather?
     @Published var forecastOneCalAPI: ForecastOneCalAPI?
 
-    let location: LocationManager
+    private let location: LocationManager
+        
+    private var timerUpdateCurrentWeather: Timer?
+    private var timerUpdateForecast: Timer?
+    private var dateFetching = Date()
+    
+    private let timeIntervalFetchCurrentWeather = 900.0
+    private let timeIntervalFetchForecast = 1800.0
+    
+    init() {
+        location = LocationManager.shared
+//        dateFetching = Date()
+//        dataNextLoad = dateFetching.addingTimeInterval(30)
+    }
+    
+    func isEnoughTimeHasPassed() -> Bool {
+        let currentDate = Date()
+        guard  currentDate > dateFetching.addingTimeInterval(30) else {
+            print("Меньше 30 сек", dateFetching, currentDate)
+            
+            return false
+        }
+        print("Прошло больше 30 сек")
+        return true
+    }
+   
+    
+    func startAutoUpdateWeather() {
+        timerUpdateCurrentWeather = Timer.scheduledTimer(withTimeInterval: timeIntervalFetchCurrentWeather, repeats: true) { _ in
+            self.fetchCurrentWeather()
+            print("UpdateCurrentWeather \(self.getCurrentDate())")
+        }
+        
+        timerUpdateForecast = Timer.scheduledTimer(withTimeInterval: timeIntervalFetchForecast, repeats: true) { _ in
+            self.fetchForecast()
+            print("UpdateForecast \(self.getCurrentDate())")
+        }
+    }
+    
+    func actionUpdateButton() {
+        guard isEnoughTimeHasPassed() else { return }
+        fechWeather()
+    }
+    
+    func fechWeather() {
+        dateFetching = Date()
+        fetchForecast()
+        fetchCurrentWeather()
+    }
+    
+    func fetchForecast() {
+//        guard let location = locationManager.location  else { return }
+        
+        
+        let url = URLManager.shared.urlOneCallFrom(
+            latitude: latitude,
+            longitude: longitude
+        )
+        
+        NetworkManager.shared.fetchForecastSevenDays(from: url) { forecast in
+            self.forecastOneCalAPI = forecast
+            print("fetchForecastSevenDays")
+        }
+    }
+    
+   
+    func fetchCurrentWeather() {
+        let url = URLManager.shared.urlCurrentWeatherFrom(
+            latitude: latitude,
+            longitude: longitude
+        )
+        
+        NetworkManager.shared.fetchCurrentWeather(from: url) { currentWeather in
+            self.currenWeather = currentWeather
+            print("fetchCurrentWeather")
+        }
+    }
+    
+    private func getCurrentDate() -> String {
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss E, d MMM y"
+        return dateFormatter.string(from: date)
+    }
+    
+}
+
+extension WeatherViewModel {
     
     var latitude: String {
         guard let coordinate = location.location?.coordinate else { return "" }
@@ -104,67 +191,4 @@ class WeatherViewModel: ObservableObject {
         guard let icon = currenWeather?.weather?.first?.icon else { return "thermometer" }
         return DataManager.shared.convert(iconName: icon)
     }
-    
-    private var timerUpdateCurrentWeather: Timer?
-    private var timerUpdateForecast: Timer?
-    
-    
-    init() {
-        location = LocationManager.shared
-    }
-    
-    
-    func startAutoUpdateWeather() {
-        timerUpdateCurrentWeather = Timer.scheduledTimer(withTimeInterval: 900, repeats: true) { _ in
-            self.fetchCurrentWeather()
-            print("UpdateCurrentWeather \(self.getCurrentDate())")
-        }
-        
-        timerUpdateForecast = Timer.scheduledTimer(withTimeInterval: 3600, repeats: true) { _ in
-            self.fetchForecast()
-            print("UpdateForecast \(self.getCurrentDate())")
-        }
-    }
-    
-    
-    func fechWeather() {
-        fetchForecast()
-        fetchCurrentWeather()
-    }
-    
-    func fetchForecast() {
-//        guard let location = locationManager.location  else { return }
-        
-        
-        let url = URLManager.shared.urlOneCallFrom(
-            latitude: latitude,
-            longitude: longitude
-        )
-        
-        NetworkManager.shared.fetchForecastSevenDays(from: url) { forecast in
-            self.forecastOneCalAPI = forecast
-            print("fetchForecastSevenDays")
-        }
-    }
-    
-   
-    func fetchCurrentWeather() {
-        let url = URLManager.shared.urlCurrentWeatherFrom(
-            latitude: latitude,
-            longitude: longitude
-        )
-        
-        NetworkManager.shared.fetchCurrentWeather(from: url) { currentWeather in
-            self.currenWeather = currentWeather
-            print("fetchCurrentWeather")
-        }
-    }
-    
-    private func getCurrentDate() -> String {
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm:ss E, d MMM y"
-        return dateFormatter.string(from: date)
-    }
-    
 }

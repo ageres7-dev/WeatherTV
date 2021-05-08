@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B61FED026468856000D4552 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 3B61FECF26468856000D4552 /* .gitignore */; };
+		3B61FED226468A56000D4552 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61FED126468A56000D4552 /* API.swift */; };
 		A51698772602652000C3FC26 /* Location Manager???.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51698762602652000C3FC26 /* Location Manager???.swift */; };
 		A51CA0D52638874C00582369 /* FindingLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51CA0D42638874C00582369 /* FindingLocationView.swift */; };
 		A531DFE625F7642F00AB91E1 /* CurrentWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = A531DFE525F7642F00AB91E1 /* CurrentWeather.swift */; };
@@ -55,6 +57,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3B61FECF26468856000D4552 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		3B61FED126468A56000D4552 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		A51698762602652000C3FC26 /* Location Manager???.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location Manager???.swift"; sourceTree = "<group>"; };
 		A51CA0D42638874C00582369 /* FindingLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindingLocationView.swift; sourceTree = "<group>"; };
 		A531DFE525F7642F00AB91E1 /* CurrentWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
@@ -167,6 +171,7 @@
 				A531E00925F88B5F00AB91E1 /* Key API.swift */,
 				A51698762602652000C3FC26 /* Location Manager???.swift */,
 				A548313F2615A87C001E7F76 /* Location Manager.swift */,
+				3B61FED126468A56000D4552 /* API.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -209,6 +214,7 @@
 		A597C23B25F63169002940BF = {
 			isa = PBXGroup;
 			children = (
+				3B61FECF26468856000D4552 /* .gitignore */,
 				A597C24625F63169002940BF /* WeatherTV */,
 				A597C25825F6316B002940BF /* WeatherTVTests */,
 				A597C26325F6316B002940BF /* WeatherTVUITests */,
@@ -379,6 +385,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B61FED026468856000D4552 /* .gitignore in Resources */,
 				A597C24F25F6316B002940BF /* Preview Assets.xcassets in Resources */,
 				A597C24C25F6316B002940BF /* Assets.xcassets in Resources */,
 				A5717ECC261CFF4F00C6FA60 /* city.list.json in Resources */,
@@ -416,6 +423,7 @@
 				A5412A6225FFDCA400B2FE64 /* DayForecastView.swift in Sources */,
 				A531E02925FA8BFD00AB91E1 /* Forecast.swift in Sources */,
 				A5BF6EF6262B634900522AE5 /* SearchView.swift in Sources */,
+				3B61FED226468A56000D4552 /* API.swift in Sources */,
 				A51CA0D52638874C00582369 /* FindingLocationView.swift in Sources */,
 				A5DA9741262C614B00EC34E8 /* SearchController.swift in Sources */,
 				A54831402615A87C001E7F76 /* Location Manager.swift in Sources */,
