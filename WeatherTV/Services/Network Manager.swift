@@ -12,83 +12,36 @@ class NetworkManager {
     
     private init() {}
     
-    func fetchCurrentWeather(from url: String, completion: @escaping (_ weather: CurrentWeather)->()) {
-        guard let weatherURL = URL(string: url) else { return }
-        
-        URLSession.shared.dataTask(with: weatherURL) { (data, _, error) in
-            if let error = error {
-                print(error)
-                return
-            }
-            guard let data = data else { return }
-            
-            do {
-                let decode = JSONDecoder()
-                let weather = try decode.decode(CurrentWeather.self, from: data)
-                
-                DispatchQueue.main.async {
-                    completion(weather)
-                }
-            } catch let error {
-                print("CurrentWeather Error serialization json", error.localizedDescription)
-            }
-        }.resume()
+    func fetchCurrentWeather(from url: URL?, completion: @escaping (_ weather: CurrentWeather)->()) {
+        guard let url = url else { return }
+        print(url)
+        fetchObject(CurrentWeather.self, from: url) { weather in
+            completion(weather)
+        }
 
     }
     
     
-    func fetchForecast(from url: String, completion: @escaping (_ forecast: Forecast)->()) {
-        guard let forecastURL = URL(string: url) else { return }
+    func fetchForecast(from url: URL?, completion: @escaping (_ forecast: Forecast)->()) {
+        guard let url = url else { return }
         
-        URLSession.shared.dataTask(with: forecastURL) { (data, _, error) in
-            if let error = error {
-                print(error)
-                return
-            }
-            guard let data = data else { return }
-            
-            do {
-                let decode = JSONDecoder()
-                let forecast = try decode.decode(Forecast.self, from: data)
-                
-                DispatchQueue.main.async {
-                    completion(forecast)
-                }
-            } catch let error {
-                print("Forecast Error serialization json", error.localizedDescription)
-                print(data)
-            }
-        }.resume()
+        
+        fetchObject(Forecast.self, from: url) { forecast in
+            completion(forecast)
+        }
     
     }
     
     
-    func fetchForecastSevenDays(from url: String, completion: @escaping (_ forecast: ForecastOneCalAPI)->()) {
-        guard let forecastURL = URL(string: url) else { return }
+    func fetchForecastSevenDays(from url: URL?, completion: @escaping (_ forecast: ForecastOneCalAPI)->()) {
+        guard let url = url else { return }
         
-        URLSession.shared.dataTask(with: forecastURL) { (data, _, error) in
-            if let error = error {
-                print(error)
-                return
-            }
-            guard let data = data else { return }
-            
-            do {
-                let decode = JSONDecoder()
-                decode.keyDecodingStrategy = .convertFromSnakeCase
-                decode.dateDecodingStrategy = .secondsSince1970
-                let forecast = try decode.decode(ForecastOneCalAPI.self, from: data)
-                
-                DispatchQueue.main.async {
-                    completion(forecast)
-                }
-            } catch let error {
-                print("Forecast Error serialization json", error.localizedDescription)
-                print(data)
-            }
-        }.resume()
-    
+        fetchObject(ForecastOneCalAPI.self, from: url) { forecast in
+            completion(forecast)
+        }
     }
+    
+    
     func fetchCitys(complition: @escaping ([City]) -> Void) {
         let url = Bundle.main.url(forResource: "city.list.json", withExtension: nil)
         fetchObject([City].self, from: url) { citys in
@@ -96,12 +49,7 @@ class NetworkManager {
         }
     }
     
-//    func urlFrom(local file: String) -> URL? {
-//        guard let url = self.url(forResource: file, withExtension: nil) else {
-//                   fatalError("Failed to locate \(file) in bundle.")
-//               }
-//    }
-    
+    /// Сериалзация json файла полученного по url
     private func fetchObject<T: Decodable>(_ type: T.Type, from url: URL?, completion: @escaping (_ object: T)->()) {
         
         guard let url = url else { return }

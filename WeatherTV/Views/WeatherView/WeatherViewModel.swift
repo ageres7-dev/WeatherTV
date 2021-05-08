@@ -19,8 +19,9 @@ class WeatherViewModel: ObservableObject {
     private var timerUpdateForecast: Timer?
     private var dateFetching = Date()
     
-    private let timeIntervalFetchCurrentWeather = 900.0
-    private let timeIntervalFetchForecast = 1800.0
+    private let timeIntervalFetchCurrentWeather: Double = 10 * 60
+    private let timeIntervalFetchForecast: Double = 30 * 60
+    private let manualUpdateInterval: Double = 0.5 * 60
     
     init() {
         location = LocationManager.shared
@@ -30,7 +31,7 @@ class WeatherViewModel: ObservableObject {
     
     func isEnoughTimeHasPassed() -> Bool {
         let currentDate = Date()
-        guard  currentDate > dateFetching.addingTimeInterval(30) else {
+        guard  currentDate > dateFetching.addingTimeInterval(manualUpdateInterval) else {
             print("Меньше 30 сек", dateFetching, currentDate)
             
             return false
@@ -54,19 +55,16 @@ class WeatherViewModel: ObservableObject {
     
     func actionUpdateButton() {
         guard isEnoughTimeHasPassed() else { return }
-        fechWeather()
+        fetchWeather()
     }
     
-    func fechWeather() {
+    func fetchWeather() {
         dateFetching = Date()
         fetchForecast()
         fetchCurrentWeather()
     }
     
     func fetchForecast() {
-//        guard let location = locationManager.location  else { return }
-        
-        
         let url = URLManager.shared.urlOneCallFrom(
             latitude: latitude,
             longitude: longitude
@@ -114,34 +112,30 @@ extension WeatherViewModel {
     
     
     var todayForecasts: String {
-        var todayForecasts = ""
+        guard let dayTemp = dailyForecasts.first?.temp?.day,
+              let nightTemp = dailyForecasts.first?.temp?.night else { return "" }
         
-        guard var daily = forecastOneCalAPI?.daily else { return  "" }
-        
-        daily.sort {
-            guard let first = $0.dt, let second = $1.dt else { return false }
-            return first < second
-        }
-        
-        
-        if let dayTemp = daily.first?.temp?.day,
-           let nightTemp = daily.first?.temp?.night {
-            todayForecasts = "\(lround(dayTemp)) / \(lround(nightTemp))ºС"
-        }
-        return todayForecasts
-        
+        return "\(lround(dayTemp)) / \(lround(nightTemp))ºС"
     }
     
     var dailyForecasts: [Daily] {
         guard var daily = forecastOneCalAPI?.daily else { return [] }
+        guard !daily.isEmpty else { return [] }
         
         daily.sort {
             guard let first = $0.dt, let second = $1.dt else { return false }
             return first < second
         }
-        daily.remove(at: 0)
         return daily
     }
+    
+    var forecastFromTomorrow: [Daily] {
+        var forecastFromTomorrow = dailyForecasts
+        guard !forecastFromTomorrow.isEmpty else { return [] }
+        forecastFromTomorrow.removeFirst()
+        return forecastFromTomorrow
+    }
+    
     
     var locationName: String? {
         currenWeather?.name

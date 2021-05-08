@@ -74,7 +74,7 @@ struct WeatherView: View {
             
             Spacer()
             LazyHStack {
-                ForEach((viewModel.dailyForecasts), id: \.self) { day in
+                ForEach((viewModel.forecastFromTomorrow), id: \.self) { day in
                     DayForecastView(viewModel: DayForecastViewModel(daily: day))
                 }
             }
@@ -83,7 +83,7 @@ struct WeatherView: View {
 //            Spacer()
         }
         .onAppear {
-            viewModel.fechWeather()
+            viewModel.fetchWeather()
             viewModel.startAutoUpdateWeather()
         }
     }

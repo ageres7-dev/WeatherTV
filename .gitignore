@@ -93,4 +93,6 @@ iOSInjectionProject/
 #Custom files project
 #
 WeatherTV/Services/API.swift
-
+WeatherTV/WeatherTV/Services/API.swift/Services/API.swift
+city.list.json
+WeatherTV/city.list.json
