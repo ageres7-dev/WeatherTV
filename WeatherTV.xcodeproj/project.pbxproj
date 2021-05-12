@@ -168,7 +168,6 @@
 				A531DFF925F7F6BB00AB91E1 /* Network Manager.swift */,
 				A5E9FCC725FE891E001D3317 /* Data Manager.swift */,
 				A531E00925F88B5F00AB91E1 /* URLManager.swift */,
-				A51698762602652000C3FC26 /* Location Manager???.swift */,
 				A548313F2615A87C001E7F76 /* Location Manager.swift */,
 				3B61FED126468A56000D4552 /* API.swift */,
 			);
@@ -205,6 +204,7 @@
 		A5412A7525FFF76E00B2FE64 /* trash */ = {
 			isa = PBXGroup;
 			children = (
+				A51698762602652000C3FC26 /* Location Manager???.swift */,
 				A5E9FCB625FE86E1001D3317 /* ForecastSevenDaysView */,
 				A531E02D25FA927500AB91E1 /* ForecastView */,
 			);

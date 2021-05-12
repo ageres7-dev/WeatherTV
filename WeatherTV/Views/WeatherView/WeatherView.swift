@@ -46,6 +46,7 @@ struct WeatherView: View {
                     
                     Text(viewModel.description)
                         .font(.title3)
+                        .multilineTextAlignment(.center)
                         .frame(width: 340)
                 }
                 Spacer()

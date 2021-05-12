@@ -14,6 +14,7 @@ struct ForecastOneCalAPI: Codable {
     let lat, lon: Double?
     let timezone: String?
     let timezoneOffset: Date?
+    let current: Current?
     let daily: [Daily]?
 
 //    enum CodingKeys: String, CodingKey {
@@ -75,3 +76,17 @@ struct Temp: Codable, Hashable{
 //        case icon
 //    }
 //}
+
+
+struct Current: Codable, Hashable {
+    let dt, sunrise, sunset: Date?
+    let temp: Double?
+    let feelsLike: Double?
+    let pressure, humidity: Double?
+    let dewPoint: Double?
+    let uvi, clouds, visibility: Double?
+    let windSpeed: Double?
+    let windDeg: Double?
+    let windGust: Double?
+    let weather: [Weather]?
+}

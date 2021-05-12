@@ -14,6 +14,7 @@ class URLManager {
     
     func urlOneCallFrom(latitude: String, longitude: String) -> URL? {
         let queryItems = [
+            URLQueryItem(name: "exclude", value: "minutely,hourly,alerts"),
             URLQueryItem(name: "lat", value: latitude),
             URLQueryItem(name: "lon", value: longitude),
             URLQueryItem(name: "appid", value: API.key.rawValue),
@@ -43,6 +44,9 @@ class URLManager {
     private enum Constant: String {
         case oneCallURL = "https://api.openweathermap.org/data/2.5/onecall"
         case currentWeatherURL = "https://api.openweathermap.org/data/2.5/weather"
+        
+//        case oneCallURL = "https://api.openweathermap.org/da/2.5/onecall"
+//        case currentWeatherURL = "https://api.openweathermap.org/da/2.5/weather"
     }
     
 }

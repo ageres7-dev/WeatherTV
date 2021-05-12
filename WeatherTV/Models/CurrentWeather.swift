@@ -51,17 +51,17 @@ struct Main: Decodable, Hashable  {
     let seaLevel: Double?
     let grndLevel: Double?
 
-    enum CodingKeys: String, CodingKey {
-        case temp
-        case feelsLike = "feels_like"
-        case pressure
-        case humidity
-        case tempMin = "temp_min"
-        case tempMax = "temp_max"
-        case seaLevel = "sea_level"
-        case grndLevel = "grnd_level"
+//    enum CodingKeys: String, CodingKey {
+//        case temp
+//        case feelsLike = "feels_like"
+//        case pressure
+//        case humidity
+//        case tempMin = "temp_min"
+//        case tempMax = "temp_max"
+//        case seaLevel = "sea_level"
+//        case grndLevel = "grnd_level"
         
-    }
+//    }
 }
 
 // MARK: - Wind

@@ -25,8 +25,6 @@ class WeatherViewModel: ObservableObject {
     
     init() {
         location = LocationManager.shared
-//        dateFetching = Date()
-//        dataNextLoad = dateFetching.addingTimeInterval(30)
     }
     
     func isEnoughTimeHasPassed() -> Bool {
@@ -45,12 +43,15 @@ class WeatherViewModel: ObservableObject {
         timerUpdateCurrentWeather = Timer.scheduledTimer(withTimeInterval: timeIntervalFetchCurrentWeather, repeats: true) { _ in
             self.fetchCurrentWeather()
             print("UpdateCurrentWeather \(self.getCurrentDate())")
+            self.dateFetching = Date()
         }
         
         timerUpdateForecast = Timer.scheduledTimer(withTimeInterval: timeIntervalFetchForecast, repeats: true) { _ in
             self.fetchForecast()
             print("UpdateForecast \(self.getCurrentDate())")
+            self.dateFetching = Date()
         }
+        
     }
     
     func actionUpdateButton() {
@@ -99,6 +100,9 @@ class WeatherViewModel: ObservableObject {
 }
 
 extension WeatherViewModel {
+    var placemark: String {
+        location.placemark?.locality ?? ""
+    }
     
     var latitude: String {
         guard let coordinate = location.location?.coordinate else { return "" }
@@ -145,20 +149,23 @@ extension WeatherViewModel {
     
     
     var locationName: String? {
-        currentWeather?.name
-    }
-    /*
-    var locationName: String {
-        if let city = currentWeather?.name,
-           let country = currentWeather?.sys?.country {
-            return "\(city), \(country)"
+        if let location = location.placemark?.locality {
+            return location
+        } else if let locationFromCurrentWeather = currentWeather?.name {
+            return "\(locationFromCurrentWeather), \(currentWeather?.sys?.country ?? "")"
         } else {
-            return ""
+            return nil
         }
     }
-    */
+
     var description: String {
-        currentWeather?.weather?.first?.description ?? "-"
+        var description = ""
+        if let descriptionCurrentWeather = currentWeather?.weather?.first?.description {
+            description = descriptionCurrentWeather
+        } else if let descriptionOneCall = forecastOneCalAPI?.current?.weather?.first?.description {
+            description = descriptionOneCall
+        }
+        return description
     }
     
     var main: String {
@@ -166,8 +173,14 @@ extension WeatherViewModel {
     }
     
     var temp: String? {
-        guard let temp = currentWeather?.main?.temp else { return nil }
-        return " \(lround(temp))º"
+        var temperature: String?
+        
+        if let temp = currentWeather?.main?.temp {
+            temperature = " \(lround(temp))º"
+        } else if let temp = forecastOneCalAPI?.current?.temp {
+            temperature = " \(lround(temp))º"
+        }
+        return temperature
     }
     
     var humidity: String {
@@ -189,8 +202,15 @@ extension WeatherViewModel {
     }
     
     var icon: String {
-        guard let icon = currentWeather?.weather?.first?.icon else { return "thermometer" }
-        return DataManager.shared.convert(iconName: icon)
+        var iconName: String?
+        
+        if let icon = currentWeather?.weather?.first?.icon {
+            iconName = icon
+        } else if let icon = forecastOneCalAPI?.current?.weather?.first?.icon {
+            iconName = icon
+        }
+        
+        return DataManager.shared.convert(iconName: iconName)
     }
     
     var sunsetTime: String? {
