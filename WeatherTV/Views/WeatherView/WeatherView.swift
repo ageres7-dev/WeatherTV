@@ -42,7 +42,7 @@ struct WeatherView: View {
                     Image(systemName: viewModel.icon)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 240, height: 240)
+                        .frame(width: 230, height: 230)
                     
                     Text(viewModel.description)
                         .font(.title3)
@@ -54,7 +54,7 @@ struct WeatherView: View {
                 if let temp = viewModel.temp {
                     VStack {
                         Text(temp)
-                            .font(.system(size: 160))
+                            .font(.system(size: 180))
                         Text(viewModel.todayForecasts)
                         Text(viewModel.todayDate)
                     }
