@@ -1,14 +1,14 @@
 {
   "images" : [
     {
-      "scale" : "1x",
+      "filename" : "iconSun1@x1.png",
       "idiom" : "tv",
-      "filename" : "iconSun.png"
+      "scale" : "1x"
     },
     {
+      "filename" : "iconSun@x2.png",
       "idiom" : "tv",
-      "scale" : "2x",
-      "filename" : "iconSun@2x.png"
+      "scale" : "2x"
     }
   ],
   "info" : {
