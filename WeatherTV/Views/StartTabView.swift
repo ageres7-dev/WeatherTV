@@ -45,16 +45,15 @@ struct StartTabView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .opacity(0.8)
                                 .frame(height: 60)
-//                                .offset(x: -90, y: 0)
                                 .shadow(radius: 30)
+                            
                             Group {
                                 Text("Data source provider")
                                 Text("openweathermap.org")
                             }
                             .font(.system(size: 16))
-//                            .offset(x: -90, y: 0)
-                            
-                        }.offset(x: -90, y: 0)
+                        }
+                        .offset(x: -90, y: 0)
                         
                         Spacer()
                     }

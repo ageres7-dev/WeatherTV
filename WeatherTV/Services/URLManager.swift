@@ -44,9 +44,6 @@ class URLManager {
     private enum Constant: String {
         case oneCallURL = "https://api.openweathermap.org/data/2.5/onecall"
         case currentWeatherURL = "https://api.openweathermap.org/data/2.5/weather"
-        
-//        case oneCallURL = "https://api.openweathermap.org/da/2.5/onecall"
-//        case currentWeatherURL = "https://api.openweathermap.org/da/2.5/weather"
     }
     
 }
