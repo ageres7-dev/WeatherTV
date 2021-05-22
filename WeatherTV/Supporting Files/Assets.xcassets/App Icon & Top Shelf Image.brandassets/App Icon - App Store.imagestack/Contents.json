@@ -1,4 +1,8 @@
 {
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
   "layers" : [
     {
       "filename" : "iconCloud.imagestacklayer"
@@ -7,17 +11,13 @@
       "filename" : "iconSun.imagestacklayer"
     },
     {
-      "filename" : "iconBackground.imagestacklayer"
+      "filename" : "iconBackground@x1.imagestacklayer"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
-  },
   "properties" : {
     "canvasSize" : {
-      "width" : 1280,
-      "height" : 768
+      "height" : 768,
+      "width" : 1280
     }
   }
 }
