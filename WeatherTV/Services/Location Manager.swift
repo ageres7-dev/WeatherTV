@@ -21,11 +21,15 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     private let manager = CLLocationManager()
     
+    func requestWhenInUseAuthorization() {
+        manager.requestWhenInUseAuthorization()
+        
+    }
     
     override private init() {
         super.init()
-        manager.requestWhenInUseAuthorization()
         manager.delegate = self
+        manager.requestWhenInUseAuthorization()
         manager.requestLocation()
     }
     
@@ -64,7 +68,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         geocode()
         
     }
-    
     
     internal func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Failed to find location: \(error.localizedDescription)")

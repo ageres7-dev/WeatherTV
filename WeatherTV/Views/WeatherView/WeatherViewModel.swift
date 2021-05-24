@@ -12,6 +12,7 @@ class WeatherViewModel: ObservableObject {
     
     @Published var currentWeather: CurrentWeather?
     @Published var forecastOneCalAPI: ForecastOneCalAPI?
+    @Published var conditionCode: Int?
 
     private let location: LocationManager
         
@@ -86,6 +87,7 @@ class WeatherViewModel: ObservableObject {
         
         NetworkManager.shared.fetchCurrentWeather(from: url) { currentWeather in
             self.currentWeather = currentWeather
+            self.conditionCode = currentWeather.weather?.first?.id
             print("fetchCurrentWeather")
         }
     }
@@ -200,6 +202,9 @@ extension WeatherViewModel {
         guard let pressure = currentWeather?.main?.pressure else { return "" }
         return "Pressure: \(lround(pressure)) hPa"
     }
+    
+
+    
     
     var icon: String {
         var iconName: String?

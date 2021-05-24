@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3B61FED026468856000D4552 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 3B61FECF26468856000D4552 /* .gitignore */; };
 		3B61FED226468A56000D4552 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61FED126468A56000D4552 /* API.swift */; };
+		3BF6BBD2265C13C1006C9456 /* WeatherBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF6BBD1265C13C1006C9456 /* WeatherBackgroundView.swift */; };
+		3BF6BBD5265C1FC9006C9456 /* Ext + Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF6BBD4265C1FC9006C9456 /* Ext + Color.swift */; };
 		A51698772602652000C3FC26 /* Location Manager???.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51698762602652000C3FC26 /* Location Manager???.swift */; };
 		A51CA0D52638874C00582369 /* FindingLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51CA0D42638874C00582369 /* FindingLocationView.swift */; };
 		A531DFE625F7642F00AB91E1 /* CurrentWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = A531DFE525F7642F00AB91E1 /* CurrentWeather.swift */; };
@@ -58,6 +60,8 @@
 /* Begin PBXFileReference section */
 		3B61FECF26468856000D4552 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		3B61FED126468A56000D4552 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		3BF6BBD1265C13C1006C9456 /* WeatherBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherBackgroundView.swift; sourceTree = "<group>"; };
+		3BF6BBD4265C1FC9006C9456 /* Ext + Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext + Color.swift"; sourceTree = "<group>"; };
 		A51698762602652000C3FC26 /* Location Manager???.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location Manager???.swift"; sourceTree = "<group>"; };
 		A51CA0D42638874C00582369 /* FindingLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindingLocationView.swift; sourceTree = "<group>"; };
 		A531DFE525F7642F00AB91E1 /* CurrentWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
@@ -118,6 +122,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3BF6BBD3265C1FA9006C9456 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3BF6BBD4265C1FC9006C9456 /* Ext + Color.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		A51CA0D32638870500582369 /* FindingLocationView */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,6 +159,7 @@
 				A5BF6EF5262B634900522AE5 /* SearchView.swift */,
 				A5DA9740262C614B00EC34E8 /* SearchController.swift */,
 				A5EEA13B262F6FBE0002EF8D /* serash.swift */,
+				3BF6BBD1265C13C1006C9456 /* WeatherBackgroundView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -233,6 +246,7 @@
 		A597C24625F63169002940BF /* WeatherTV */ = {
 			isa = PBXGroup;
 			children = (
+				3BF6BBD3265C1FA9006C9456 /* Extensions */,
 				A5412A7525FFF76E00B2FE64 /* trash */,
 				A531DFF825F7F69800AB91E1 /* Services */,
 				A531DFF325F7F41600AB91E1 /* Supporting Files */,
@@ -412,6 +426,7 @@
 				A5E9FCC825FE891E001D3317 /* Data Manager.swift in Sources */,
 				A531E03425FA92C500AB91E1 /* ForecastViewModel.swift in Sources */,
 				A531DFE625F7642F00AB91E1 /* CurrentWeather.swift in Sources */,
+				3BF6BBD2265C13C1006C9456 /* WeatherBackgroundView.swift in Sources */,
 				A540D1C52614F17700B477B2 /* SettingsView.swift in Sources */,
 				A5E9FCB825FE871C001D3317 /* ForecastSevenDaysView.swift in Sources */,
 				A531E01B25F93FBB00AB91E1 /* WeatherViewModel.swift in Sources */,
@@ -421,6 +436,7 @@
 				A5BF6EF6262B634900522AE5 /* SearchView.swift in Sources */,
 				3B61FED226468A56000D4552 /* API.swift in Sources */,
 				A51CA0D52638874C00582369 /* FindingLocationView.swift in Sources */,
+				3BF6BBD5265C1FC9006C9456 /* Ext + Color.swift in Sources */,
 				A5DA9741262C614B00EC34E8 /* SearchController.swift in Sources */,
 				A54831402615A87C001E7F76 /* Location Manager.swift in Sources */,
 				A5E9FCAF25FE81E3001D3317 /* ForecastOneCalAPI.swift in Sources */,

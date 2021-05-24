@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct FindingLocationView: View {
-//    @StateObject private var viewModel = FindingLocationViewModel()
-    
     @EnvironmentObject var location: LocationManager
     
     var body: some View {
@@ -17,10 +15,15 @@ struct FindingLocationView: View {
             if isShowAllowAccess {
                 
                 VStack {
-                    Text("Please allow access to the location")
+//                    Text("Please allow access to the location")
+                    Text("Turning on location services allows us to show you local weather.")
                         .font(.title2)
                     Button("Open in settings") {
                         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+                    }
+                    
+                    Button("location") {
+                        location.requestWhenInUseAuthorization()
                     }
                 }
                 
@@ -46,7 +49,7 @@ extension FindingLocationView {
     }
     
     var isFindingCurrentLocation: Bool {
-        location.location == nil // && isShowAllowAccess
+        location.location == nil && !isShowAllowAccess
     }
 }
 
