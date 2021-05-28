@@ -16,15 +16,13 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         willSet { objectWillChange.send() }
     }
     
+    @Published var placemark: CLPlacemark? {
+        willSet { objectWillChange.send() }
+    }
     
     static let shared = LocationManager()
-    
     private let manager = CLLocationManager()
-    
-    func requestWhenInUseAuthorization() {
-        manager.requestWhenInUseAuthorization()
-        
-    }
+    private let geocoder = CLGeocoder()
     
     override private init() {
         super.init()
@@ -33,13 +31,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         manager.requestLocation()
     }
     
-    
-    private let geocoder = CLGeocoder()
-    
-    // Rest of the class
-    
-    @Published var placemark: CLPlacemark? {
-        willSet { objectWillChange.send() }
+    func requestWhenInUseAuthorization() {
+        manager.requestWhenInUseAuthorization()
     }
     
     private func geocode() {
@@ -55,18 +48,14 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
-    
-    
     internal func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         status = manager.authorizationStatus
-        
     }
     
     internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.first else { return }
         self.location = location
         geocode()
-        
     }
     
     internal func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
