@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import CoreLocation
+//import CoreLocation
 
 class WeatherViewModel: ObservableObject {
     
@@ -21,7 +21,7 @@ class WeatherViewModel: ObservableObject {
     private var dateFetching = Date()
     
     private let timeIntervalFetchCurrentWeather: Double = 10 * 60
-    private let timeIntervalFetchForecast: Double = 30 * 60
+    private let timeIntervalFetchForecast: Double = 120 * 60
     private let manualUpdateInterval: Double = 0.5 * 60
     
     init() {
@@ -78,7 +78,6 @@ class WeatherViewModel: ObservableObject {
         }
     }
     
-   
     func fetchCurrentWeather() {
         let url = URLManager.shared.urlCurrentWeatherFrom(
             latitude: latitude,
@@ -222,7 +221,6 @@ extension WeatherViewModel {
         guard let date = currentWeather?.sys?.sunset else { return nil }
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
-//        return formatter.string(from: date)
         return "Sunset time: \(formatter.string(from: date))"
     }
     
@@ -230,8 +228,10 @@ extension WeatherViewModel {
         guard let date = currentWeather?.sys?.sunrise else { return nil }
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
-//        return formatter.string(from: date)
-        
         return "Sunrise time: \(formatter.string(from: date))"
+    }
+    
+    var weatherConditionID: Int? {
+        currentWeather?.weather?.first?.id
     }
 }
