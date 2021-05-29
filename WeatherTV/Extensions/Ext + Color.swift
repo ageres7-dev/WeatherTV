@@ -14,3 +14,14 @@ extension Color {
     static let lightYellow = Color(red: 224/255, green: 214/255, blue: 133/255)
     
 }
+
+
+extension String {
+    func capitalizingFirstLetter() -> String {
+      return prefix(1).uppercased() + self.lowercased().dropFirst()
+    }
+
+    mutating func capitalizeFirstLetter() {
+      self = self.capitalizingFirstLetter()
+    }
+}

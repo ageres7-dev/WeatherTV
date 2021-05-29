@@ -157,7 +157,7 @@ extension WeatherViewModel {
             return nil
         }
     }
-
+    
     var description: String {
         var description = ""
         if let descriptionCurrentWeather = currentWeather?.weather?.first?.description {
@@ -165,6 +165,7 @@ extension WeatherViewModel {
         } else if let descriptionOneCall = forecastOneCalAPI?.current?.weather?.first?.description {
             description = descriptionOneCall
         }
+        description.capitalizeFirstLetter()
         return description
     }
     

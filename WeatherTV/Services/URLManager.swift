@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 class URLManager {
     static let shared = URLManager()
     private init() {}
