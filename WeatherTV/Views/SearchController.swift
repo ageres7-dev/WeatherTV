@@ -16,7 +16,12 @@ struct SearchController: UIViewControllerRepresentable {
     UINavigationController {
         let controller = UISearchController(searchResultsController: context.coordinator)
         controller.searchResultsUpdater = context.coordinator
+        
+     //   UISearchBar
         return UINavigationController(rootViewController: UISearchContainerViewController(searchController: controller))
+        
+        
+        
     }
 
     func updateUIViewController(_ uiViewController: UINavigationController, context: UIViewControllerRepresentableContext<SearchController>) {

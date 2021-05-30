@@ -9,26 +9,35 @@ import SwiftUI
 
 struct SearchView: View {
     
-    @State private var search = ""
+    @ObservedObject var state: SearchState
+    
     @State private var citys: [City] = []
     
     var body: some View {
         VStack(spacing: 0) {
-            SearchController(searchString: $search)
+//            Button("Get") {
+//                NetworkManager.shared.fetchCitys { citys in
+//                    self.citys = citys
+//                }
+//            }
+            
             ScrollView(.vertical, showsIndicators: false) {
-                
-                Button("Get") {
-                    NetworkManager.shared.fetchCitys { citys in
-                        self.citys = citys
-                    }
-                }
-                
-                
                 LazyVStack {
-                    ForEach(citys, id: \.self) { city in
-                        Button(city.name ?? "-", action: {} )
+  
+                    ForEach(citys.filter({
+                        guard let cityName = $0.name else { return false}
+                        return cityName.lowercased().contains(state.text.lowercased())
+                    }), id: \.self) { city in
+                        Button(city.name ?? "-", action: { print(city.country ?? "")} )
                     }
+                    
                 }
+            }
+            
+        }
+        .onAppear {
+            NetworkManager.shared.fetchCitys { citys in
+                self.citys = citys
             }
         }
     }

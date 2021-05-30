@@ -95,6 +95,9 @@ struct WeatherView: View {
                 .offset(x: 0, y: -60)
             }
             .onAppear {
+                // нужно переделать,
+                // необходимо включить ограничения на обновления
+                // сейчас обновляется при каждом появлении экрана
                 viewModel.fetchWeather()
                 viewModel.startAutoUpdateWeather()
             }
