@@ -11,7 +11,6 @@ import Foundation
 struct CurrentWeather: Decodable, Hashable {
     let coord: Coord?
     let weather: [Weather]?
-//    let base: String?
     let main: Main?
     let visibility: Int? //Видимость, метр
     let wind: Wind?
@@ -23,7 +22,6 @@ struct CurrentWeather: Decodable, Hashable {
     let timezone: Int? //Сдвиг в секундах от UTC
     let id: Int?
     let name: String?
-//        let cod: Int?
 }
 
 // MARK: - Coord
@@ -50,18 +48,6 @@ struct Main: Decodable, Hashable  {
     let tempMax: Double?
     let seaLevel: Double?
     let grndLevel: Double?
-
-//    enum CodingKeys: String, CodingKey {
-//        case temp
-//        case feelsLike = "feels_like"
-//        case pressure
-//        case humidity
-//        case tempMin = "temp_min"
-//        case tempMax = "temp_max"
-//        case seaLevel = "sea_level"
-//        case grndLevel = "grnd_level"
-        
-//    }
 }
 
 // MARK: - Wind
@@ -99,8 +85,6 @@ struct Snow: Decodable, Hashable {
 
 // MARK: - Sys
 struct Sys: Decodable, Hashable {
-//    let type, id: Int?
-//    let message: Double?
     let country: String?
     let sunrise: Date?
     let sunset: Date?

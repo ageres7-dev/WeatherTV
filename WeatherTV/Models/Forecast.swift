@@ -19,7 +19,6 @@ struct Forecast: Decodable, Hashable {
 }
 // MARK: - List
 struct List: Decodable, Hashable {
-//    let id: Int
     let dt: Int?
     let main: Main?
     let weather: [Weather]?

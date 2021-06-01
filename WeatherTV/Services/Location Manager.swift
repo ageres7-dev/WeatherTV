@@ -23,7 +23,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     static let shared = LocationManager()
     private let manager = CLLocationManager()
     private let geocoder = CLGeocoder()
-    
+    private let defaultLocale = Locale.init(identifier: "en_US")
     override private init() {
         super.init()
         manager.delegate = self
@@ -37,14 +37,20 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     private func geocode() {
         guard let location = self.location else { return }
-        let usLocale = Locale.init(identifier: "en_US")
-        
-        geocoder.reverseGeocodeLocation(location, preferredLocale: usLocale) { (places, error) in
+    
+        geocoder.reverseGeocodeLocation(location, preferredLocale: defaultLocale) { (places, error) in
             if error == nil {
                 self.placemark = places?[0]
             } else {
                 self.placemark = nil
             }
+        }
+    }
+    
+    func findLocation(from string: String, completion: @escaping ([CLPlacemark]?) -> Void) {
+        
+        geocoder.geocodeAddressString(string, in: nil, preferredLocale: defaultLocale) {  placemarks, _ in
+            completion(placemarks)
         }
     }
     

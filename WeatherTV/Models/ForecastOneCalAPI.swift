@@ -16,17 +16,10 @@ struct ForecastOneCalAPI: Codable {
     let timezoneOffset: Date?
     let current: Current?
     let daily: [Daily]?
-
-//    enum CodingKeys: String, CodingKey {
-//        case lat, lon, timezone
-//        case timezoneOffset = "timezone_offset"
-//        case daily
-//    }
 }
 
 // MARK: - Daily
 struct Daily: Codable, Hashable {
-//    var id = UUID()
     let dt: Date?
     let sunrise: Date?
     let sunset: Date?
@@ -42,16 +35,6 @@ struct Daily: Codable, Hashable {
     let pop: Double?
     let uvi: Double?
     let snow: Double?
-
-//    enum CodingKeys: String, CodingKey {
-//        case dt, sunrise, sunset, temp
-//        case feelsLike = "feels_like"
-//        case pressure, humidity
-//        case dewPoint = "dew_point"
-//        case windSpeed = "wind_speed"
-//        case windDeg = "wind_deg"
-//        case weather, clouds, pop, uvi, snow
-//    }
 }
 
 // MARK: - FeelsLike
@@ -64,19 +47,6 @@ struct Temp: Codable, Hashable{
     let day, min, max, night: Double?
     let eve, morn: Double?
 }
-
-//// MARK: - Weather
-//struct Weather: Codable {
-//    let id: Int?
-//    let main, weatherDescription, icon: String?
-//
-//    enum CodingKeys: String, CodingKey {
-//        case id, main
-//        case weatherDescription = "description"
-//        case icon
-//    }
-//}
-
 
 struct Current: Codable, Hashable {
     let dt, sunrise, sunset: Date?

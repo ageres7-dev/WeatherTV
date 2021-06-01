@@ -21,10 +21,6 @@ struct FindingLocationView: View {
                     Button("Open in settings") {
                         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
                     }
-                    
-                    Button("location") {
-                        location.requestWhenInUseAuthorization()
-                    }
                 }
                 
                 

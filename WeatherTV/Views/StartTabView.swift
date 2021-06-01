@@ -20,7 +20,7 @@ struct StartTabView: View {
 
 //                    TestingSearchView()
                         PageView(SearchView(state: state), state: state)
-                        
+//                    SearchView(state: state)
                         .tabItem { Image(systemName: "magnifyingglass") }
                 }
                 .ignoresSafeArea(.all, edges: .top)

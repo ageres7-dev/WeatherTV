@@ -54,22 +54,24 @@ struct PageViewController: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ searchContainer: UINavigationController, context: Context) {
-        print("Update Page Search Controller")
+//        print("Update Page Search Controller")
         
         // Add horizontal constraint uiKBfv.left = super.left - 90 to
         // searchContainer.children[0] as? UISearchContainerViewController)?.searchController.view.constraints
-        
-        if searchContainer.children.count > 0,
-           let searchController = (searchContainer.children[0] as? UISearchContainerViewController)?.searchController,
-           let searchControllerView = searchController.view,
-           searchController.children.count > 1,
-           let uiKBFocusView = searchController.children[1].view,
-           !searchControllerView.constraints.reduce(false, {$0 || ($1.firstAttribute == NSLayoutConstraint.Attribute.centerX) }){
             
-            let horizontalConstraint = NSLayoutConstraint(item: uiKBFocusView, attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, toItem: searchControllerView, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1, constant: 0)
-            
-            searchControllerView.addConstraints([horizontalConstraint])
-        }
+//        if searchContainer.children.count > 0,
+//           let searchController = (searchContainer.children[0] as? UISearchContainerViewController)?.searchController,
+//           let searchControllerView = searchController.view,
+//           searchController.children.count > 1,
+//           let uiKBFocusView = searchController.children[1].view,
+//           !searchControllerView.constraints.reduce(false, {$0 || ($1.firstAttribute == NSLayoutConstraint.Attribute.centerX) }){
+//
+//            let horizontalConstraint = NSLayoutConstraint(item: uiKBFocusView, attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, toItem: searchControllerView, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1, constant: 0)
+//
+//            searchControllerView.addConstraints([horizontalConstraint])
+//            
+//        }
+         
     }
 }
 
