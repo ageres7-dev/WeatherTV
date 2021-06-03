@@ -8,29 +8,31 @@
 import SwiftUI
 
 struct StartTabView: View {
+    @State private var selection = 0
     @ObservedObject var state = SearchState()
     var body: some View {
         NavigationView {
-        ZStack {
-                TabView {
-                    FindingLocationView()
+            ZStack {
+                TabView(selection: $selection) {
+                    SearchWrapper(SearchView(state: state), state: state)
+                        .tabItem { Image(systemName: "magnifyingglass") }
+                        .tag(0)
+                    
+                    FindingLocationView(selection: $selection)
                         .tabItem {
                             Label("Local Weather", systemImage: "location")
                         }
-
-//                    TestingSearchView()
-                        PageView(SearchView(state: state), state: state)
-//                    SearchView(state: state)
-                        .tabItem { Image(systemName: "magnifyingglass") }
+                        .tag(1)
+                    
+                    
                 }
                 .ignoresSafeArea(.all, edges: .top)
             }
-
+            
             LogoDataProvider()
         }
     }
 }
-
 
 
 struct StartTabView_Previews: PreviewProvider {

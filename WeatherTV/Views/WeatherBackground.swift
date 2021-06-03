@@ -72,7 +72,7 @@ struct WeatherBackground: View {
             .opacity(isClouds ? defaultOpacity : 0)
             
         }
-        .animation(.linear(duration:2).delay(1))
+        .animation(.linear(duration:2).delay(0))
         .ignoresSafeArea()
         
     }

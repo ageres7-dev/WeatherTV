@@ -9,8 +9,12 @@ import SwiftUI
 
 struct FindingLocationView: View {
     @EnvironmentObject var location: LocationManager
+    @State private var isFirsOnAppear = true
+    @Binding var selection: Int
+    
     
     var body: some View {
+
         VStack {
             if isShowAllowAccess {
                 
@@ -19,10 +23,9 @@ struct FindingLocationView: View {
                     Text("Turning on location services allows us to show you local weather.")
                         .font(.title2)
                     Button("Open in settings") {
-                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                     }
                 }
-                
                 
             } else if isFindingCurrentLocation {
                 
@@ -30,11 +33,27 @@ struct FindingLocationView: View {
                     .font(.title2)
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
+                    .onAppear {
+                        location.requestLocation()
+                    }
                 
             } else {
                 WeatherView()
+                    
             }
         }
+        .onChange(of: selection) { selection in
+            if selection == 1, isFirsOnAppear {
+                location.requestWhenInUseAuthorization()
+                isFirsOnAppear = false
+                
+            }
+        }
+//        .onAppear {
+//            location.requestLocation()
+//            location.requestWhenInUseAuthorization()
+//        }
+        
     }
 }
 
@@ -51,7 +70,7 @@ extension FindingLocationView {
 
 struct FindingLocaationView_Previews: PreviewProvider {
     static var previews: some View {
-        FindingLocationView()
+        FindingLocationView(selection: .constant(0))
             .environmentObject(LocationManager.shared)
     }
 }

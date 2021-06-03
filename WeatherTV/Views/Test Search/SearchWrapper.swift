@@ -1,5 +1,5 @@
 //
-//  SearchWrapper .swift
+//  SearchWrapper.swift
 //  WeatherTV
 //
 //  Created by Sergey Dolgikh on 30.05.2021.
@@ -19,7 +19,7 @@ class SearchState: NSObject, ObservableObject, UISearchResultsUpdating {
     }
 }
 
-struct PageView<Page: View>: View {
+struct SearchWrapper<Page: View>: View {
     var viewController: UIHostingController<Page>
     @ObservedObject var state: SearchState
 
@@ -41,11 +41,11 @@ struct PageViewController: UIViewControllerRepresentable {
         
         let searchController = UISearchController(searchResultsController: controller)
         searchController.searchResultsUpdater = state
-        searchController.searchBar.placeholder = NSLocalizedString("Enter search", comment: "")
+        searchController.searchBar.placeholder = NSLocalizedString("Enter city", comment: "")
         
         // Contain the `UISearchController` in a `UISearchContainerViewController`.
         let searchContainer = UISearchContainerViewController(searchController: searchController)
-        searchContainer.title = NSLocalizedString("Search", comment: "")
+        searchContainer.title = NSLocalizedString("City search", comment: "")
 
         // Finally contain the `UISearchContainerViewController` in a `UINavigationController`.
         let searchNavigationController = UINavigationController(rootViewController: searchContainer)

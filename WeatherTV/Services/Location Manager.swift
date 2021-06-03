@@ -8,26 +8,34 @@ import Foundation
 import CoreLocation
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-    @Published var location: CLLocation? {
-        willSet { objectWillChange.send() }
-    }
+    @Published var location: CLLocation?
+//    {
+//        willSet { objectWillChange.send() }
+//    }
     
-    @Published var status: CLAuthorizationStatus? {
-        willSet { objectWillChange.send() }
-    }
+    @Published var status: CLAuthorizationStatus?
+//    {
+//        willSet { objectWillChange.send() }
+//    }
     
-    @Published var placemark: CLPlacemark? {
-        willSet { objectWillChange.send() }
-    }
+    @Published var placemark: CLPlacemark?
+//    {
+//        willSet { objectWillChange.send() }
+//    }
     
     static let shared = LocationManager()
     private let manager = CLLocationManager()
     private let geocoder = CLGeocoder()
     private let defaultLocale = Locale.init(identifier: "en_US")
+    
     override private init() {
         super.init()
         manager.delegate = self
-        manager.requestWhenInUseAuthorization()
+//        manager.requestWhenInUseAuthorization()
+//        manager.requestLocation()
+    }
+    
+    func requestLocation() {
         manager.requestLocation()
     }
     

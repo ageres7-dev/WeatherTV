@@ -19,22 +19,8 @@ struct SearchView: View {
         ScrollView(.vertical) {
             LazyVStack {
                 ForEach(cities, id: \.self) { city in
-//                    Button(city.name ?? "-", action: { print(city.country ?? "")} )
-                    
-                    
                     Button(action: {}) {
-                        VStack{
-                            Text("name: \(city.name ?? "-")")
-                            Text("locality \(city.locality ?? "-")")
-                            Text("locality \(city.administrativeArea ?? "-")")
-                            Text("locality \(city.isoCountryCode ?? "-")")
-                            Text("country \(city.country ?? "-")")
-                            
-                            Text(String((city.location?.coordinate.latitude)!))
-                            Text(String((city.location?.coordinate.longitude)!))
-//                            Text("latitude \(city.location?.coordinate.latitude ?? "-")")
-//                            Text("latitude \(city.location?.coordinate.longitude ?? "-")")
-                        }
+                        Text(locationString(from: city))
                     }
                     .transition(.opacity)
                 }
@@ -48,7 +34,6 @@ struct SearchView: View {
                     return
                 }
                 cities = placemarks
-                
             }
         }
         
@@ -85,9 +70,16 @@ struct SearchView: View {
     }
 }
 
-//extension SearchView {
-//
-//}
+extension SearchView {
+    func locationString(from city: CLPlacemark) -> String {
+        let locality = city.locality != nil ? "\(city.locality!), " : ""
+        let administrativeArea = city.administrativeArea != nil ? "\(city.administrativeArea!), " : ""
+        let country = city.country != nil ? "\(city.country!)" : ""
+        
+        
+        return locality + administrativeArea + country
+    }
+}
 
 
 
