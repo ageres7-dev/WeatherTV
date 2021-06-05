@@ -8,21 +8,34 @@
 import SwiftUI
 
 struct StartTabView: View {
-    @State private var selection = 0
+    @State private var locations: [Location] = []
+    @State private var selection = "search"
     @ObservedObject var state = SearchState()
     var body: some View {
         NavigationView {
             ZStack {
                 TabView(selection: $selection) {
-                    SearchWrapper(SearchView(state: state), state: state)
+                    SearchWrapper(SearchView(state: state,
+                                             locations: $locations,
+                                             selection: $selection),
+                                  state: state)
                         .tabItem { Image(systemName: "magnifyingglass") }
-                        .tag(0)
+                        .tag("search")
                     
                     FindingLocationView(selection: $selection)
                         .tabItem {
                             Label("Local Weather", systemImage: "location")
                         }
-                        .tag(1)
+                        .tag("localWeather")
+                    
+                    ForEach(locations, id: \.id) { location in
+                        WeatherView(viewModel: WeatherViewModel(location: location))
+                            .tabItem {
+                                Text(location.name ?? "")
+                            }
+                            .tag(location.name ?? "")
+                        //                                                    .tag(2)
+                    }
                     
                 }
                 .ignoresSafeArea(.all, edges: .top)
@@ -42,6 +55,14 @@ struct StartTabView_Previews: PreviewProvider {
 }
 
 
+
+
+//struct CitiesView: View {
+//    @State private var
+//    var body: some View {
+//
+//    }
+//}
 
 
 

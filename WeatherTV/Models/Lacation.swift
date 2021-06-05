@@ -8,14 +8,14 @@
 import Foundation
 import CoreLocation
 
-struct Location: Codable {
+struct Location: Codable, Hashable {
+//    let tag: String
+    var id = UUID()
     let name: String?
     let latitude: String
     let longitude: String
     var dateOfLastUpdate: Date?
 }
-
-
 
 
 extension Location {

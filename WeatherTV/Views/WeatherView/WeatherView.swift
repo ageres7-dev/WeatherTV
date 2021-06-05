@@ -26,12 +26,12 @@ struct WeatherView: View {
                         Text(locationName)
                             .font(.title3)
                     }
-                    
+
                     Spacer()
-                    
+
                     Button(action: {viewModel.actionUpdateButton() }) {
                         Image(systemName: "arrow.clockwise")
-                        
+
                     }
                 }
                 
@@ -83,6 +83,7 @@ struct WeatherView: View {
                     .font(.body)
                     
                 }
+                .offset(x: 0, y: -60)
                 .padding()
                 
                 Spacer()

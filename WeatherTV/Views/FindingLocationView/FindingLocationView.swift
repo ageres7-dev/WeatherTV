@@ -10,12 +10,15 @@ import SwiftUI
 struct FindingLocationView: View {
     @EnvironmentObject var location: LocationManager
     @State private var isFirsOnAppear = true
-    @Binding var selection: Int
-    
+    @Binding var selection: String
     
     var body: some View {
-
+        
         VStack {
+            
+            
+            
+            
             if isShowAllowAccess {
                 VStack {
                     Text("Turning on location services allows us to show you local weather.")
@@ -37,6 +40,7 @@ struct FindingLocationView: View {
                 
             } else {
                 if let location = location.placemark?.location {
+                    
                     WeatherView(
                         viewModel: WeatherViewModel(
                             location: .getFrom(location)
@@ -45,35 +49,46 @@ struct FindingLocationView: View {
                 }
             }
         }
+//        .onAppear {
+//            guard isFirsOnAppear else { return }
+//            if selection == "localWeather" {
+//                location.requestWhenInUseAuthorization()
+//                isFirsOnAppear = false
+//            }
+//        }
         .onChange(of: selection) { selection in
             guard isFirsOnAppear else { return }
-            if selection == 1 {
+            if selection == "localWeather" {
+                print(location.status.debugDescription.description )
                 location.requestWhenInUseAuthorization()
+                print(location.status .debugDescription.description)
                 isFirsOnAppear = false
             }
         }
-//        .onAppear {
-//            location.requestLocation()
-//            location.requestWhenInUseAuthorization()
-//        }
+        //        .onAppear {
+        //            location.requestLocation()
+        //            location.requestWhenInUseAuthorization()
+        //        }
         
     }
 }
 
 
 extension FindingLocationView {
+    
+  
     var isShowAllowAccess: Bool {
-        location.status == .denied
+        location.status == .denied || location.status == .none
     }
     
     var isFindingCurrentLocation: Bool {
-        location.location == nil && !isShowAllowAccess
+        location.location == nil  || location.status == .none // && !isShowAllowAccess
     }
 }
 
 struct FindingLocaationView_Previews: PreviewProvider {
     static var previews: some View {
-        FindingLocationView(selection: .constant(0))
+        FindingLocationView(selection: .constant(""))
             .environmentObject(LocationManager.shared)
     }
 }

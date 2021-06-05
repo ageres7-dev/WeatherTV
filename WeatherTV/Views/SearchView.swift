@@ -9,18 +9,29 @@ import SwiftUI
 import CoreLocation
 
 struct SearchView: View {
-    @EnvironmentObject var location: LocationManager
-    @ObservedObject var state: SearchState
     
     @State private var cities: [CLPlacemark] = []
+    @EnvironmentObject var location: LocationManager
+    @ObservedObject var state: SearchState
+    @Binding var locations: [Location]
+    @Binding var selection: String
     
     var body: some View {
         
         ScrollView(.vertical) {
             LazyVStack {
-                ForEach(cities, id: \.self) { city in
-                    Button(action: {}) {
-                        Text(locationString(from: city))
+                ForEach(cities.filter({ $0.locality != nil }), id: \.self) { city in
+                    Button(action: {
+                        locations.append(.getFrom(city))
+                        selection = city.locality ?? ""
+                        state.text = ""
+                    }) {
+                        HStack(spacing: 16) {
+                            Image(systemName: "plus.circle")
+                                
+                            Text(locationString(from: city))
+                        }
+                        .font(.title3)
                     }
                     .transition(.opacity)
                 }
@@ -36,37 +47,13 @@ struct SearchView: View {
                 cities = placemarks
             }
         }
-        
-        
-        
-        /*
-        VStack(spacing: 0) {
-            
-
-            ScrollView(.vertical, showsIndicators: false) {
-                LazyVStack {
-                    if state.text == "" {
-                        ForEach(cities, id: \.self) { city in
-                            Button(city.name ?? "-", action: { print(city.country ?? "")} )
-                        }
-                    } else {
-                        ForEach(citys.filter({
-                            guard let cityName = $0.name else { return false}
-                            return cityName.lowercased().contains(state.text.lowercased())
-                        }), id: \.self) { city in
-                            Button(city.name ?? "-", action: { print(city.country ?? "")} )
-                        }
-                    }
-                }
-            }
-            
-        }
         .onAppear {
-            NetworkManager.shared.fetchCitys { citys in
-                self.citys = citys
-            }
+            state.text = ""
         }
-             */
+        .onDisappear {
+
+            state.text = ""
+        }
     }
 }
 
@@ -78,6 +65,10 @@ extension SearchView {
         
         
         return locality + administrativeArea + country
+    }
+    
+    private func actionAddLocation() {
+        
     }
 }
 
