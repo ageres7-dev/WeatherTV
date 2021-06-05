@@ -12,8 +12,10 @@ class WeatherViewModel: ObservableObject {
     @Published var currentWeather: CurrentWeather?
     @Published var forecastOneCalAPI: ForecastOneCalAPI?
     @Published var conditionCode: Int?
-
-    private let location: LocationManager
+    
+    let location: Location
+    
+    private let locationManager = LocationManager.shared
         
     private var timerUpdateCurrentWeather: Timer?
     private var timerUpdateForecast: Timer?
@@ -23,9 +25,12 @@ class WeatherViewModel: ObservableObject {
     private let timeIntervalFetchForecast: Double = 120 * 60
     private let manualUpdateInterval: Double = 0.5 * 60
     
-    init() {
-        location = LocationManager.shared
+    init(location: Location) {
+        self.location = location
     }
+//    init() {
+//        location = LocationManager.shared
+//    }
     
     func isEnoughTimeHasPassed() -> Bool {
         let currentDate = Date()
@@ -67,8 +72,8 @@ class WeatherViewModel: ObservableObject {
     
     func fetchForecast() {
         let url = URLManager.shared.urlOneCallFrom(
-            latitude: latitude,
-            longitude: longitude
+            latitude: location.latitude,
+            longitude: location.longitude
         )
         
         NetworkManager.shared.fetchForecastSevenDays(from: url) { forecast in
@@ -79,8 +84,8 @@ class WeatherViewModel: ObservableObject {
     
     func fetchCurrentWeather() {
         let url = URLManager.shared.urlCurrentWeatherFrom(
-            latitude: latitude,
-            longitude: longitude
+            latitude: location.latitude,
+            longitude: location.longitude
         )
         
         NetworkManager.shared.fetchCurrentWeather(from: url) { currentWeather in
@@ -100,19 +105,21 @@ class WeatherViewModel: ObservableObject {
 }
 
 extension WeatherViewModel {
+    
+    //to do удалить
     var placemark: String {
-        location.placemark?.locality ?? ""
+        location.name ?? "kkkkkk"
     }
     
-    var latitude: String {
-        guard let coordinate = location.location?.coordinate else { return "" }
-        return String(coordinate.latitude)
-    }
-    
-    var longitude: String {
-        guard let coordinate = location.location?.coordinate else { return "" }
-        return String(coordinate.longitude)
-    }
+//    var latitude: String {
+//        guard let coordinate = location.location?.coordinate else { return "" }
+//        return String(coordinate.latitude)
+//    }
+//
+//    var longitude: String {
+//        guard let coordinate = location.location?.coordinate else { return "" }
+//        return String(coordinate.longitude)
+//    }
     
     
     var todayForecasts: String {
@@ -149,8 +156,11 @@ extension WeatherViewModel {
     
     
     var locationName: String? {
-        if let location = location.placemark?.locality {
+        
+        if let location = location.name {
             return location
+        } else if  let locality = locationManager.placemark?.locality {
+            return locality
         } else if let locationFromCurrentWeather = currentWeather?.name {
             return "\(locationFromCurrentWeather), \(currentWeather?.sys?.country ?? "")"
         } else {

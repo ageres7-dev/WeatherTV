@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WeatherView: View {
-    @StateObject private var viewModel = WeatherViewModel()
+    @StateObject var viewModel: WeatherViewModel //= WeatherViewModel(location: location)
     
     var body: some View {
         ZStack {
@@ -108,7 +108,7 @@ struct WeatherView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherView()
+        WeatherView(viewModel: WeatherViewModel(location: .orenburg))
             .environmentObject(LocationManager.shared)
     }
 }

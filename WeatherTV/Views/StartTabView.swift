@@ -24,7 +24,6 @@ struct StartTabView: View {
                         }
                         .tag(1)
                     
-                    
                 }
                 .ignoresSafeArea(.all, edges: .top)
             }

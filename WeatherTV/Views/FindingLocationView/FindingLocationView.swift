@@ -17,9 +17,7 @@ struct FindingLocationView: View {
 
         VStack {
             if isShowAllowAccess {
-                
                 VStack {
-//                    Text("Please allow access to the location")
                     Text("Turning on location services allows us to show you local weather.")
                         .font(.title2)
                     Button("Open in settings") {
@@ -38,15 +36,20 @@ struct FindingLocationView: View {
                     }
                 
             } else {
-                WeatherView()
-                    
+                if let location = location.placemark?.location {
+                    WeatherView(
+                        viewModel: WeatherViewModel(
+                            location: .getFrom(location)
+                        )
+                    )
+                }
             }
         }
         .onChange(of: selection) { selection in
-            if selection == 1, isFirsOnAppear {
+            guard isFirsOnAppear else { return }
+            if selection == 1 {
                 location.requestWhenInUseAuthorization()
                 isFirsOnAppear = false
-                
             }
         }
 //        .onAppear {
