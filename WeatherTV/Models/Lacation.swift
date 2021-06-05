@@ -15,7 +15,7 @@ struct Location: Codable, Hashable, Identifiable {
     let latitude: String
     let longitude: String
     var dateOfLastUpdate: Date?
-    let tag: String
+    var tag: String
 }
 
 

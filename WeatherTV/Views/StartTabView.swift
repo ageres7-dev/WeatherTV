@@ -11,12 +11,15 @@ struct StartTabView: View {
     @State private var locations: [Location] = []
     @State private var selection = "search"
     @State private var nameCurrentLocation = "My Location"
+    @State private var weatherConditionID: Int? = nil
     
     @ObservedObject var state = SearchState()
     
     var body: some View {
         NavigationView {
             ZStack {
+                WeatherBackground(conditionID: weatherConditionID)
+                    .ignoresSafeArea()
                 TabView(selection: $selection) {
                     SearchWrapper(SearchView(state: state,
                                              locations: $locations,
@@ -26,14 +29,16 @@ struct StartTabView: View {
                         .tag("search")
                     
                     FindingLocationView(selection: $selection,
-                                        nameCurrentLocation: $nameCurrentLocation)
+                                        nameCurrentLocation: $nameCurrentLocation,
+                                        weatherConditionID: $weatherConditionID)
                         .tabItem {
                             Label(nameCurrentLocation, systemImage: "location")
                         }
                         .tag("localWeather")
                     
                     ForEach(locations) { location in
-                        WeatherView(viewModel: WeatherViewModel(location: location))
+                        WeatherView(viewModel: WeatherViewModel(location: location), weatherConditionID: $weatherConditionID,
+                                    selection: $selection)
                             .tabItem {
                                 Text(location.name ?? "")
                             }

@@ -11,7 +11,8 @@ import CoreLocation
 struct SearchView: View {
     
     @State private var cities: [CLPlacemark] = []
-    @State private var isShowAlert = false
+    @State private var isShowAlertDeniedAdding = false
+    @State private var isShowAlertMaximumAmount = false
     @EnvironmentObject var location: LocationManager
     @ObservedObject var state: SearchState
     @Binding var locations: [Location]
@@ -24,11 +25,14 @@ struct SearchView: View {
                 ForEach(cities.filter({ $0.locality != nil }), id: \.self) { city in
                     Button(action: {
                         let newLocation = Location.getFrom(city)
-                        
+                        guard locations.count <= 5 else {
+                            isShowAlertMaximumAmount.toggle()
+                            return
+                        }
                         guard !locations.contains(where: {
                             $0.tag == newLocation.tag
                         }) else {
-                            isShowAlert.toggle()
+                            isShowAlertDeniedAdding.toggle()
                             return
                         }
                         
@@ -48,8 +52,11 @@ struct SearchView: View {
             }
             .padding(.top)
         }
-        .alert(isPresented: $isShowAlert) {
+        .alert(isPresented: $isShowAlertDeniedAdding) {
             Alert(title: Text("This city has already been added."))
+        }
+        .alert(isPresented: $isShowAlertMaximumAmount) {
+            Alert(title: Text("Maximum locations reached."))
         }
         
         .onChange(of: state.text) { text in

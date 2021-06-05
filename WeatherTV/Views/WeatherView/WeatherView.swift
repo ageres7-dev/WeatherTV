@@ -9,11 +9,13 @@ import SwiftUI
 
 struct WeatherView: View {
     @StateObject var viewModel: WeatherViewModel //= WeatherViewModel(location: location)
+    @Binding var weatherConditionID: Int?
+    @Binding var selection: String
     
     var body: some View {
         ZStack {
-            WeatherBackground(conditionID: viewModel.weatherConditionID)
-                .ignoresSafeArea()
+//            WeatherBackground(conditionID: viewModel.weatherConditionID)
+//                .ignoresSafeArea()
             
             VStack {
                 /*
@@ -59,6 +61,9 @@ struct WeatherView: View {
                             Text(viewModel.todayForecasts)
                             Text(viewModel.todayDate)
                         }
+//                        .onAppear {
+//                            weatherConditionID = viewModel.weatherConditionID
+//                        }
                     } else {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle())
@@ -96,7 +101,17 @@ struct WeatherView: View {
                 .frame(height: 130)
                 .offset(x: 0, y: -60)
             }
+            .onReceive(viewModel.$conditionCode, perform: { code in
+                weatherConditionID = code
+            })
             .onAppear {
+                guard selection == viewModel.location.tag else {
+                    print("select \(selection)")
+                    print("tag in model \(viewModel.location.tag )")
+                    return
+                    
+                }
+//                weatherConditionID = viewModel.weatherConditionID
                 // нужно переделать,
                 // необходимо включить ограничения на обновления
                 // сейчас обновляется при каждом появлении экрана
@@ -110,7 +125,7 @@ struct WeatherView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherView(viewModel: WeatherViewModel(location: .orenburg))
+        WeatherView(viewModel: WeatherViewModel(location: .orenburg), weatherConditionID: .constant(200), selection: .constant("orenburg"))
             .environmentObject(LocationManager.shared)
     }
 }

@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct FindingLocationView: View {
     @EnvironmentObject var location: LocationManager
     @State private var isFirsOnAppear = true
     @Binding var selection: String
     @Binding var nameCurrentLocation: String
+    @Binding var weatherConditionID: Int?
     
     var body: some View {
         
@@ -38,11 +40,14 @@ struct FindingLocationView: View {
                 
             } else {
                 if let placemark = location.placemark {
-                   
+                    
+//                    var location = Location.getFrom(placemark)
+//                    location.tag = "localWeather"
+                    
                     WeatherView(
-                        viewModel: WeatherViewModel(
-                            location: .getFrom(placemark)
-                        )
+                        viewModel: WeatherViewModel(location: convert(placemark)),
+                        weatherConditionID: $weatherConditionID,
+                        selection: $selection
                     )
                     .onAppear {
                         guard let newNameCurrentLocation = placemark.locality else { return }
@@ -78,7 +83,14 @@ struct FindingLocationView: View {
 
 extension FindingLocationView {
     
+    func convert(_ placemark: CLPlacemark) -> Location {
+        var temp = Location.getFrom(placemark)
+        temp.tag = "localWeather"
+        return temp
+        //                    location.tag = "localWeather"
+    }
   
+    
     var isShowAllowAccess: Bool {
         location.status == .denied || location.status == .none
     }
@@ -90,7 +102,7 @@ extension FindingLocationView {
 
 struct FindingLocaationView_Previews: PreviewProvider {
     static var previews: some View {
-        FindingLocationView(selection: .constant(""), nameCurrentLocation: .constant("orenburg"))
+        FindingLocationView(selection: .constant(""), nameCurrentLocation: .constant("orenburg"), weatherConditionID: .constant(200))
             .environmentObject(LocationManager.shared)
     }
 }
