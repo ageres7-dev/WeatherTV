@@ -10,7 +10,10 @@ import SwiftUI
 struct StartTabView: View {
     @State private var locations: [Location] = []
     @State private var selection = "search"
+    @State private var nameCurrentLocation = "My Location"
+    
     @ObservedObject var state = SearchState()
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -22,26 +25,27 @@ struct StartTabView: View {
                         .tabItem { Image(systemName: "magnifyingglass") }
                         .tag("search")
                     
-                    FindingLocationView(selection: $selection)
+                    FindingLocationView(selection: $selection,
+                                        nameCurrentLocation: $nameCurrentLocation)
                         .tabItem {
-                            Label("Local Weather", systemImage: "location")
+                            Label(nameCurrentLocation, systemImage: "location")
                         }
                         .tag("localWeather")
                     
-                    ForEach(locations, id: \.id) { location in
+                    ForEach(locations) { location in
                         WeatherView(viewModel: WeatherViewModel(location: location))
                             .tabItem {
                                 Text(location.name ?? "")
                             }
-                            .tag(location.name ?? "")
-                        //                                                    .tag(2)
+                            .tag(location.tag)
                     }
                     
                 }
                 .ignoresSafeArea(.all, edges: .top)
+                
+                LogoDataProvider()
             }
-            
-            LogoDataProvider()
+   
         }
     }
 }

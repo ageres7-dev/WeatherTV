@@ -11,6 +11,7 @@
 		3B61FED026468856000D4552 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 3B61FECF26468856000D4552 /* .gitignore */; };
 		3B61FED226468A56000D4552 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61FED126468A56000D4552 /* API.swift */; };
 		3B6F4BF3266AA06600690AF3 /* Lacation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6F4BF2266AA06600690AF3 /* Lacation.swift */; };
+		3BC8F536266BF38500A0F91B /* Ext + CLPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC8F535266BF38500A0F91B /* Ext + CLPlacemark.swift */; };
 		3BD7C1092662D36700F4C323 /* TestingSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD7C1082662D36700F4C323 /* TestingSearchView.swift */; };
 		3BD7C10B2662D50B00F4C323 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD7C10A2662D50B00F4C323 /* SearchBar.swift */; };
 		3BD7C10D2662D50D00F4C323 /* ViewControllerResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD7C10C2662D50D00F4C323 /* ViewControllerResolver.swift */; };
@@ -70,6 +71,7 @@
 		3B61FECF26468856000D4552 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		3B61FED126468A56000D4552 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		3B6F4BF2266AA06600690AF3 /* Lacation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lacation.swift; sourceTree = "<group>"; };
+		3BC8F535266BF38500A0F91B /* Ext + CLPlacemark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext + CLPlacemark.swift"; sourceTree = "<group>"; };
 		3BD7C1082662D36700F4C323 /* TestingSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingSearchView.swift; sourceTree = "<group>"; };
 		3BD7C10A2662D50B00F4C323 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		3BD7C10C2662D50D00F4C323 /* ViewControllerResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerResolver.swift; sourceTree = "<group>"; };
@@ -138,19 +140,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3BD7C1072662D33D00F4C323 /* Test Search */ = {
+		3BD7C1072662D33D00F4C323 /* SearchView */ = {
 			isa = PBXGroup;
 			children = (
 				3BD7C1082662D36700F4C323 /* TestingSearchView.swift */,
 				3B0D330D2663C2CF00421E2E /* SearchWrapper.swift */,
+				A5BF6EF5262B634900522AE5 /* SearchView.swift */,
 			);
-			path = "Test Search";
+			path = SearchView;
 			sourceTree = "<group>";
 		};
 		3BF6BBD3265C1FA9006C9456 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				3BF6BBD4265C1FC9006C9456 /* Ext + Color.swift */,
+				3BC8F535266BF38500A0F91B /* Ext + CLPlacemark.swift */,
 				3BD7C12D2663BAB600F4C323 /* Ext + String.swift */,
 			);
 			path = Extensions;
@@ -178,13 +182,12 @@
 		A531DFED25F79F4600AB91E1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3BD7C1072662D33D00F4C323 /* Test Search */,
+				3BD7C1072662D33D00F4C323 /* SearchView */,
 				A51CA0D32638870500582369 /* FindingLocationView */,
 				A5412A6625FFDCBB00B2FE64 /* DayForecastView */,
 				A531E01925F93F8100AB91E1 /* WeatherView */,
 				A5E9FCA925FD4832001D3317 /* StartTabView.swift */,
 				A540D1C42614F17700B477B2 /* SettingsView.swift */,
-				A5BF6EF5262B634900522AE5 /* SearchView.swift */,
 				3BF6BBD1265C13C1006C9456 /* WeatherBackground.swift */,
 				3BD7C12B26638B4300F4C323 /* LogoDataProvider.swift */,
 			);
@@ -477,6 +480,7 @@
 				A54831402615A87C001E7F76 /* Location Manager.swift in Sources */,
 				3B6F4BF3266AA06600690AF3 /* Lacation.swift in Sources */,
 				A5E9FCAF25FE81E3001D3317 /* ForecastOneCalAPI.swift in Sources */,
+				3BC8F536266BF38500A0F91B /* Ext + CLPlacemark.swift in Sources */,
 				A531E00A25F88B5F00AB91E1 /* URLManager.swift in Sources */,
 				3BD7C12C26638B4300F4C323 /* LogoDataProvider.swift in Sources */,
 				A531DFFA25F7F6BB00AB91E1 /* Network Manager.swift in Sources */,

@@ -42,13 +42,13 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     func requestWhenInUseAuthorization() {
         manager.requestWhenInUseAuthorization()
     }
-    
+
     private func geocode() {
         guard let location = self.location else { return }
     
         geocoder.reverseGeocodeLocation(location, preferredLocale: defaultLocale) { (places, error) in
             if error == nil {
-                self.placemark = places?[0]
+                self.placemark = places?.first
             } else {
                 self.placemark = nil
             }
@@ -57,7 +57,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     func findLocation(from string: String, completion: @escaping ([CLPlacemark]?) -> Void) {
         
-        geocoder.geocodeAddressString(string, in: nil, preferredLocale: defaultLocale) {  placemarks, _ in
+        geocoder.geocodeAddressString(string, in: nil, preferredLocale: defaultLocale) { placemarks, _ in
             completion(placemarks)
         }
     }

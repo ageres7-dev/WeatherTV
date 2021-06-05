@@ -11,14 +11,12 @@ struct FindingLocationView: View {
     @EnvironmentObject var location: LocationManager
     @State private var isFirsOnAppear = true
     @Binding var selection: String
+    @Binding var nameCurrentLocation: String
     
     var body: some View {
         
         VStack {
-            
-            
-            
-            
+
             if isShowAllowAccess {
                 VStack {
                     Text("Turning on location services allows us to show you local weather.")
@@ -39,13 +37,17 @@ struct FindingLocationView: View {
                     }
                 
             } else {
-                if let location = location.placemark?.location {
-                    
+                if let placemark = location.placemark {
+                   
                     WeatherView(
                         viewModel: WeatherViewModel(
-                            location: .getFrom(location)
+                            location: .getFrom(placemark)
                         )
                     )
+                    .onAppear {
+                        guard let newNameCurrentLocation = placemark.locality else { return }
+                        nameCurrentLocation = newNameCurrentLocation
+                    }
                 }
             }
         }
@@ -88,7 +90,7 @@ extension FindingLocationView {
 
 struct FindingLocaationView_Previews: PreviewProvider {
     static var previews: some View {
-        FindingLocationView(selection: .constant(""))
+        FindingLocationView(selection: .constant(""), nameCurrentLocation: .constant("orenburg"))
             .environmentObject(LocationManager.shared)
     }
 }

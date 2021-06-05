@@ -11,6 +11,7 @@ import CoreLocation
 struct SearchView: View {
     
     @State private var cities: [CLPlacemark] = []
+    @State private var isShowAlert = false
     @EnvironmentObject var location: LocationManager
     @ObservedObject var state: SearchState
     @Binding var locations: [Location]
@@ -22,8 +23,17 @@ struct SearchView: View {
             LazyVStack {
                 ForEach(cities.filter({ $0.locality != nil }), id: \.self) { city in
                     Button(action: {
-                        locations.append(.getFrom(city))
-                        selection = city.locality ?? ""
+                        let newLocation = Location.getFrom(city)
+                        
+                        guard !locations.contains(where: {
+                            $0.tag == newLocation.tag
+                        }) else {
+                            isShowAlert.toggle()
+                            return
+                        }
+                        
+                        locations.append(newLocation)
+                        selection = newLocation.tag
                         state.text = ""
                     }) {
                         HStack(spacing: 16) {
@@ -38,6 +48,10 @@ struct SearchView: View {
             }
             .padding(.top)
         }
+        .alert(isPresented: $isShowAlert) {
+            Alert(title: Text("This city has already been added."))
+        }
+        
         .onChange(of: state.text) { text in
             location.findLocation(from: text) { placemarks in
                 guard let placemarks = placemarks else {
@@ -59,18 +73,18 @@ struct SearchView: View {
 
 extension SearchView {
     func locationString(from city: CLPlacemark) -> String {
-        let locality = city.locality != nil ? "\(city.locality!), " : ""
-        let administrativeArea = city.administrativeArea != nil ? "\(city.administrativeArea!), " : ""
-        let country = city.country != nil ? "\(city.country!)" : ""
-        
-        
-        return locality + administrativeArea + country
+        city.getTag()
+//        let locality = city.locality != nil ? "\(city.locality!), " : ""
+//        let administrativeArea = city.administrativeArea != nil ? "\(city.administrativeArea!), " : ""
+//        let country = city.country != nil ? "\(city.country!)" : ""
+//
+//
+//        return locality + administrativeArea + country
     }
     
-    private func actionAddLocation() {
-        
-    }
 }
+
+
 
 
 

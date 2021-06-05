@@ -31,7 +31,7 @@ struct LogoDataProvider: View {
                         }
                         .font(.system(size: 16))
                     }
-                    .offset(x: -90, y: 0)
+                    .offset(x: -90, y: -30)
                     
                     Spacer()
                 }
