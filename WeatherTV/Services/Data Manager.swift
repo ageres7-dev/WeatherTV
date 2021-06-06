@@ -7,15 +7,25 @@
 
 import SwiftUI
 
+
+
+
 class DataManager {
-    @AppStorage("locations") var userData = Data()
+    @AppStorage("userData") var userData = Data()
     
     static let shared = DataManager()
     private init() {}
     
-    func save(locations: [Location]) {
+    func save(locations: UserData) {
         guard let userData = try? JSONEncoder().encode(locations) else { return }
         self.userData = userData
+    }
+    
+    func loadLocations() -> UserData {
+        guard let locations = try? JSONDecoder().decode(UserData.self, from: userData) else {
+            return UserData()
+        }
+        return locations
     }
 
 }
