@@ -42,11 +42,16 @@ struct WeatherView: View {
                 
                 HStack{
                     VStack{
-                        Image(systemName: viewModel.icon)
+                        
+                        if let icon = viewModel.icon {
+                        Image(systemName: icon)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 230, height: 230)
-                        
+                        } else {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle())
+                        }
                         Text(viewModel.description)
                             .font(.title3)
                             .multilineTextAlignment(.center)

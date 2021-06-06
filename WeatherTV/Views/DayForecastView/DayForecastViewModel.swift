@@ -29,8 +29,10 @@ extension DayForecastViewModel {
         return formatter.string(from: dt)
     }
     
-    var iconName: String {
-        DataManager.shared.convert(iconName: daily?.weather?.first?.icon)
+    var iconName: String? {
+//        DataManager.shared.convert(iconName: daily?.weather?.first?.icon)
+        daily?.weather?.first?.icon?.convertWeatherIconName()
+        
     }
     
     

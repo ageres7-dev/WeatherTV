@@ -215,7 +215,7 @@ extension WeatherViewModel {
 
     
     
-    var icon: String {
+    var icon: String? {
         var iconName: String?
         
         if let icon = currentWeather?.weather?.first?.icon {
@@ -224,7 +224,7 @@ extension WeatherViewModel {
             iconName = icon
         }
         
-        return DataManager.shared.convert(iconName: iconName)
+        return iconName?.convertWeatherIconName()
     }
     
     var sunsetTime: String? {
