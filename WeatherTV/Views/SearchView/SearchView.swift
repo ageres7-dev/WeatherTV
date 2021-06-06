@@ -18,11 +18,13 @@ struct SearchView: View {
     @Binding var locations: [Location]
     @Binding var selection: String
     
+    
+    
     var body: some View {
         
         ScrollView(.vertical) {
             LazyVStack {
-                ForEach(cities.filter({ $0.locality != nil }), id: \.self) { city in
+                ForEach(filteredCitiesFound, id: \.self) { city in
                     Button(action: {
                         let newLocation = Location.getFrom(city)
                         guard locations.count <= 5 else {
@@ -79,15 +81,21 @@ struct SearchView: View {
 }
 
 extension SearchView {
-    func locationString(from city: CLPlacemark) -> String {
+    private func locationString(from city: CLPlacemark) -> String {
         city.getTag()
+//        let name = city.name ?? ""
 //        let locality = city.locality != nil ? "\(city.locality!), " : ""
 //        let administrativeArea = city.administrativeArea != nil ? "\(city.administrativeArea!), " : ""
 //        let country = city.country != nil ? "\(city.country!)" : ""
-//
-//
-//        return locality + administrativeArea + country
+//        return name + locality + administrativeArea + country
+        
+        
     }
+    private var filteredCitiesFound: [CLPlacemark] {
+        cities.filter({ $0.locality != nil })
+//        cities
+    }
+    
     
 }
 

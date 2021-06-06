@@ -102,15 +102,23 @@ struct WeatherView: View {
                 .offset(x: 0, y: -60)
             }
             .onReceive(viewModel.$conditionCode, perform: { code in
+                guard selection == viewModel.location.tag else { return }
                 weatherConditionID = code
             })
+            .onChange(of: selection, perform: { selection in
+                guard selection == viewModel.location.tag else { return }
+                weatherConditionID = viewModel.conditionCode
+//                weatherConditionID = viewModel.weatherConditionID
+                // нужно переделать,
+                // необходимо включить ограничения на обновления
+                // сейчас обновляется при каждом появлении экрана
+//                viewModel.fetchWeather()
+//                viewModel.startAutoUpdateWeather()
+            })
+            
             .onAppear {
-                guard selection == viewModel.location.tag else {
-                    print("select \(selection)")
-                    print("tag in model \(viewModel.location.tag )")
-                    return
-                    
-                }
+                guard selection == viewModel.location.tag else { return }
+                weatherConditionID = viewModel.conditionCode
 //                weatherConditionID = viewModel.weatherConditionID
                 // нужно переделать,
                 // необходимо включить ограничения на обновления

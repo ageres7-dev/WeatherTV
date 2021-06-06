@@ -229,14 +229,19 @@ extension WeatherViewModel {
     
     var sunsetTime: String? {
         guard let date = currentWeather?.sys?.sunset else { return nil }
+        guard let timeZone = currentWeather?.timezone else { return nil }
+        
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
+        formatter.timeZone = TimeZone(secondsFromGMT: timeZone)
         return "Sunset time: \(formatter.string(from: date))"
     }
     
     var sunriseTime: String? {
         guard let date = currentWeather?.sys?.sunrise else { return nil }
+        guard let timeZone = currentWeather?.timezone else { return nil }
         let formatter = DateFormatter()
+        formatter.timeZone = TimeZone(secondsFromGMT: timeZone)
         formatter.dateFormat = "HH:mm"
         return "Sunrise time: \(formatter.string(from: date))"
     }
