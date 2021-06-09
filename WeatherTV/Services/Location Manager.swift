@@ -9,19 +9,8 @@ import CoreLocation
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var location: CLLocation?
-//    {
-//        willSet { objectWillChange.send() }
-//    }
-    
     @Published var status: CLAuthorizationStatus?
-//    {
-//        willSet { objectWillChange.send() }
-//    }
-    
     @Published var placemark: CLPlacemark?
-//    {
-//        willSet { objectWillChange.send() }
-//    }
     
     static let shared = LocationManager()
     private let manager = CLLocationManager()
@@ -31,8 +20,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     override private init() {
         super.init()
         manager.delegate = self
-//        manager.requestWhenInUseAuthorization()
-//        manager.requestLocation()
     }
     
     func requestLocation() {
@@ -110,3 +97,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
  }
  }
  */
+
+
+
+

@@ -28,9 +28,6 @@ class WeatherViewModel: ObservableObject {
     init(location: Location) {
         self.location = location
     }
-//    init() {
-//        location = LocationManager.shared
-//    }
     
     func isEnoughTimeHasPassed() -> Bool {
         let currentDate = Date()
@@ -43,7 +40,6 @@ class WeatherViewModel: ObservableObject {
         return true
     }
    
-    
     func startAutoUpdateWeather() {
         timerUpdateCurrentWeather = Timer.scheduledTimer(withTimeInterval: timeIntervalFetchCurrentWeather, repeats: true) { _ in
             self.fetchCurrentWeather()

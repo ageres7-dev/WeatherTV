@@ -8,130 +8,128 @@
 import SwiftUI
 
 struct WeatherView: View {
-    @StateObject var viewModel: WeatherViewModel //= WeatherViewModel(location: location)
+    @StateObject var viewModel: WeatherViewModel
     @Binding var weatherConditionID: Int?
     @Binding var selection: String
     
     var body: some View {
-        ZStack {
-//            WeatherBackground(conditionID: viewModel.weatherConditionID)
-//                .ignoresSafeArea()
-            
-            VStack {
-                /*
-                HStack(spacing: 8) {
-                    Text("")
-                        .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    Spacer()
-                    if let locationName = viewModel.locationName {
-                        Image(systemName: "location")
-                            .font(.body)
-                        Text(locationName)
-                            .font(.title3)
-                    }
-
-                    Spacer()
-
-                    Button(action: {viewModel.actionUpdateButton() }) {
-                        Image(systemName: "arrow.clockwise")
-
-                    }
+        VStack {
+            /*
+            HStack(spacing: 8) {
+                Text("")
+                    .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                Spacer()
+                if let locationName = viewModel.locationName {
+                    Image(systemName: "location")
+                        .font(.body)
+                    Text(locationName)
+                        .font(.title3)
                 }
-                */
+                
                 Spacer()
                 
-                HStack{
-                    VStack{
-                        
-                        if let icon = viewModel.icon {
+                Button(action: {viewModel.actionUpdateButton() }) {
+                    Image(systemName: "arrow.clockwise")
+                    
+                }
+            }
+            */
+            
+            HStack {
+                Spacer()
+                Button(action: {print("press trash") }) {
+                    Image(systemName: "trash")
+                    
+                }
+            }
+            Spacer()
+            
+            HStack{
+                VStack{
+                    if let icon = viewModel.icon {
                         Image(systemName: icon)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 230, height: 230)
-                        } else {
-                            ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle())
-                        }
-                        Text(viewModel.description)
-                            .font(.title3)
-                            .multilineTextAlignment(.center)
-                            .frame(width: 340)
                     }
-                    Spacer()
-                    
-                    if let temp = viewModel.temp {
-                        VStack {
-                            Text(temp)
-                                .font(.system(size: 180))
-                            Text(viewModel.todayForecasts)
-                            Text(viewModel.todayDate)
-                        }
-//                        .onAppear {
-//                            weatherConditionID = viewModel.weatherConditionID
-//                        }
-                    } else {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                    }
-                    
-                    Spacer()
-                    
-                    VStack(alignment: .leading) {
-                        Text(viewModel.feelsLike)
-                        Text(viewModel.humidity)
-                        Text(viewModel.pressure)
-                        Text("")
-                        Divider()
-                        if let sunriseTime = viewModel.sunriseTime {
-                            Text(sunriseTime)
-                        }
-                        
-                        if let sunsetTime = viewModel.sunsetTime {
-                            Text(sunsetTime)
-                        }
-                    }
-                    .frame(width: 340)
-                    .font(.body)
-                    
+                    Text(viewModel.description)
+                        .font(.title3)
+                        .multilineTextAlignment(.center)
+                        .frame(width: 340)
                 }
-                .offset(x: 0, y: -60)
-                .padding()
+                Spacer()
+                
+                if let temp = viewModel.temp {
+                    VStack {
+                        Text(temp)
+                            .font(.system(size: 180))
+                        Text(viewModel.todayForecasts)
+                        Text(viewModel.todayDate)
+                    }
+                } else {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                }
                 
                 Spacer()
-                LazyHStack {
-                    ForEach((viewModel.forecastFromTomorrow), id: \.self) { day in
-                        DayForecastView(viewModel: DayForecastViewModel(daily: day))
+                
+                VStack(alignment: .leading) {
+                    Text(viewModel.feelsLike)
+                    Text(viewModel.humidity)
+                    Text(viewModel.pressure)
+                    Text("")
+                    Divider()
+                    if let sunriseTime = viewModel.sunriseTime {
+                        Text(sunriseTime)
+                    }
+                    
+                    if let sunsetTime = viewModel.sunsetTime {
+                        Text(sunsetTime)
                     }
                 }
-                .frame(height: 130)
-                .offset(x: 0, y: -60)
+                .frame(width: 340)
+                .font(.body)
+                
             }
-            .onReceive(viewModel.$conditionCode, perform: { code in
-                guard selection == viewModel.location.tag else { return }
-                weatherConditionID = code
-            })
-            .onChange(of: selection, perform: { selection in
-                guard selection == viewModel.location.tag else { return }
-                weatherConditionID = viewModel.conditionCode
-//                weatherConditionID = viewModel.weatherConditionID
-                // нужно переделать,
-                // необходимо включить ограничения на обновления
-                // сейчас обновляется при каждом появлении экрана
-//                viewModel.fetchWeather()
-//                viewModel.startAutoUpdateWeather()
-            })
+            .offset(x: 0, y: -60)
+            .padding()
             
-            .onAppear {
-                guard selection == viewModel.location.tag else { return }
-                weatherConditionID = viewModel.conditionCode
-//                weatherConditionID = viewModel.weatherConditionID
-                // нужно переделать,
-                // необходимо включить ограничения на обновления
-                // сейчас обновляется при каждом появлении экрана
-                viewModel.fetchWeather()
-                viewModel.startAutoUpdateWeather()
+            Spacer()
+            LazyHStack {
+                ForEach((viewModel.forecastFromTomorrow), id: \.self) { day in
+                    DayForecastView(viewModel: DayForecastViewModel(daily: day))
+                }
             }
+            .frame(height: 130)
+            .offset(x: 0, y: -60)
         }
+        
+        .onReceive(viewModel.$conditionCode) { code in
+            guard selection == viewModel.location.tag else { return }
+            weatherConditionID = code
+        }
+        .onChange(of: selection) { selection in
+            guard selection == viewModel.location.tag else { return }
+            weatherConditionID = viewModel.conditionCode
+            //                weatherConditionID = viewModel.weatherConditionID
+            // нужно переделать,
+            // необходимо включить ограничения на обновления
+            // сейчас обновляется при каждом появлении экрана
+            //                viewModel.fetchWeather()
+            //                viewModel.startAutoUpdateWeather()
+        }
+        
+        .onAppear {
+            guard selection == viewModel.location.tag else { return }
+            weatherConditionID = viewModel.conditionCode
+            //                weatherConditionID = viewModel.weatherConditionID
+            // нужно переделать,
+            // необходимо включить ограничения на обновления
+            // сейчас обновляется при каждом появлении экрана
+            viewModel.fetchWeather()
+            viewModel.startAutoUpdateWeather()
+        }
+        
     }
 }
 

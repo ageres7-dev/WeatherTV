@@ -7,15 +7,13 @@
 
 import Combine
 final class UserManager: ObservableObject {
-    static let shared = UserManager()
-    
     @Published var userData: UserData
     
-    private init() {
+    init() {
         userData = UserData()
     }
     
-    private init (userData: UserData) {
+    init (userData: UserData) {
         self.userData = userData
     }
    

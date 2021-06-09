@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct StartTabView: View {
-    @State private var locations: [Location] = []
-    @State private var selection = "search"
+    @EnvironmentObject var manager: UserManager
+//    @State private var locations: [Location] = []
+//    @State private var selection = "search"
     @State private var nameCurrentLocation = "My Location"
     @State private var weatherConditionID: Int? = nil
     
@@ -20,15 +21,15 @@ struct StartTabView: View {
             ZStack {
                 WeatherBackground(conditionID: weatherConditionID)
                     .ignoresSafeArea()
-                TabView(selection: $selection) {
+                TabView(selection: $manager.userData.selectedTag) {
                     SearchWrapper(SearchView(state: state,
-                                             locations: $locations,
-                                             selection: $selection),
+                                             locations: $manager.userData.locations,
+                                             selection: $manager.userData.selectedTag),
                                   state: state)
                         .tabItem { Image(systemName: "magnifyingglass") }
                         .tag("search")
                     
-                    FindingLocationView(selection: $selection,
+                    FindingLocationView(selection: $manager.userData.selectedTag,
                                         nameCurrentLocation: $nameCurrentLocation,
                                         weatherConditionID: $weatherConditionID)
                         .tabItem {
@@ -36,9 +37,9 @@ struct StartTabView: View {
                         }
                         .tag("localWeather")
                     
-                    ForEach(locations) { location in
+                    ForEach(manager.userData.locations) { location in
                         WeatherView(viewModel: WeatherViewModel(location: location), weatherConditionID: $weatherConditionID,
-                                    selection: $selection)
+                                    selection: $manager.userData.selectedTag)
                             .tabItem {
                                 Text(location.name ?? "")
                             }
@@ -51,6 +52,9 @@ struct StartTabView: View {
                 LogoDataProvider()
             }
    
+        }
+        .onChange(of: manager.userData) { userData in
+            DataManager.shared.save(userData)
         }
     }
 }

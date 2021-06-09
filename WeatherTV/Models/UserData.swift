@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserData: Codable {
+struct UserData: Codable, Equatable {
     var locations: [Location] = []
-    var selectedTag: String = ""
+    var selectedTag: String = "My Location"
 }
