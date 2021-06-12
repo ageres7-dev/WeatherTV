@@ -39,6 +39,7 @@ struct FindingLocationView: View {
                     }
                 
             } else {
+                
                 if let placemark = location.placemark {
                     
 //                    var location = Location.getFrom(placemark)
@@ -56,27 +57,15 @@ struct FindingLocationView: View {
                 }
             }
         }
-//        .onAppear {
-//            guard isFirsOnAppear else { return }
-//            if selection == "localWeather" {
-//                location.requestWhenInUseAuthorization()
-//                isFirsOnAppear = false
-//            }
-//        }
         .onChange(of: selection) { selection in
             guard isFirsOnAppear else { return }
-            if selection == "localWeather" {
+            if selection == Constant.tagCurrentLocation.rawValue {
                 print(location.status.debugDescription.description )
                 location.requestWhenInUseAuthorization()
                 print(location.status .debugDescription.description)
                 isFirsOnAppear = false
             }
         }
-        //        .onAppear {
-        //            location.requestLocation()
-        //            location.requestWhenInUseAuthorization()
-        //        }
-        
     }
 }
 
@@ -85,7 +74,7 @@ extension FindingLocationView {
     
     func convert(_ placemark: CLPlacemark) -> Location {
         var temp = Location.getFrom(placemark)
-        temp.tag = "localWeather"
+        temp.tag = Constant.tagCurrentLocation.rawValue
         return temp
         //                    location.tag = "localWeather"
     }

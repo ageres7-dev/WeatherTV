@@ -35,7 +35,7 @@ struct StartTabView: View {
                         .tabItem {
                             Label(nameCurrentLocation, systemImage: "location")
                         }
-                        .tag("localWeather")
+                        .tag(Constant.tagCurrentLocation.rawValue)
                     
                     ForEach(manager.userData.locations) { location in
                         WeatherView(viewModel: WeatherViewModel(location: location), weatherConditionID: $weatherConditionID,

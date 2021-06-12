@@ -9,8 +9,11 @@ import Combine
 final class UserManager: ObservableObject {
     @Published var userData: UserData
     
-    init() {
-        userData = UserData()
+    static let shared = UserManager()
+  
+    
+    private init() {
+        userData = DataManager.shared.loadUserData()
     }
     
     init (userData: UserData) {

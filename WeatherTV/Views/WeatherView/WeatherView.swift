@@ -37,9 +37,10 @@ struct WeatherView: View {
             
             HStack {
                 Spacer()
-                Button(action: {print("press trash") }) {
-                    Image(systemName: "trash")
-                    
+                if viewModel.isShowDeleteBotton {
+                    Button(action: { viewModel.deleteAction() }) {
+                        Image(systemName: "trash")
+                    }
                 }
             }
             Spacer()
@@ -51,11 +52,12 @@ struct WeatherView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 230, height: 230)
+                        
+                        Text(viewModel.description)
+                            .font(.title3)
+                            .multilineTextAlignment(.center)
+                            .frame(width: 340)
                     }
-                    Text(viewModel.description)
-                        .font(.title3)
-                        .multilineTextAlignment(.center)
-                        .frame(width: 340)
                 }
                 Spacer()
                 

@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct WeatherTVApp: App {
-    let userData = DataManager.shared.loadUserData()
+//    let userData = DataManager.shared.loadUserData()
     var body: some Scene {
         WindowGroup {
             StartTabView()
                 .environmentObject(LocationManager.shared)
-                .environmentObject(UserManager(userData: userData))
+                .environmentObject(UserManager.shared)
         }
     }
 }

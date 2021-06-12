@@ -5,14 +5,15 @@
 //  Created by Сергей on 10.03.2021.
 //
 
-import Foundation
+import SwiftUI
 
 class WeatherViewModel: ObservableObject {
-    
     @Published var currentWeather: CurrentWeather?
     @Published var forecastOneCalAPI: ForecastOneCalAPI?
     @Published var conditionCode: Int?
     
+//    let locations = UserManager.shared.userData.locations
+//    let selectedTag = UserManager.shared.userData.selectedTag
     let location: Location
     
     private let locationManager = LocationManager.shared
@@ -29,17 +30,30 @@ class WeatherViewModel: ObservableObject {
         self.location = location
     }
     
-    func isEnoughTimeHasPassed() -> Bool {
-        let currentDate = Date()
-        guard  currentDate > dateFetching.addingTimeInterval(manualUpdateInterval) else {
-            print("Меньше 30 сек", dateFetching, currentDate)
+    func deleteAction() {
+        guard let indexOfCurrentItem = UserManager.shared.userData.locations.firstIndex(of: location) else { return }
+        
+        let indexOfPreviousElement = UserManager.shared.userData.locations.index(before: indexOfCurrentItem)
+        
+        switch indexOfCurrentItem {
+        case 0:
+            UserManager.shared.userData.selectedTag = Constant.tagCurrentLocation.rawValue
+
+        case 1... :
+            if indexOfPreviousElement >= 0 {
+                let tagPreviousElement = UserManager.shared.userData.locations[indexOfPreviousElement].tag
+                
+                UserManager.shared.userData.selectedTag = tagPreviousElement
+            }
             
-            return false
+        default: return
         }
-        print("Прошло больше 30 сек")
-        return true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            UserManager.shared.userData.locations.remove(at: indexOfCurrentItem)
+        }
+        
     }
-   
+    
     func startAutoUpdateWeather() {
         timerUpdateCurrentWeather = Timer.scheduledTimer(withTimeInterval: timeIntervalFetchCurrentWeather, repeats: true) { _ in
             self.fetchCurrentWeather()
@@ -91,6 +105,17 @@ class WeatherViewModel: ObservableObject {
         }
     }
     
+    private func isEnoughTimeHasPassed() -> Bool {
+        let currentDate = Date()
+        guard  currentDate > dateFetching.addingTimeInterval(manualUpdateInterval) else {
+            print("Меньше 30 сек", dateFetching, currentDate)
+            
+            return false
+        }
+        print("Прошло больше 30 сек")
+        return true
+    }
+    
     private func getCurrentDate() -> String {
         let date = Date()
         let dateFormatter = DateFormatter()
@@ -101,22 +126,9 @@ class WeatherViewModel: ObservableObject {
 }
 
 extension WeatherViewModel {
-    
-    //to do удалить
-    var placemark: String {
-        location.name ?? "kkkkkk"
+    var isShowDeleteBotton: Bool {
+        location.tag != Constant.tagCurrentLocation.rawValue
     }
-    
-//    var latitude: String {
-//        guard let coordinate = location.location?.coordinate else { return "" }
-//        return String(coordinate.latitude)
-//    }
-//
-//    var longitude: String {
-//        guard let coordinate = location.location?.coordinate else { return "" }
-//        return String(coordinate.longitude)
-//    }
-    
     
     var todayForecasts: String {
         guard let dayTemp = dailyForecasts.first?.temp?.day,
@@ -209,8 +221,6 @@ extension WeatherViewModel {
     }
     
 
-    
-    
     var icon: String? {
         var iconName: String?
         

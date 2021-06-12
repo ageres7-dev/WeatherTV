@@ -11,6 +11,7 @@
 		3B61FED026468856000D4552 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 3B61FECF26468856000D4552 /* .gitignore */; };
 		3B61FED226468A56000D4552 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61FED126468A56000D4552 /* API.swift */; };
 		3B6F4BF3266AA06600690AF3 /* Lacation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6F4BF2266AA06600690AF3 /* Lacation.swift */; };
+		3BC6BC2F2673D81600E085F7 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC6BC2E2673D81600E085F7 /* Constant.swift */; };
 		3BC8F536266BF38500A0F91B /* Ext + CLPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC8F535266BF38500A0F91B /* Ext + CLPlacemark.swift */; };
 		3BC8F538266CFFA400A0F91B /* User Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC8F537266CFFA400A0F91B /* User Manager.swift */; };
 		3BC8F53A266D4D4700A0F91B /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC8F539266D4D4700A0F91B /* UserData.swift */; };
@@ -73,6 +74,7 @@
 		3B61FECF26468856000D4552 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		3B61FED126468A56000D4552 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		3B6F4BF2266AA06600690AF3 /* Lacation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lacation.swift; sourceTree = "<group>"; };
+		3BC6BC2E2673D81600E085F7 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		3BC8F535266BF38500A0F91B /* Ext + CLPlacemark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext + CLPlacemark.swift"; sourceTree = "<group>"; };
 		3BC8F537266CFFA400A0F91B /* User Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User Manager.swift"; sourceTree = "<group>"; };
 		3BC8F539266D4D4700A0F91B /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				A531E00925F88B5F00AB91E1 /* URL Manager.swift */,
 				A548313F2615A87C001E7F76 /* Location Manager.swift */,
 				3B61FED126468A56000D4552 /* API.swift */,
+				3BC6BC2E2673D81600E085F7 /* Constant.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				3BC8F536266BF38500A0F91B /* Ext + CLPlacemark.swift in Sources */,
 				A531E00A25F88B5F00AB91E1 /* URL Manager.swift in Sources */,
 				3BD7C12C26638B4300F4C323 /* LogoDataProvider.swift in Sources */,
+				3BC6BC2F2673D81600E085F7 /* Constant.swift in Sources */,
 				A531DFFA25F7F6BB00AB91E1 /* Network Manager.swift in Sources */,
 				A597C24A25F63169002940BF /* WeatherView.swift in Sources */,
 				3BD7C10B2662D50B00F4C323 /* SearchBar.swift in Sources */,
