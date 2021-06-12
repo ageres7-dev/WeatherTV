@@ -162,19 +162,19 @@ extension WeatherViewModel {
         return forecastFromTomorrow
     }
     
-    
-    var locationName: String? {
-        
-        if let location = location.name {
-            return location
-        } else if  let locality = locationManager.placemark?.locality {
-            return locality
-        } else if let locationFromCurrentWeather = currentWeather?.name {
-            return "\(locationFromCurrentWeather), \(currentWeather?.sys?.country ?? "")"
-        } else {
-            return nil
-        }
-    }
+//    
+//    var locationName: String? {
+//        
+//        if let location = location.name {
+//            return location
+//        } else if  let locality = locationManager.placemark?.locality {
+//            return locality
+//        } else if let locationFromCurrentWeather = currentWeather?.name {
+//            return "\(locationFromCurrentWeather), \(currentWeather?.sys?.country ?? "")"
+//        } else {
+//            return nil
+//        }
+//    }
     
     var description: String {
         var description = ""

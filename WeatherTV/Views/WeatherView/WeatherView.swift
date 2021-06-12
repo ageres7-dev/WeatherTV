@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WeatherView: View {
     @StateObject var viewModel: WeatherViewModel
+    @State private var showingActionSheet = false
     @Binding var weatherConditionID: Int?
     @Binding var selection: String
     
@@ -38,8 +39,16 @@ struct WeatherView: View {
             HStack {
                 Spacer()
                 if viewModel.isShowDeleteBotton {
-                    Button(action: { viewModel.deleteAction() }) {
+                    Button(action: { showingActionSheet.toggle() }) {
                         Image(systemName: "trash")
+                    }
+                    .actionSheet(isPresented: $showingActionSheet) {
+                        ActionSheet(title: Text("Remove \(viewModel.location.name ?? "a city") from the list?"), buttons: [
+                            .destructive(Text("Delete")) {
+                                viewModel.deleteAction()
+                            },
+                            .cancel()
+                        ])
                     }
                 }
             }
