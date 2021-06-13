@@ -122,23 +122,22 @@ struct WeatherView: View {
         .onChange(of: selection) { selection in
             guard selection == viewModel.location.tag else { return }
             weatherConditionID = viewModel.conditionCode
-            //                weatherConditionID = viewModel.weatherConditionID
-            // нужно переделать,
-            // необходимо включить ограничения на обновления
-            // сейчас обновляется при каждом появлении экрана
-            //                viewModel.fetchWeather()
-            //                viewModel.startAutoUpdateWeather()
+//            viewModel.onAppearAction()
         }
         
         .onAppear {
             guard selection == viewModel.location.tag else { return }
             weatherConditionID = viewModel.conditionCode
+            viewModel.onAppearAction()
+            viewModel.startAutoUpdateWeather()
+//            viewModel.fetchWeather()
+//            viewModel.onApperAction()
             //                weatherConditionID = viewModel.weatherConditionID
             // нужно переделать,
             // необходимо включить ограничения на обновления
             // сейчас обновляется при каждом появлении экрана
-            viewModel.fetchWeather()
-            viewModel.startAutoUpdateWeather()
+//            viewModel.fetchWeather()
+//           viewModel.startAutoUpdateWeather()
         }
         
     }

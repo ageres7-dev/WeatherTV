@@ -11,76 +11,121 @@ class WeatherViewModel: ObservableObject {
     @Published var currentWeather: CurrentWeather?
     @Published var forecastOneCalAPI: ForecastOneCalAPI?
     @Published var conditionCode: Int?
-    
-//    let locations = UserManager.shared.userData.locations
-//    let selectedTag = UserManager.shared.userData.selectedTag
     let location: Location
     
+    private let userManager = UserManager.shared
     private let locationManager = LocationManager.shared
-        
-    private var timerUpdateCurrentWeather: Timer?
-    private var timerUpdateForecast: Timer?
-    private var dateFetching = Date()
     
-    private let timeIntervalFetchCurrentWeather: Double = 10 * 60
-    private let timeIntervalFetchForecast: Double = 120 * 60
-    private let manualUpdateInterval: Double = 0.5 * 60
+    private var timerAutoUpdate: Timer?
+    private let minTimeIntervalUpdateForecast = TimeInterval(60 * 60 * 4) // 4 часа 60 * 60 * 4
+    private let minTimeIntervalUpdateCurrentWeather = TimeInterval(60 * 15) //15 минут 60 * 15
+    private let timeIntervalUpdateWeather: Double = 60 * 16 //16 минут 60 * 15
+    
+    private var indexOfCurrentItem: Int? {
+        userManager.userData.locations.firstIndex { $0.id == location.id }
+    }
     
     init(location: Location) {
         self.location = location
     }
     
-    func deleteAction() {
-        guard let indexOfCurrentItem = UserManager.shared.userData.locations.firstIndex(of: location) else { return }
+    func onAppearAction() {
+        guard location.tag == userManager.userData.selectedTag else { return }
+        getCurrentWeatherIfEnoughTimeHasPassed()
+        getForecastIfEnoughTimeHasPassed()
+    }
+    
+    private func getCurrentWeatherIfEnoughTimeHasPassed() {
+        let currentDate = Date()
+        guard let indexOfCurrentItem = indexOfCurrentItem else { return }
+        guard let dateLastUpdateCurrentWeather = userManager.userData.locations[indexOfCurrentItem].lastUpdateCurrentWeather else {
+            fetchCurrentWeather()
+            return
+        }
+        let intervalSinceLastUpdateCurrentWeather = currentDate.timeIntervalSince(dateLastUpdateCurrentWeather)
         
-        let indexOfPreviousElement = UserManager.shared.userData.locations.index(before: indexOfCurrentItem)
+        print("\nintervalSinceLastUpdateCurrentWeather \(intervalSinceLastUpdateCurrentWeather)")
+        print("\(intervalSinceLastUpdateCurrentWeather / 60) минут")
+        if intervalSinceLastUpdateCurrentWeather > minTimeIntervalUpdateCurrentWeather {
+            fetchCurrentWeather()
+        } else {
+            if currentWeather == nil {
+                currentWeather = userManager.userData.locations[indexOfCurrentItem].currentWeather
+            }
+        }
+    }
+    
+    private func getForecastIfEnoughTimeHasPassed() {
+        let currentDate = Date()
+        guard let indexOfCurrentItem = indexOfCurrentItem else { return }
+        guard let dateLastUpdateForecast = userManager.userData.locations[indexOfCurrentItem].lastUpdateForecastWeather else {
+            fetchForecast()
+            return
+        }
+        
+        let intervalSinceLastUpdateForecast = currentDate.timeIntervalSince(dateLastUpdateForecast)
+        print("\nintervalSinceLastUpdateForecast \(intervalSinceLastUpdateForecast)")
+        print("\(intervalSinceLastUpdateForecast / 60) минут")
+        if intervalSinceLastUpdateForecast > minTimeIntervalUpdateForecast {
+            fetchForecast()
+        } else {
+            if forecastOneCalAPI == nil {
+                forecastOneCalAPI = userManager.userData.locations[indexOfCurrentItem].forecastOneCalAPI
+            }
+        }
+    }
+    
+    func deleteAction() {
+        guard let indexOfCurrentItem = indexOfCurrentItem else { return }
+        
+        let indexOfPreviousElement = userManager.userData.locations.index(before: indexOfCurrentItem)
         
         switch indexOfCurrentItem {
         case 0:
-            UserManager.shared.userData.selectedTag = Constant.tagCurrentLocation.rawValue
-
+            userManager.userData.selectedTag = Constant.tagCurrentLocation.rawValue
+            
         case 1... :
             if indexOfPreviousElement >= 0 {
-                let tagPreviousElement = UserManager.shared.userData.locations[indexOfPreviousElement].tag
+                let tagPreviousElement = userManager.userData.locations[indexOfPreviousElement].tag
                 
-                UserManager.shared.userData.selectedTag = tagPreviousElement
+                userManager.userData.selectedTag = tagPreviousElement
             }
             
         default: return
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            UserManager.shared.userData.locations.remove(at: indexOfCurrentItem)
+            self.userManager.userData.locations.remove(at: indexOfCurrentItem)
         }
         
     }
     
     func startAutoUpdateWeather() {
-        timerUpdateCurrentWeather = Timer.scheduledTimer(withTimeInterval: timeIntervalFetchCurrentWeather, repeats: true) { _ in
-            self.fetchCurrentWeather()
-            print("UpdateCurrentWeather \(self.getCurrentDate())")
-            self.dateFetching = Date()
-        }
-        
-        timerUpdateForecast = Timer.scheduledTimer(withTimeInterval: timeIntervalFetchForecast, repeats: true) { _ in
-            self.fetchForecast()
-            print("UpdateForecast \(self.getCurrentDate())")
-            self.dateFetching = Date()
+        guard timerAutoUpdate == nil else { return }
+        print("startAutoUpdateWeather()")
+        timerAutoUpdate = Timer.scheduledTimer(withTimeInterval: timeIntervalUpdateWeather, repeats: true) { _ in
+            print("Действие по таймеру \(self.currentWeather?.name ?? "")")
+            self.onAppearAction()
         }
         
     }
-    
-    func actionUpdateButton() {
-        guard isEnoughTimeHasPassed() else { return }
-        fetchWeather()
-    }
-    
+        
     func fetchWeather() {
-        dateFetching = Date()
         fetchForecast()
         fetchCurrentWeather()
     }
     
-    func fetchForecast() {
+    private func saveCurrentDateUpdateForecast() {
+        guard let indexOfCurrentItem = indexOfCurrentItem else { return }
+        userManager.userData.locations[indexOfCurrentItem].lastUpdateForecastWeather = Date()
+    }
+    
+    private func saveCurrentDateUpdateCurrentWeather() {
+        guard let indexOfCurrentItem = indexOfCurrentItem else { return }
+        userManager.userData.locations[indexOfCurrentItem].lastUpdateCurrentWeather = Date()
+    }
+    
+    
+    private func fetchForecast() {
         let url = URLManager.shared.urlOneCallFrom(
             latitude: location.latitude,
             longitude: location.longitude
@@ -89,10 +134,14 @@ class WeatherViewModel: ObservableObject {
         NetworkManager.shared.fetchForecastSevenDays(from: url) { forecast in
             self.forecastOneCalAPI = forecast
             print("fetchForecastSevenDays")
+            
+            guard let indexOfCurrentItem = self.indexOfCurrentItem else { return }
+            self.userManager.userData.locations[indexOfCurrentItem].forecastOneCalAPI = forecast
+            self.userManager.userData.locations[indexOfCurrentItem].lastUpdateForecastWeather = Date()
         }
     }
     
-    func fetchCurrentWeather() {
+    private func fetchCurrentWeather() {
         let url = URLManager.shared.urlCurrentWeatherFrom(
             latitude: location.latitude,
             longitude: location.longitude
@@ -102,18 +151,11 @@ class WeatherViewModel: ObservableObject {
             self.currentWeather = currentWeather
             self.conditionCode = currentWeather.weather?.first?.id
             print("fetchCurrentWeather")
-        }
-    }
-    
-    private func isEnoughTimeHasPassed() -> Bool {
-        let currentDate = Date()
-        guard  currentDate > dateFetching.addingTimeInterval(manualUpdateInterval) else {
-            print("Меньше 30 сек", dateFetching, currentDate)
             
-            return false
+            guard let indexOfCurrentItem = self.indexOfCurrentItem else { return }
+            self.userManager.userData.locations[indexOfCurrentItem].currentWeather = currentWeather
+            self.userManager.userData.locations[indexOfCurrentItem].lastUpdateCurrentWeather = Date()
         }
-        print("Прошло больше 30 сек")
-        return true
     }
     
     private func getCurrentDate() -> String {
@@ -162,19 +204,19 @@ extension WeatherViewModel {
         return forecastFromTomorrow
     }
     
-//    
-//    var locationName: String? {
-//        
-//        if let location = location.name {
-//            return location
-//        } else if  let locality = locationManager.placemark?.locality {
-//            return locality
-//        } else if let locationFromCurrentWeather = currentWeather?.name {
-//            return "\(locationFromCurrentWeather), \(currentWeather?.sys?.country ?? "")"
-//        } else {
-//            return nil
-//        }
-//    }
+    //
+    //    var locationName: String? {
+    //
+    //        if let location = location.name {
+    //            return location
+    //        } else if  let locality = locationManager.placemark?.locality {
+    //            return locality
+    //        } else if let locationFromCurrentWeather = currentWeather?.name {
+    //            return "\(locationFromCurrentWeather), \(currentWeather?.sys?.country ?? "")"
+    //        } else {
+    //            return nil
+    //        }
+    //    }
     
     var description: String {
         var description = ""
@@ -220,7 +262,7 @@ extension WeatherViewModel {
         return "Pressure: \(lround(pressure)) hPa"
     }
     
-
+    
     var icon: String? {
         var iconName: String?
         

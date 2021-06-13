@@ -10,7 +10,7 @@ import Foundation
 
 
 // MARK: - ForecastForSevenDays
-struct ForecastOneCalAPI: Codable {
+struct ForecastOneCalAPI: Codable, Hashable {
     let lat, lon: Double?
     let timezone: String?
     let timezoneOffset: Date?

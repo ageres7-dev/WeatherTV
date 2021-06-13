@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - CurrentWeather
-struct CurrentWeather: Decodable, Hashable {
+struct CurrentWeather: Codable, Hashable {
     let coord: Coord?
     let weather: [Weather]?
     let main: Main?
@@ -17,7 +17,7 @@ struct CurrentWeather: Decodable, Hashable {
     let clouds: Clouds?
     let rain: Rain?
     let snow: Snow?
-    let dt: Int? //Время расчета данных, unix, UTC
+    let dt: Date? //Время расчета данных, unix, UTC
     let sys: Sys?
     let timezone: Int? //Сдвиг в секундах от UTC
     let id: Int?
@@ -25,7 +25,7 @@ struct CurrentWeather: Decodable, Hashable {
 }
 
 // MARK: - Coord
-struct Coord: Decodable, Hashable {
+struct Coord: Codable, Hashable {
     let lon: Double?
     let lat: Double?
 }
@@ -39,7 +39,7 @@ struct Weather: Codable, Hashable  {
 }
 
 // MARK: - Main
-struct Main: Decodable, Hashable  {
+struct Main: Codable, Hashable  {
     let temp: Double?
     let feelsLike: Double?
     let pressure: Double?
@@ -51,19 +51,19 @@ struct Main: Decodable, Hashable  {
 }
 
 // MARK: - Wind
-struct Wind: Decodable, Hashable  {
+struct Wind: Codable, Hashable  {
     let speed: Double?
     let deg: Double?
     let gust: Double?
 }
 
 // MARK: - Clouds
-struct Clouds: Decodable, Hashable {
+struct Clouds: Codable, Hashable {
     let all: Double?
 }
 
 // MARK: - Rain
-struct Rain: Decodable, Hashable {
+struct Rain: Codable, Hashable {
     let oneHours: Double? //Объем дождя за последний 1 час, мм
     let threeHours: Double? //Объем дождя за последние 3 часа, мм
     enum CodingKeys: String, CodingKey {
@@ -73,7 +73,7 @@ struct Rain: Decodable, Hashable {
 }
 
 // MARK: - Snow
-struct Snow: Decodable, Hashable {
+struct Snow: Codable, Hashable {
     let oneHours: Double?
     let threeHours: Double?
     enum CodingKeys: String, CodingKey {
@@ -84,7 +84,7 @@ struct Snow: Decodable, Hashable {
 
 
 // MARK: - Sys
-struct Sys: Decodable, Hashable {
+struct Sys: Codable, Hashable {
     let country: String?
     let sunrise: Date?
     let sunset: Date?
