@@ -9,11 +9,9 @@ import SwiftUI
 
 struct StartTabView: View {
     @EnvironmentObject var manager: UserManager
-//    @State private var locations: [Location] = []
-//    @State private var selection = "search"
-    @State private var nameCurrentLocation = "My Location"
+//    @State private var nameCurrentLocation = "My Location"
     @State private var weatherConditionID: Int? = nil
-    
+    @State private var isShowLocalWeather = false
     @ObservedObject var state = SearchState()
     
     var body: some View {
@@ -29,15 +27,35 @@ struct StartTabView: View {
                         .tabItem { Image(systemName: "magnifyingglass") }
                         .tag("search")
                     
-                    FindingLocationView(selection: $manager.userData.selectedTag,
-                                        nameCurrentLocation: $nameCurrentLocation,
-                                        weatherConditionID: $weatherConditionID)
-                        .tabItem {
-                            Label(nameCurrentLocation, systemImage: "location")
-                        }
-                        .tag(Constant.tagCurrentLocation.rawValue)
                     
-                    ForEach(manager.userData.locations) { location in
+                    
+                        if isShowLocalWeather {
+                            
+                            WeatherView(viewModel: WeatherViewModel(location: currentLocation ), weatherConditionID: $weatherConditionID,
+                                        selection: $manager.userData.selectedTag)
+                            
+                                .tabItem {
+                                    Label(nameCurrentLocation, systemImage: "location")
+                                }
+                                .tag(Constant.tagCurrentLocation.rawValue)
+                                
+                            
+                            
+                        } else {
+                            FindingLocationView(selection: $manager.userData.selectedTag,
+//                                                nameCurrentLocation: $nameCurrentLocation,
+                                                weatherConditionID: $weatherConditionID, isShowLocalWeather: $isShowLocalWeather)
+                                .tabItem {
+                                    Label(nameCurrentLocation, systemImage: "location")
+                                }
+                                .tag(Constant.tagCurrentLocation.rawValue)
+                        }
+                    
+                    
+                    
+                    
+                    
+                    ForEach(locations) { location in
                         WeatherView(viewModel: WeatherViewModel(location: location), weatherConditionID: $weatherConditionID,
                                     selection: $manager.userData.selectedTag)
                             .tabItem {
@@ -57,6 +75,26 @@ struct StartTabView: View {
             DataManager.shared.save(userData)
         }
     }
+}
+
+extension StartTabView {
+    
+    private var nameCurrentLocation: String {
+        currentLocation.name ?? "My Location"
+    }
+    
+    private var currentLocation: Location {
+        manager.userData.locations.first(where: { $0.tag == Constant.tagCurrentLocation.rawValue})! // ?? Location.orenburg
+//        manager.userData.locations.filter(
+//            { $0.tag == Constant.tagCurrentLocation.rawValue }
+//
+//        )
+    }
+    
+    private var locations: [Location] {
+        manager.userData.locations.filter({ $0.tag != Constant.tagCurrentLocation.rawValue })
+    }
+    
 }
 
 

@@ -17,9 +17,9 @@ class WeatherViewModel: ObservableObject {
     private let locationManager = LocationManager.shared
     
     private var timerAutoUpdate: Timer?
-    private let minTimeIntervalUpdateForecast = TimeInterval(60 * 60 * 4) // 4 часа 60 * 60 * 4
-    private let minTimeIntervalUpdateCurrentWeather = TimeInterval(60 * 15) //15 минут 60 * 15
-    private let timeIntervalUpdateWeather: Double = 60 * 16 //16 минут 60 * 15
+    private let minTimeIntervalUpdateForecast = TimeInterval(50) // 4 часа 60 * 60 * 4
+    private let minTimeIntervalUpdateCurrentWeather = TimeInterval(50) //15 минут 60 * 15
+    private let timeIntervalUpdateWeather: Double = 60 //16 минут 60 * 15
     
     private var indexOfCurrentItem: Int? {
         userManager.userData.locations.firstIndex { $0.id == location.id }
@@ -30,7 +30,10 @@ class WeatherViewModel: ObservableObject {
     }
     
     func onAppearAction() {
-        guard location.tag == userManager.userData.selectedTag else { return }
+        guard location.tag == userManager.userData.selectedTag else {
+            print("экран не виден, выходим из функции onAppearAction()")
+            return
+        }
         getCurrentWeatherIfEnoughTimeHasPassed()
         getForecastIfEnoughTimeHasPassed()
     }
@@ -48,8 +51,11 @@ class WeatherViewModel: ObservableObject {
         print("\(intervalSinceLastUpdateCurrentWeather / 60) минут")
         if intervalSinceLastUpdateCurrentWeather > minTimeIntervalUpdateCurrentWeather {
             fetchCurrentWeather()
+            print("\(location.tag) получаем погоду текущую")
         } else {
+            print{"не обновляем погоду"}
             if currentWeather == nil {
+                print("\(location.tag) берем погоду из кеша")
                 currentWeather = userManager.userData.locations[indexOfCurrentItem].currentWeather
             }
         }
@@ -68,8 +74,11 @@ class WeatherViewModel: ObservableObject {
         print("\(intervalSinceLastUpdateForecast / 60) минут")
         if intervalSinceLastUpdateForecast > minTimeIntervalUpdateForecast {
             fetchForecast()
+            print("\(location.tag) прошло достаточно времени, получаем прогноз погоды")
         } else {
+            print{"не обновляем прогноз"}
             if forecastOneCalAPI == nil {
+                print("\(location.tag) берем прогноз из кеша")
                 forecastOneCalAPI = userManager.userData.locations[indexOfCurrentItem].forecastOneCalAPI
             }
         }
@@ -101,18 +110,15 @@ class WeatherViewModel: ObservableObject {
     
     func startAutoUpdateWeather() {
         guard timerAutoUpdate == nil else { return }
-        print("startAutoUpdateWeather()")
+        print("\(location.tag) старт таймера")
         timerAutoUpdate = Timer.scheduledTimer(withTimeInterval: timeIntervalUpdateWeather, repeats: true) { _ in
-            print("Действие по таймеру \(self.currentWeather?.name ?? "")")
+            print("\(self.location.tag) Действие по таймеру)")
+            print("Имя локации OpenWeatherMap: \(self.currentWeather?.name ?? "")")
             self.onAppearAction()
         }
         
     }
         
-    func fetchWeather() {
-        fetchForecast()
-        fetchCurrentWeather()
-    }
     
     private func saveCurrentDateUpdateForecast() {
         guard let indexOfCurrentItem = indexOfCurrentItem else { return }
@@ -133,7 +139,7 @@ class WeatherViewModel: ObservableObject {
         
         NetworkManager.shared.fetchForecastSevenDays(from: url) { forecast in
             self.forecastOneCalAPI = forecast
-            print("fetchForecastSevenDays")
+            print("Получаем прогноз погоды \(self.location.tag)")
             
             guard let indexOfCurrentItem = self.indexOfCurrentItem else { return }
             self.userManager.userData.locations[indexOfCurrentItem].forecastOneCalAPI = forecast
@@ -150,7 +156,7 @@ class WeatherViewModel: ObservableObject {
         NetworkManager.shared.fetchCurrentWeather(from: url) { currentWeather in
             self.currentWeather = currentWeather
             self.conditionCode = currentWeather.weather?.first?.id
-            print("fetchCurrentWeather")
+            print("Получаем текущую погоды \(self.location.tag)")
             
             guard let indexOfCurrentItem = self.indexOfCurrentItem else { return }
             self.userManager.userData.locations[indexOfCurrentItem].currentWeather = currentWeather
@@ -170,6 +176,10 @@ class WeatherViewModel: ObservableObject {
 extension WeatherViewModel {
     var isShowDeleteBotton: Bool {
         location.tag != Constant.tagCurrentLocation.rawValue
+    }
+    
+    var nameLocationOpenWeather: String? {
+        currentWeather?.name //+ currentWeather?.sys?.country
     }
     
     var todayForecasts: String {

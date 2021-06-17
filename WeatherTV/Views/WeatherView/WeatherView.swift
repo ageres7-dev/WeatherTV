@@ -38,6 +38,8 @@ struct WeatherView: View {
             
             HStack {
                 Spacer()
+                Text(viewModel.nameLocationOpenWeather ?? "")
+                Spacer()
                 if viewModel.isShowDeleteBotton {
                     Button(action: { showingActionSheet.toggle() }) {
                         Image(systemName: "trash")

@@ -9,11 +9,13 @@ import SwiftUI
 import CoreLocation
 
 struct FindingLocationView: View {
+    @EnvironmentObject var manager: UserManager
     @EnvironmentObject var location: LocationManager
     @State private var isFirsOnAppear = true
     @Binding var selection: String
-    @Binding var nameCurrentLocation: String
+//    @Binding var nameCurrentLocation: String
     @Binding var weatherConditionID: Int?
+    @Binding var isShowLocalWeather: Bool
     
     var body: some View {
         
@@ -42,9 +44,25 @@ struct FindingLocationView: View {
                 
                 if let placemark = location.placemark {
                     
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .onAppear {
+                            comparisonOfTheSavedLocationWithThe(currentLocation: placemark)
+//                            var currentLocation = Location.getFrom(placemark)
+//                            currentLocation.tag = Constant.tagCurrentLocation.rawValue
+//
+//                            manager.userData.locations.removeAll {
+//                                $0.tag == Constant.tagCurrentLocation.rawValue
+//                            }
+//
+//                            let startIndex = manager.userData.locations.startIndex
+//                            manager.userData.locations.insert(currentLocation, at: startIndex)
+//                            isShowLocalWeather = true
+                        }
+                    
 //                    var location = Location.getFrom(placemark)
 //                    location.tag = "localWeather"
-                    
+                    /*
                     WeatherView(
                         viewModel: WeatherViewModel(location: convert(placemark)),
                         weatherConditionID: $weatherConditionID,
@@ -54,6 +72,8 @@ struct FindingLocationView: View {
                         guard let newNameCurrentLocation = placemark.locality else { return }
                         nameCurrentLocation = newNameCurrentLocation
                     }
+                    */
+                    
                 }
             }
         }
@@ -71,27 +91,58 @@ struct FindingLocationView: View {
 
 
 extension FindingLocationView {
+    private func comparisonOfTheSavedLocationWithThe(currentLocation: CLPlacemark) {
+        var currentLocation = Location.getFrom(currentLocation)
+        currentLocation.tag = Constant.tagCurrentLocation.rawValue
+        
+        let index = manager.userData.locations.firstIndex(where: {
+            $0.tag == Constant.tagCurrentLocation.rawValue
+        })
+        guard let indexCurrentLocation = index else { return }
+        let savedLocation = manager.userData.locations[indexCurrentLocation]
+        
+        if currentLocation.latitude != savedLocation.latitude,
+           currentLocation.longitude != savedLocation.longitude {
+            manager.userData.locations.remove(at: indexCurrentLocation)
+            let startIndex = manager.userData.locations.startIndex
+            manager.userData.locations.insert(currentLocation, at: startIndex)
+        }
+        /*
+         let x = 1.23556789
+         let y = Double(round(1000*x)/1000)
+         print(y)  // 1.236
+         */
+//        
+//        manager.userData.locations.removeAll {
+//            $0.tag == Constant.tagCurrentLocation.rawValue
+//        }
+//        
+//        let startIndex = manager.userData.locations.startIndex
+//        manager.userData.locations.insert(currentLocation, at: startIndex)
+        
+        isShowLocalWeather = true
+    }
     
-    func convert(_ placemark: CLPlacemark) -> Location {
+    private func convert(_ placemark: CLPlacemark) -> Location {
         var temp = Location.getFrom(placemark)
         temp.tag = Constant.tagCurrentLocation.rawValue
         return temp
-        //                    location.tag = "localWeather"
     }
   
     
-    var isShowAllowAccess: Bool {
+    private var isShowAllowAccess: Bool {
         location.status == .denied || location.status == .none
     }
     
-    var isFindingCurrentLocation: Bool {
+    private var isFindingCurrentLocation: Bool {
         location.location == nil  || location.status == .none // && !isShowAllowAccess
     }
 }
 
+
 struct FindingLocaationView_Previews: PreviewProvider {
     static var previews: some View {
-        FindingLocationView(selection: .constant(""), nameCurrentLocation: .constant("orenburg"), weatherConditionID: .constant(200))
+        FindingLocationView(selection: .constant(""), weatherConditionID: .constant(200), isShowLocalWeather: .constant(false))
             .environmentObject(LocationManager.shared)
     }
 }
