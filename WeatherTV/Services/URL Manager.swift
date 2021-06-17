@@ -11,11 +11,11 @@ class URLManager {
     static let shared = URLManager()
     private init() {}
     
-    func urlOneCallFrom(latitude: String, longitude: String) -> URL? {
+    func urlOneCallFrom(latitude: Double, longitude: Double) -> URL? {
         let queryItems = [
             URLQueryItem(name: "exclude", value: "minutely,hourly,alerts"),
-            URLQueryItem(name: "lat", value: latitude),
-            URLQueryItem(name: "lon", value: longitude),
+            URLQueryItem(name: "lat", value: String(latitude)),
+            URLQueryItem(name: "lon", value: String(longitude)),
             URLQueryItem(name: "appid", value: API.key.rawValue),
             URLQueryItem(name: "units", value: "metric"),
         ]
@@ -26,10 +26,10 @@ class URLManager {
         return components?.url
     }
     
-    func urlCurrentWeatherFrom(latitude: String, longitude: String) -> URL? {
+    func urlCurrentWeatherFrom(latitude: Double, longitude: Double) -> URL? {
         let queryItems = [
-            URLQueryItem(name: "lat", value: latitude),
-            URLQueryItem(name: "lon", value: longitude),
+            URLQueryItem(name: "lat", value: String(latitude)),
+            URLQueryItem(name: "lon", value: String(longitude)),
             URLQueryItem(name: "appid", value: API.key.rawValue),
             URLQueryItem(name: "units", value: "metric"),
         ]

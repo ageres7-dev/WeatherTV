@@ -11,8 +11,8 @@ import CoreLocation
 struct Location: Codable, Hashable, Identifiable {
     var id = UUID()
     let name: String?
-    let latitude: String
-    let longitude: String
+    let latitude: Double
+    let longitude: Double
     var tag: String
     var lastUpdateCurrentWeather: Date?
     var lastUpdateForecastWeather: Date?
@@ -24,16 +24,16 @@ struct Location: Codable, Hashable, Identifiable {
 extension Location {
     static var orenburg: Location {
         Location(name: "Orenburg",
-                 latitude: "51.46",
-                 longitude: "55.06",
+                 latitude: 51.46,
+                 longitude: 55.06,
                  tag: "Orenburg")
     }
     
     static func getFrom(_ placemark: CLPlacemark) -> Location {
         Location(
             name: placemark.locality,
-            latitude: String(placemark.location?.coordinate.latitude ?? 0),
-            longitude: String(placemark.location?.coordinate.longitude ?? 0),
+            latitude: placemark.location?.coordinate.latitude ?? 0,
+            longitude: placemark.location?.coordinate.longitude ?? 0,
             tag: placemark.getTag()
         )
     }
@@ -41,8 +41,8 @@ extension Location {
     static func getFrom(_ location: CLLocation, tag: String) -> Location {
         Location(
             name: nil,
-            latitude: String(location.coordinate.latitude),
-            longitude: String(location.coordinate.longitude),
+            latitude: location.coordinate.latitude,
+            longitude: location.coordinate.longitude,
             tag: tag
         )
     }

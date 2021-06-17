@@ -13,7 +13,7 @@ struct FindingLocationView: View {
     @EnvironmentObject var location: LocationManager
     @State private var isFirsOnAppear = true
     @Binding var selection: String
-//    @Binding var nameCurrentLocation: String
+    @Binding var nameCurrentLocation: String
     @Binding var weatherConditionID: Int?
     @Binding var isShowLocalWeather: Bool
     
@@ -43,37 +43,11 @@ struct FindingLocationView: View {
             } else {
                 
                 if let placemark = location.placemark {
-                    
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
                         .onAppear {
                             comparisonOfTheSavedLocationWithThe(currentLocation: placemark)
-//                            var currentLocation = Location.getFrom(placemark)
-//                            currentLocation.tag = Constant.tagCurrentLocation.rawValue
-//
-//                            manager.userData.locations.removeAll {
-//                                $0.tag == Constant.tagCurrentLocation.rawValue
-//                            }
-//
-//                            let startIndex = manager.userData.locations.startIndex
-//                            manager.userData.locations.insert(currentLocation, at: startIndex)
-//                            isShowLocalWeather = true
                         }
-                    
-//                    var location = Location.getFrom(placemark)
-//                    location.tag = "localWeather"
-                    /*
-                    WeatherView(
-                        viewModel: WeatherViewModel(location: convert(placemark)),
-                        weatherConditionID: $weatherConditionID,
-                        selection: $selection
-                    )
-                    .onAppear {
-                        guard let newNameCurrentLocation = placemark.locality else { return }
-                        nameCurrentLocation = newNameCurrentLocation
-                    }
-                    */
-                    
                 }
             }
         }
@@ -98,28 +72,37 @@ extension FindingLocationView {
         let index = manager.userData.locations.firstIndex(where: {
             $0.tag == Constant.tagCurrentLocation.rawValue
         })
-        guard let indexCurrentLocation = index else { return }
-        let savedLocation = manager.userData.locations[indexCurrentLocation]
         
-        if currentLocation.latitude != savedLocation.latitude,
-           currentLocation.longitude != savedLocation.longitude {
-            manager.userData.locations.remove(at: indexCurrentLocation)
-            let startIndex = manager.userData.locations.startIndex
-            manager.userData.locations.insert(currentLocation, at: startIndex)
+        if let indexCurrentLocation = index {
+            let savedLocation = manager.userData.locations[indexCurrentLocation]
+            let savedLatitude = (savedLocation.latitude)
+            let savedLongitude = (savedLocation.longitude)
+            
+            print(savedLatitude)
+            print(currentLocation.latitude)
+            let roundedSavedLatitude = round(1000 * savedLatitude) / 1000
+            let roundedSavedLongitude = round(1000 * savedLongitude) / 1000
+            
+            let roundedCurrentLatitude = round(1000 * currentLocation.latitude) / 1000
+            let roundedCurrentLongitude = round(1000 * currentLocation.longitude) / 1000
+            
+            if roundedSavedLatitude == roundedCurrentLatitude,
+                  roundedSavedLongitude == roundedCurrentLongitude {
+                
+                currentLocation.lastUpdateCurrentWeather = savedLocation.lastUpdateCurrentWeather
+                currentLocation.lastUpdateForecastWeather = savedLocation.lastUpdateForecastWeather
+                currentLocation.currentWeather = savedLocation.currentWeather
+                currentLocation.forecastOneCalAPI = savedLocation.forecastOneCalAPI
+            }
         }
-        /*
-         let x = 1.23556789
-         let y = Double(round(1000*x)/1000)
-         print(y)  // 1.236
-         */
-//        
-//        manager.userData.locations.removeAll {
-//            $0.tag == Constant.tagCurrentLocation.rawValue
-//        }
-//        
-//        let startIndex = manager.userData.locations.startIndex
-//        manager.userData.locations.insert(currentLocation, at: startIndex)
         
+        manager.userData.locations.removeAll(where: {
+            $0.tag == Constant.tagCurrentLocation.rawValue
+        })
+        
+        let startIndex = manager.userData.locations.startIndex
+        manager.userData.locations.insert(currentLocation, at: startIndex)
+        nameCurrentLocation = currentLocation.name ?? "My Location"
         isShowLocalWeather = true
     }
     
@@ -142,7 +125,13 @@ extension FindingLocationView {
 
 struct FindingLocaationView_Previews: PreviewProvider {
     static var previews: some View {
-        FindingLocationView(selection: .constant(""), weatherConditionID: .constant(200), isShowLocalWeather: .constant(false))
-            .environmentObject(LocationManager.shared)
+        FindingLocationView(
+            selection: .constant(""),
+            nameCurrentLocation: .constant("ee"),
+            weatherConditionID: .constant(200),
+            isShowLocalWeather: .constant(false)
+        )
+        
+        .environmentObject(LocationManager.shared)
     }
 }

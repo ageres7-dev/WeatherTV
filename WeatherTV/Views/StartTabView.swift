@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StartTabView: View {
     @EnvironmentObject var manager: UserManager
-//    @State private var nameCurrentLocation = "My Location"
+    @State private var nameCurrentLocation = "My Location"
     @State private var weatherConditionID: Int? = nil
     @State private var isShowLocalWeather = false
     @ObservedObject var state = SearchState()
@@ -28,9 +28,8 @@ struct StartTabView: View {
                         .tag("search")
                     
                     
-                    
                         if isShowLocalWeather {
-                            
+                            if let currentLocation = currentLocation {
                             WeatherView(viewModel: WeatherViewModel(location: currentLocation ), weatherConditionID: $weatherConditionID,
                                         selection: $manager.userData.selectedTag)
                             
@@ -38,22 +37,18 @@ struct StartTabView: View {
                                     Label(nameCurrentLocation, systemImage: "location")
                                 }
                                 .tag(Constant.tagCurrentLocation.rawValue)
-                                
+                            }
                             
                             
                         } else {
                             FindingLocationView(selection: $manager.userData.selectedTag,
-//                                                nameCurrentLocation: $nameCurrentLocation,
+                                                nameCurrentLocation: $nameCurrentLocation,
                                                 weatherConditionID: $weatherConditionID, isShowLocalWeather: $isShowLocalWeather)
                                 .tabItem {
                                     Label(nameCurrentLocation, systemImage: "location")
                                 }
                                 .tag(Constant.tagCurrentLocation.rawValue)
                         }
-                    
-                    
-                    
-                    
                     
                     ForEach(locations) { location in
                         WeatherView(viewModel: WeatherViewModel(location: location), weatherConditionID: $weatherConditionID,
@@ -79,12 +74,12 @@ struct StartTabView: View {
 
 extension StartTabView {
     
-    private var nameCurrentLocation: String {
-        currentLocation.name ?? "My Location"
-    }
+//    private var nameCurrentLocation: String {
+//        currentLocation?.name ?? "My Location"
+//    }
     
-    private var currentLocation: Location {
-        manager.userData.locations.first(where: { $0.tag == Constant.tagCurrentLocation.rawValue})! // ?? Location.orenburg
+    private var currentLocation: Location? {
+        manager.userData.locations.first(where: { $0.tag == Constant.tagCurrentLocation.rawValue}) // ?? Location.orenburg
 //        manager.userData.locations.filter(
 //            { $0.tag == Constant.tagCurrentLocation.rawValue }
 //
