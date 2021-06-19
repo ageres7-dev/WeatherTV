@@ -12,47 +12,30 @@ struct WeatherView: View {
     @State private var showingActionSheet = false
     @Binding var weatherConditionID: Int?
     @Binding var selection: String
+    @State private var isFirstOnAppear = true
     
     var body: some View {
         VStack {
-            /*
-            HStack(spacing: 8) {
-                Text("")
-                    .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                Spacer()
-                if let locationName = viewModel.locationName {
-                    Image(systemName: "location")
-                        .font(.body)
-                    Text(locationName)
-                        .font(.title3)
-                }
-                
-                Spacer()
-                
-                Button(action: {viewModel.actionUpdateButton() }) {
-                    Image(systemName: "arrow.clockwise")
-                    
-                }
-            }
-            */
             
             HStack {
+//                Spacer()
+//                Text(viewModel.nameLocationOpenWeather ?? "")
                 Spacer()
-                Text(viewModel.nameLocationOpenWeather ?? "")
-                Spacer()
-                if viewModel.isShowDeleteBotton {
-                    Button(action: { showingActionSheet.toggle() }) {
-                        Image(systemName: "trash")
-                    }
-                    .actionSheet(isPresented: $showingActionSheet) {
-                        ActionSheet(title: Text("Remove \(viewModel.location.name ?? "a city") from the list?"), buttons: [
-                            .destructive(Text("Delete")) {
-                                viewModel.deleteAction()
-                            },
-                            .cancel()
-                        ])
-                    }
+                
+                Button(action: { showingActionSheet.toggle() }) {
+                    Image(systemName: "trash")
                 }
+                 
+                .opacity(viewModel.isShowDeleteBotton ? 1 : 0)
+                .actionSheet(isPresented: $showingActionSheet) {
+                    ActionSheet(title: Text("Remove \(viewModel.location.name ?? "a city") from the list?"), buttons: [
+                        .destructive(Text("Delete")) {
+                            viewModel.deleteAction()
+                        },
+                        .cancel()
+                    ])
+                }
+                
             }
             Spacer()
             
@@ -124,22 +107,23 @@ struct WeatherView: View {
         .onChange(of: selection) { selection in
             guard selection == viewModel.location.tag else { return }
             weatherConditionID = viewModel.conditionCode
-//            viewModel.onAppearAction()
+            viewModel.onAppearAction()
         }
         
         .onAppear {
-            guard selection == viewModel.location.tag else { return }
-            weatherConditionID = viewModel.conditionCode
+            guard isFirstOnAppear else { return }
             viewModel.onAppearAction()
             viewModel.startAutoUpdateWeather()
-//            viewModel.fetchWeather()
-//            viewModel.onApperAction()
-            //                weatherConditionID = viewModel.weatherConditionID
-            // нужно переделать,
-            // необходимо включить ограничения на обновления
-            // сейчас обновляется при каждом появлении экрана
-//            viewModel.fetchWeather()
-//           viewModel.startAutoUpdateWeather()
+            isFirstOnAppear = false
+//            print(".onAppear \(viewModel.nameLocationOpenWeather ?? "")")
+//            viewModel.onAppearAction()
+//
+//            guard selection == viewModel.location.tag else {
+//                print("\(viewModel.nameLocationOpenWeather ?? "") экран не виден, выходим из функции .onAppear ")
+//                return
+//            }
+//            weatherConditionID = viewModel.conditionCode
+            
         }
         
     }

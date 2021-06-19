@@ -17,9 +17,9 @@ class WeatherViewModel: ObservableObject {
     private let locationManager = LocationManager.shared
     
     private var timerAutoUpdate: Timer?
-    private let minTimeIntervalUpdateForecast = TimeInterval(50) // 4 часа 60 * 60 * 4
-    private let minTimeIntervalUpdateCurrentWeather = TimeInterval(50) //15 минут 60 * 15
-    private let timeIntervalUpdateWeather: Double = 60 //16 минут 60 * 15
+    private let minTimeIntervalUpdateForecast = TimeInterval(60 * 60 * 4) // 4 часа 60 * 60 * 4
+    private let minTimeIntervalUpdateCurrentWeather = TimeInterval(60 * 15) //15 минут 60 * 15
+    private let timeIntervalUpdateWeather: Double = 30 //16 минут 60 * 15
     
     private var indexOfCurrentItem: Int? {
         userManager.userData.locations.firstIndex { $0.id == location.id }
@@ -30,10 +30,11 @@ class WeatherViewModel: ObservableObject {
     }
     
     func onAppearAction() {
-        guard location.tag == userManager.userData.selectedTag else {
-            print("экран не виден, выходим из функции onAppearAction()")
-            return
-        }
+        print(nameLocationOpenWeather ?? "")
+//        guard location.tag == userManager.userData.selectedTag else {
+//            print("экран не виден, выходим из функции onAppearAction()")
+//            return
+//        }
         getCurrentWeatherIfEnoughTimeHasPassed()
         getForecastIfEnoughTimeHasPassed()
     }
@@ -106,13 +107,21 @@ class WeatherViewModel: ObservableObject {
             self.userManager.userData.locations.remove(at: indexOfCurrentItem)
         }
         
+        timerAutoUpdate?.invalidate()
+        
     }
     
     func startAutoUpdateWeather() {
         guard timerAutoUpdate == nil else { return }
         print("\(location.tag) старт таймера")
         timerAutoUpdate = Timer.scheduledTimer(withTimeInterval: timeIntervalUpdateWeather, repeats: true) { _ in
+            
             print("\(self.location.tag) Действие по таймеру)")
+            guard self.location.tag == self.userManager.userData.selectedTag else {
+                print("экран не виден, выходим из функции startAutoUpdateWeather()")
+                return
+            }
+            
             print("Имя локации OpenWeatherMap: \(self.currentWeather?.name ?? "")")
             self.onAppearAction()
         }

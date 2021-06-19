@@ -14,7 +14,7 @@ class NetworkManager {
     
     func fetchCurrentWeather(from url: URL?, completion: @escaping (_ weather: CurrentWeather)->()) {
         guard let url = url else { return }
-        print(url)
+//        print(url)
         fetchObject(CurrentWeather.self, from: url) { weather in
             completion(weather)
         }
@@ -35,7 +35,7 @@ class NetworkManager {
     
     func fetchForecastSevenDays(from url: URL?, completion: @escaping (_ forecast: ForecastOneCalAPI)->()) {
         guard let url = url else { return }
-        print(url)
+//        print(url)
         fetchObject(ForecastOneCalAPI.self, from: url) { forecast in
             completion(forecast)
         }
