@@ -37,7 +37,10 @@ struct FindingLocationView: View {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
                     .onAppear {
-                        location.requestLocation()
+                        if selection == Constant.tagCurrentLocation.rawValue {
+                            location.requestLocation()
+                            location.requestWhenInUseAuthorization()
+                        }
                     }
                 
             } else {

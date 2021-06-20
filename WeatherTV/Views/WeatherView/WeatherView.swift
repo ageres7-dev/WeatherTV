@@ -68,23 +68,25 @@ struct WeatherView: View {
                 }
                 
                 Spacer()
-                
-                VStack(alignment: .leading) {
-                    Text(viewModel.feelsLike)
-                    Text(viewModel.humidity)
-                    Text(viewModel.pressure)
-                    Text("")
-                    Divider()
-                    if let sunriseTime = viewModel.sunriseTime {
-                        Text(sunriseTime)
+                if let _ = viewModel.temp {
+                    VStack(alignment: .leading) {
+                        Text(viewModel.feelsLike)
+                        Text(viewModel.humidity)
+                        Text(viewModel.pressure)
+                        Text("")
+                        Divider()
+                        if let sunriseTime = viewModel.sunriseTime {
+                            Text(sunriseTime)
+                        }
+                        
+                        if let sunsetTime = viewModel.sunsetTime {
+                            Text(sunsetTime)
+                        }
                     }
-                    
-                    if let sunsetTime = viewModel.sunsetTime {
-                        Text(sunsetTime)
-                    }
+                    .frame(width: 340)
+                    .font(.body)
                 }
-                .frame(width: 340)
-                .font(.body)
+                
                 
             }
             .offset(x: 0, y: -60)

@@ -6,6 +6,8 @@
 //
 import Foundation
 import CoreLocation
+import MapKit
+
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var location: CLLocation?
@@ -17,10 +19,32 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let geocoder = CLGeocoder()
     private let defaultLocale = Locale.init(identifier: "en_US")
     
+    private let request = MKLocalSearch.Request()
+    private var localSearch: MKLocalSearch?
+    
     override private init() {
         super.init()
         manager.delegate = self
     }
+    
+    
+    
+    
+    func findLocationMap(from string: String, completion: @escaping ([CLPlacemark]?) -> Void) {
+        request.resultTypes = .address
+        request.naturalLanguageQuery = string
+        
+        localSearch = MKLocalSearch(request: request)
+        localSearch?.start { (searchResponse, _) in
+            guard let items = searchResponse?.mapItems else { return }
+            
+            let placemarks = items.map {
+                $0.placemark as CLPlacemark
+            }
+            completion(placemarks)
+        }
+    }
+   
     
     func requestLocation() {
         manager.requestLocation()
@@ -30,6 +54,13 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         manager.requestWhenInUseAuthorization()
     }
 
+    
+    func findLocation(from string: String, completion: @escaping ([CLPlacemark]?) -> Void) {
+        geocoder.geocodeAddressString(string, in: nil, preferredLocale: defaultLocale) { placemarks, _ in
+            completion(placemarks)
+        }
+    }
+    
     private func geocode() {
         guard let location = self.location else { return }
     
@@ -39,13 +70,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             } else {
                 self.placemark = nil
             }
-        }
-    }
-    
-    func findLocation(from string: String, completion: @escaping ([CLPlacemark]?) -> Void) {
-        
-        geocoder.geocodeAddressString(string, in: nil, preferredLocale: defaultLocale) { placemarks, _ in
-            completion(placemarks)
         }
     }
     
