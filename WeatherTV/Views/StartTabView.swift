@@ -12,6 +12,7 @@ struct StartTabView: View {
     @State private var nameCurrentLocation = "My Location"
     @State private var weatherConditionID: Int? = nil
     @State private var isShowLocalWeather = false
+    @State private var isCleanText = false
     @ObservedObject var state = SearchState()
     
     var body: some View {
@@ -20,10 +21,14 @@ struct StartTabView: View {
                 WeatherBackground(conditionID: weatherConditionID)
                     .ignoresSafeArea()
                 TabView(selection: $manager.userData.selectedTag) {
-                    SearchWrapper(SearchView(state: state,
-                                             locations: $manager.userData.locations,
-                                             selection: $manager.userData.selectedTag),
-                                  state: state)
+                    SearchWrapper(
+                        SearchView(state: state,
+                                   locations: $manager.userData.locations,
+                                   selection: $manager.userData.selectedTag,
+                                   isCleanText: $isCleanText),
+                        state: state,
+                        isCleanText: $isCleanText
+                    )
                         .tabItem { Image(systemName: "magnifyingglass") }
                         .tag("search")
                     

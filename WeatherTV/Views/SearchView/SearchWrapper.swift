@@ -22,13 +22,15 @@ class SearchState: NSObject, ObservableObject, UISearchResultsUpdating {
 struct SearchWrapper<Page: View>: View {
     var viewController: UIHostingController<Page>
     @ObservedObject var state: SearchState
+    @Binding var isCleanText: Bool
 
-    init(_ resultsView: Page, state: SearchState) {
+    init(_ resultsView: Page, state: SearchState, isCleanText: Binding<Bool>) {
         self.viewController = UIHostingController(rootView: resultsView)
         self.state = state
+        self._isCleanText = isCleanText
     }
     var body: some View {
-        PageViewController(controller: viewController, state: state)
+        PageViewController(controller: viewController, state: state, isCleanText: $isCleanText)
             .ignoresSafeArea(.all, edges: .all)
     }
 }
@@ -36,7 +38,16 @@ struct SearchWrapper<Page: View>: View {
 struct PageViewController: UIViewControllerRepresentable {
     var controller: UIViewController
     @ObservedObject var state: SearchState
+    @Binding var isCleanText: Bool
 
+//    @Binding var text: String
+//
+//        init(text: Binding<String>) {
+//            self._text = text
+//        }
+//
+//    
+    
     func makeUIViewController(context: Context) -> UINavigationController {
         
         let searchController = UISearchController(searchResultsController: controller)
@@ -54,11 +65,25 @@ struct PageViewController: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ searchContainer: UINavigationController, context: Context) {
-//        print("Update Page Search Controller")
+        print("Update Page Search Controller")
         
-        // Add horizontal constraint uiKBfv.left = super.left - 90 to
-        // searchContainer.children[0] as? UISearchContainerViewController)?.searchController.view.constraints
+        //        if state.text == "" {
+        let vc = searchContainer.children.first as? UISearchContainerViewController
+        
+        if isCleanText {
+            vc?.searchController.searchBar.text = nil
+            isCleanText.toggle()
+        }
+        print(vc?.searchController.searchBar.text ?? "------")
+        //        }
+        
+        //        searchContainer.
+        //         Add horizontal constraint uiKBfv.left = super.left - 90 to
+        //         searchContainer.children[0] as? UISearchContainerViewController?.searchController.view.constraints
             
+        
+        
+        
 //        if searchContainer.children.count > 0,
 //           let searchController = (searchContainer.children[0] as? UISearchContainerViewController)?.searchController,
 //           let searchControllerView = searchController.view,
@@ -74,15 +99,3 @@ struct PageViewController: UIViewControllerRepresentable {
          
     }
 }
-
-//struct SearchWrapper_: View {
-//    var body: some View {
-//        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-//    }
-//}
-//
-//struct SearchWrapper__Previews: PreviewProvider {
-//    static var previews: some View {
-//        SearchWrapper_()
-//    }
-//}

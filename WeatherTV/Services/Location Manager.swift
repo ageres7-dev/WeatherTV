@@ -28,8 +28,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     
-    
-    
     func findLocationMap(from string: String, completion: @escaping ([CLPlacemark]?) -> Void) {
         request.resultTypes = .address
         request.naturalLanguageQuery = string

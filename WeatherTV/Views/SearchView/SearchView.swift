@@ -16,6 +16,7 @@ struct SearchView: View {
     @ObservedObject var state: SearchState
     @Binding var locations: [Location]
     @Binding var selection: String
+    @Binding var isCleanText: Bool
     
     var body: some View {
         
@@ -53,22 +54,32 @@ extension SearchView {
     
     private func addLocationToList(from city: CLPlacemark) {
         let newLocation = Location.getFrom(city)
+        
         guard !locations.contains(where: {
             $0.tag == newLocation.tag
         }) else {
-            alertText = "This city has already been added."
+            alertText = "\(newLocation.name ?? "This city") has already been added." //"This city has already been added."
+            selection = newLocation.tag
             isShowAlert.toggle()
+            isCleanText.toggle()
             return
         }
         guard locations.count <= 5 else {
             alertText = "Maximum locations reached."
             isShowAlert.toggle()
+            isCleanText.toggle()
             return
         }
 
         locations.append(newLocation)
-        selection = newLocation.tag
-        state.text = ""
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            selection = newLocation.tag
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            isCleanText.toggle()
+        }
+
     }
     
     private func locationString(from city: CLPlacemark) -> String {
