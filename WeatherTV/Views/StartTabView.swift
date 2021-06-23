@@ -20,40 +20,45 @@ struct StartTabView: View {
             ZStack {
                 WeatherBackground(conditionID: weatherConditionID)
                     .ignoresSafeArea()
+                
                 TabView(selection: $manager.userData.selectedTag) {
-                    SearchWrapper(
-                        SearchView(state: state,
-                                   locations: $manager.userData.locations,
-                                   selection: $manager.userData.selectedTag,
-                                   isCleanText: $isCleanText),
-                        state: state,
-                        isCleanText: $isCleanText
-                    )
-                        .tabItem { Image(systemName: "magnifyingglass") }
-                        .tag("search")
+                    Group {
+                        if isShowSearchView {
+                            SearchWrapper(
+                                SearchView(state: state,
+                                           locations: $manager.userData.locations,
+                                           selection: $manager.userData.selectedTag,
+                                           isCleanText: $isCleanText),
+                                state: state,
+                                isCleanText: $isCleanText
+                            )
+                        } else {
+                            DisabledSearchMessageView()
+                        }
+                    }
+                    .tabItem { Image(systemName: "magnifyingglass") }
+                    .tag("search")
                     
-                    
-                        if isShowLocalWeather {
-                            if let currentLocation = currentLocation {
+                    if isShowLocalWeather {
+                        if let currentLocation = currentLocation {
                             WeatherView(viewModel: WeatherViewModel(location: currentLocation ), weatherConditionID: $weatherConditionID,
                                         selection: $manager.userData.selectedTag)
-                            
-                                .tabItem {
-                                    Label(nameCurrentLocation, systemImage: "location")
-                                }
-                                .tag(Constant.tagCurrentLocation.rawValue)
-                            }
-                            
-                            
-                        } else {
-                            FindingLocationView(selection: $manager.userData.selectedTag,
-                                                nameCurrentLocation: $nameCurrentLocation,
-                                                weatherConditionID: $weatherConditionID, isShowLocalWeather: $isShowLocalWeather)
+                                
                                 .tabItem {
                                     Label(nameCurrentLocation, systemImage: "location")
                                 }
                                 .tag(Constant.tagCurrentLocation.rawValue)
                         }
+                        
+                    } else {
+                        FindingLocationView(selection: $manager.userData.selectedTag,
+                                            nameCurrentLocation: $nameCurrentLocation,
+                                            weatherConditionID: $weatherConditionID, isShowLocalWeather: $isShowLocalWeather)
+                            .tabItem {
+                                Label(nameCurrentLocation, systemImage: "location")
+                            }
+                            .tag(Constant.tagCurrentLocation.rawValue)
+                    }
                     
                     ForEach(locations) { location in
                         WeatherView(viewModel: WeatherViewModel(location: location), weatherConditionID: $weatherConditionID,
@@ -69,7 +74,7 @@ struct StartTabView: View {
                 
                 LogoDataProvider()
             }
-   
+            
         }
         .onChange(of: manager.userData) { userData in
             DataManager.shared.save(userData)
@@ -79,16 +84,12 @@ struct StartTabView: View {
 
 extension StartTabView {
     
-//    private var nameCurrentLocation: String {
-//        currentLocation?.name ?? "My Location"
-//    }
+    private var isShowSearchView: Bool {
+        locations.count < 5
+    }
     
     private var currentLocation: Location? {
-        manager.userData.locations.first(where: { $0.tag == Constant.tagCurrentLocation.rawValue}) // ?? Location.orenburg
-//        manager.userData.locations.filter(
-//            { $0.tag == Constant.tagCurrentLocation.rawValue }
-//
-//        )
+        manager.userData.locations.first(where: { $0.tag == Constant.tagCurrentLocation.rawValue})
     }
     
     private var locations: [Location] {
@@ -104,31 +105,3 @@ struct StartTabView_Previews: PreviewProvider {
             .environmentObject(LocationManager.shared)
     }
 }
-
-
-
-
-//struct CitiesView: View {
-//    @State private var
-//    var body: some View {
-//
-//    }
-//}
-
-
-
-
-
-
-
-
-//                    WeatherView()
-//                .tabItem { Image(systemName: "Weather") }
-
-//                    SettingsView()
-//                        .tabItem {
-//                            Label("Settings", systemImage: "gearshape")
-//                        }
-//
-//
-//                    SearchView()

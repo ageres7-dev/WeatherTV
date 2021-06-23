@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3B0D330E2663C2CF00421E2E /* SearchWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0D330D2663C2CF00421E2E /* SearchWrapper.swift */; };
+		3B49875926826FA500ADE3D7 /* DisabledSearchMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B49875826826FA500ADE3D7 /* DisabledSearchMessageView.swift */; };
 		3B61FED026468856000D4552 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 3B61FECF26468856000D4552 /* .gitignore */; };
 		3B61FED226468A56000D4552 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B61FED126468A56000D4552 /* API.swift */; };
 		3B6F4BF3266AA06600690AF3 /* Lacation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B6F4BF2266AA06600690AF3 /* Lacation.swift */; };
@@ -15,7 +16,6 @@
 		3BC8F536266BF38500A0F91B /* Ext + CLPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC8F535266BF38500A0F91B /* Ext + CLPlacemark.swift */; };
 		3BC8F538266CFFA400A0F91B /* User Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC8F537266CFFA400A0F91B /* User Manager.swift */; };
 		3BC8F53A266D4D4700A0F91B /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BC8F539266D4D4700A0F91B /* UserData.swift */; };
-		3BD7C1092662D36700F4C323 /* TestingSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD7C1082662D36700F4C323 /* TestingSearchView.swift */; };
 		3BD7C10B2662D50B00F4C323 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD7C10A2662D50B00F4C323 /* SearchBar.swift */; };
 		3BD7C10D2662D50D00F4C323 /* ViewControllerResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD7C10C2662D50D00F4C323 /* ViewControllerResolver.swift */; };
 		3BD7C10F2662E0A100F4C323 /* Search3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BD7C10E2662E0A100F4C323 /* Search3.swift */; };
@@ -71,6 +71,7 @@
 
 /* Begin PBXFileReference section */
 		3B0D330D2663C2CF00421E2E /* SearchWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWrapper.swift; sourceTree = "<group>"; };
+		3B49875826826FA500ADE3D7 /* DisabledSearchMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledSearchMessageView.swift; sourceTree = "<group>"; };
 		3B61FECF26468856000D4552 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		3B61FED126468A56000D4552 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		3B6F4BF2266AA06600690AF3 /* Lacation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lacation.swift; sourceTree = "<group>"; };
@@ -78,7 +79,6 @@
 		3BC8F535266BF38500A0F91B /* Ext + CLPlacemark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Ext + CLPlacemark.swift"; sourceTree = "<group>"; };
 		3BC8F537266CFFA400A0F91B /* User Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User Manager.swift"; sourceTree = "<group>"; };
 		3BC8F539266D4D4700A0F91B /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
-		3BD7C1082662D36700F4C323 /* TestingSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingSearchView.swift; sourceTree = "<group>"; };
 		3BD7C10A2662D50B00F4C323 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		3BD7C10C2662D50D00F4C323 /* ViewControllerResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerResolver.swift; sourceTree = "<group>"; };
 		3BD7C10E2662E0A100F4C323 /* Search3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search3.swift; sourceTree = "<group>"; };
@@ -149,7 +149,6 @@
 		3BD7C1072662D33D00F4C323 /* SearchView */ = {
 			isa = PBXGroup;
 			children = (
-				3BD7C1082662D36700F4C323 /* TestingSearchView.swift */,
 				3B0D330D2663C2CF00421E2E /* SearchWrapper.swift */,
 				A5BF6EF5262B634900522AE5 /* SearchView.swift */,
 			);
@@ -197,6 +196,7 @@
 				A540D1C42614F17700B477B2 /* SettingsView.swift */,
 				3BF6BBD1265C13C1006C9456 /* WeatherBackground.swift */,
 				3BD7C12B26638B4300F4C323 /* LogoDataProvider.swift */,
+				3B49875826826FA500ADE3D7 /* DisabledSearchMessageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -473,10 +473,10 @@
 				3B0D330E2663C2CF00421E2E /* SearchWrapper.swift in Sources */,
 				A531DFE625F7642F00AB91E1 /* CurrentWeather.swift in Sources */,
 				3BF6BBD2265C13C1006C9456 /* WeatherBackground.swift in Sources */,
+				3B49875926826FA500ADE3D7 /* DisabledSearchMessageView.swift in Sources */,
 				A540D1C52614F17700B477B2 /* SettingsView.swift in Sources */,
 				3BC8F53A266D4D4700A0F91B /* UserData.swift in Sources */,
 				3BC8F538266CFFA400A0F91B /* User Manager.swift in Sources */,
-				3BD7C1092662D36700F4C323 /* TestingSearchView.swift in Sources */,
 				A5E9FCB825FE871C001D3317 /* ForecastSevenDaysView.swift in Sources */,
 				A531E01B25F93FBB00AB91E1 /* WeatherViewModel.swift in Sources */,
 				A5E9FCAA25FD4832001D3317 /* StartTabView.swift in Sources */,
@@ -662,7 +662,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"WeatherTV/Preview Content\"";
 				DEVELOPMENT_TEAM = RNER64Q73Y;
 				ENABLE_PREVIEWS = YES;
@@ -671,7 +671,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ageres7.WeatherTV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -686,7 +686,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"WeatherTV/Preview Content\"";
 				DEVELOPMENT_TEAM = RNER64Q73Y;
 				ENABLE_PREVIEWS = YES;
@@ -695,7 +695,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ageres7.WeatherTV;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

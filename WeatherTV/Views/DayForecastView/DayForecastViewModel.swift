@@ -15,12 +15,6 @@ class DayForecastViewModel {
 }
 
 extension DayForecastViewModel {
-//    var dayOfWeek: String {
-//        guard let dt = daily?.dt else { return "" }
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "E"
-//        return formatter.string(from: dt)
-//    }
     
     var date: String {
         guard let dt = daily?.dt else { return "" }
@@ -30,9 +24,7 @@ extension DayForecastViewModel {
     }
     
     var iconName: String? {
-//        DataManager.shared.convert(iconName: daily?.weather?.first?.icon)
         daily?.weather?.first?.icon?.convertWeatherIconName()
-        
     }
     
     
@@ -41,12 +33,7 @@ extension DayForecastViewModel {
         guard let dayTemp = daily?.temp?.day else { return "" }
         return "\(lround(dayTemp)) / \(lround(nightTemp))ºС"
     }
-    
-//    var description: String {
-//        guard let description = daily?.weather?.first?.description else { return "" }
-//        return description
-//    }
-    
+
     private var dayTemp: String {
         guard let dayTemp = daily?.temp?.day else { return "" }
         return "\(lround(dayTemp))ºС"

@@ -128,7 +128,6 @@ class WeatherViewModel: ObservableObject {
         
     }
         
-    
     private func saveCurrentDateUpdateForecast() {
         guard let indexOfCurrentItem = indexOfCurrentItem else { return }
         userManager.userData.locations[indexOfCurrentItem].lastUpdateForecastWeather = Date()

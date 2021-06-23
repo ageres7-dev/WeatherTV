@@ -25,7 +25,6 @@ struct WeatherView: View {
                 Button(action: { showingActionSheet.toggle() }) {
                     Image(systemName: "trash")
                 }
-                 
                 .opacity(viewModel.isShowDeleteBotton ? 1 : 0)
                 .actionSheet(isPresented: $showingActionSheet) {
                     ActionSheet(title: Text("Remove \(viewModel.location.name ?? "a city") from the list?"), buttons: [
@@ -35,7 +34,6 @@ struct WeatherView: View {
                         .cancel()
                     ])
                 }
-                
             }
             Spacer()
             
@@ -87,7 +85,6 @@ struct WeatherView: View {
                     .font(.body)
                 }
                 
-                
             }
             .offset(x: 0, y: -60)
             .padding()
@@ -117,15 +114,6 @@ struct WeatherView: View {
             viewModel.onAppearAction()
             viewModel.startAutoUpdateWeather()
             isFirstOnAppear = false
-//            print(".onAppear \(viewModel.nameLocationOpenWeather ?? "")")
-//            viewModel.onAppearAction()
-//
-//            guard selection == viewModel.location.tag else {
-//                print("\(viewModel.nameLocationOpenWeather ?? "") экран не виден, выходим из функции .onAppear ")
-//                return
-//            }
-//            weatherConditionID = viewModel.conditionCode
-            
         }
         
     }
