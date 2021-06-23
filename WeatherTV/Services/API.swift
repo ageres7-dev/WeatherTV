@@ -8,6 +8,6 @@
 import Foundation
 
 enum API: String {
-    case key = "5dd2b561e08cf36d5726459eecfe7bd7"
+    case key = "insert your API key"
 
 }
