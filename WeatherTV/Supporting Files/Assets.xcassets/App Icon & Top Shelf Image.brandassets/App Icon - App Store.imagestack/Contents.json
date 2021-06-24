@@ -5,19 +5,20 @@
   },
   "layers" : [
     {
-      "filename" : "iconCloud.imagestacklayer"
+      "filename" : "Front.imagestacklayer"
     },
     {
-      "filename" : "iconSun.imagestacklayer"
+      "filename" : "Middle.imagestacklayer"
     },
     {
-      "filename" : "iconBackground@x1.imagestacklayer"
+      "filename" : "Back.imagestacklayer"
     }
   ],
   "properties" : {
     "canvasSize" : {
       "height" : 768,
       "width" : 1280
-    }
+    },
+    "compression-type" : "automatic"
   }
 }

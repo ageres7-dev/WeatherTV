@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "iconSun@x1.png",
+      "idiom" : "tv"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
