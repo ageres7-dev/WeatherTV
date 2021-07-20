@@ -69,6 +69,11 @@ struct StartTabView: View {
                             .tag(location.tag)
                     }
                     
+                    
+                    SettingsView(temperature: $manager.userData.settings.temperature,
+                                 pressure: $manager.userData.settings.pressure)
+                        .tabItem { Image(systemName: "gearshape") }
+                        .tag("settings")
                 }
                 .ignoresSafeArea(.all, edges: .top)
                 

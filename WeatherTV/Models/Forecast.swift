@@ -13,12 +13,12 @@ import Foundation
 struct Forecast: Decodable, Hashable {
     let cod: String?
     let cnt: Int? //Количество временных меток, возвращенных в ответе API
-    let list: [List]?
+    let list: [List1]?
     let city: City?
     
 }
 // MARK: - List
-struct List: Decodable, Hashable {
+struct List1: Decodable, Hashable {
     let dt: Int?
     let main: Main?
     let weather: [Weather]?

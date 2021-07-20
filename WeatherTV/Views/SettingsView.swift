@@ -9,37 +9,70 @@ import SwiftUI
 import CoreLocation
 
 struct SettingsView: View {
-    @StateObject var locationManager = LocationManager.shared
+    @EnvironmentObject var manager: UserManager
+    @Binding var temperature: TypeTemperature
+    @Binding var pressure: TypePressure
     
-    @State private var selectedStrength = "Mild"
-    @State private var testBool = false
-    let strengths = ["Mild", "Medium", "Mature"]
+    let typeTemperature = [TypeTemperature.c, TypeTemperature.f]
+    let typePressure = [TypePressure.hPa, TypePressure.mmHg]
     
-    
-    @State private var lititude = 0.0
-    @State private var longitude = 0.0
-    
+    private var animation: Animation {
+        Animation.linear
+            .repeatForever(autoreverses: false)
+    }
     
     var body: some View {
+        
         NavigationView {
-            
-            
-            VStack {
-                Text("Latitude: \(lititude)")
-                Text("Longitude: \(longitude)")
+            HStack {
+                VStack {
+                    Text("Settings")
+                        .font(.title2)
+                    GearsView()
+                        .offset(x: 0, y: -80)
+                    Spacer()
+                }
+                .padding(50)
                 
-                Text("Latitude: \(Double(locationManager.location?.coordinate.latitude ?? 0))")
-                Text("Longitude: \(Double(locationManager.location?.coordinate.longitude ?? 0))")
+                List {
+                    
+                    Picker("Temperature", selection: $temperature) {
+                        ForEach(typeTemperature, id: \.self) {
+                            Text($0.rawValue)
+                        }
+                    }
+                    .pickerStyle(InlinePickerStyle())
+                    
+                    Picker("Atmospheric pressure", selection: $pressure) {
+                        ForEach(typePressure, id: \.self) {
+                            Text($0.rawValue)
+                        }
+                    }
+                    .pickerStyle(InlinePickerStyle())
+                    
+                }
+                .listStyle(GroupedListStyle())
+                .frame(width: UIScreen.main.bounds.width / 2.2)
             }
-            
-            }
-            .navigationTitle("Select your cheese")
         }
+        .padding()
+        .ignoresSafeArea(.all, edges: .horizontal)
     }
-
-
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingsView()
+    
+    
+    func convertTemp(temp: Double, from inputTempType: UnitTemperature, to outputTempType: UnitTemperature) -> String {
+        let mf = MeasurementFormatter()
+        mf.numberFormatter.maximumFractionDigits = 0
+        mf.unitOptions = .providedUnit
+        let input = Measurement(value: temp, unit: inputTempType)
+        let output = input.converted(to: outputTempType)
+        return mf.string(from: output)
     }
 }
+
+
+//struct SettingsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SettingsView()
+//    }
+//}
