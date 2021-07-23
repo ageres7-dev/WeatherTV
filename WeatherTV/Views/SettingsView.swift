@@ -10,7 +10,6 @@ import CoreLocation
 
 struct SettingsView: View {
     @EnvironmentObject var manager: UserManager
-    @Binding var showLocalWeather: Bool
     @Binding var temperature: TypeTemperature
     @Binding var pressure: TypePressure
     
@@ -51,7 +50,7 @@ struct SettingsView: View {
                     }
                     .pickerStyle(InlinePickerStyle())
                     
-                    Toggle("Show local weather", isOn: $showLocalWeather)
+                   // Toggle("Show local weather", isOn: $showLocalWeather)
 
                     
                 }

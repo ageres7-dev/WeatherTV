@@ -39,28 +39,26 @@ struct StartTabView: View {
                     }
                     .tabItem { Image(systemName: "magnifyingglass") }
                     .tag("search")
-                    if isShowLocal {
-                        
-                        if isShowLocalWeather {
-                            if let currentLocation = currentLocation {
-                                WeatherView(viewModel: WeatherViewModel(location: currentLocation ), weatherConditionID: $weatherConditionID,
-                                            selection: $manager.userData.selectedTag)
-                                    
-                                    .tabItem {
-                                        Label(nameCurrentLocation, systemImage: "location")
-                                    }
-                                    .tag(Constant.tagCurrentLocation.rawValue)
-                            }
-                            
-                        } else {
-                            FindingLocationView(selection: $manager.userData.selectedTag,
-                                                nameCurrentLocation: $nameCurrentLocation,
-                                                weatherConditionID: $weatherConditionID, isShowLocalWeather: $isShowLocalWeather)
+                    
+                    if isShowLocalWeather {
+                        if let currentLocation = currentLocation {
+                            WeatherView(viewModel: WeatherViewModel(location: currentLocation ), weatherConditionID: $weatherConditionID,
+                                        selection: $manager.userData.selectedTag)
+                                
                                 .tabItem {
                                     Label(nameCurrentLocation, systemImage: "location")
                                 }
                                 .tag(Constant.tagCurrentLocation.rawValue)
                         }
+                        
+                    } else {
+                        FindingLocationView(selection: $manager.userData.selectedTag,
+                                            nameCurrentLocation: $nameCurrentLocation,
+                                            weatherConditionID: $weatherConditionID, isShowLocalWeather: $isShowLocalWeather)
+                            .tabItem {
+                                Label(nameCurrentLocation, systemImage: "location")
+                            }
+                            .tag(Constant.tagCurrentLocation.rawValue)
                     }
                     
                     ForEach(locations) { location in
@@ -72,9 +70,7 @@ struct StartTabView: View {
                             .tag(location.tag)
                     }
                     
-                    
                     SettingsView(
-                        showLocalWeather: $settings.settings.showLocalWeather,
                         temperature: $settings.settings.temperature,
                         pressure: $settings.settings.pressure
                     )
@@ -94,13 +90,10 @@ struct StartTabView: View {
             DataManager.shared.save(settings)
         }
     }
+    
 }
 
 extension StartTabView {
-    
-    private var isShowLocal: Bool {
-        settings.settings.showLocalWeather
-    }
     
     private var isShowSearchView: Bool {
         locations.count < 4
