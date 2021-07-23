@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StartTabView: View {
     @EnvironmentObject var manager: UserManager
+    @EnvironmentObject var settings: SettingsManager
     @State private var nameCurrentLocation = "My Location"
     @State private var weatherConditionID: Int? = nil
     @State private var isShowLocalWeather = false
@@ -38,26 +39,28 @@ struct StartTabView: View {
                     }
                     .tabItem { Image(systemName: "magnifyingglass") }
                     .tag("search")
-                    
-                    if isShowLocalWeather {
-                        if let currentLocation = currentLocation {
-                            WeatherView(viewModel: WeatherViewModel(location: currentLocation ), weatherConditionID: $weatherConditionID,
-                                        selection: $manager.userData.selectedTag)
-                                
+                    if isShowLocal {
+                        
+                        if isShowLocalWeather {
+                            if let currentLocation = currentLocation {
+                                WeatherView(viewModel: WeatherViewModel(location: currentLocation ), weatherConditionID: $weatherConditionID,
+                                            selection: $manager.userData.selectedTag)
+                                    
+                                    .tabItem {
+                                        Label(nameCurrentLocation, systemImage: "location")
+                                    }
+                                    .tag(Constant.tagCurrentLocation.rawValue)
+                            }
+                            
+                        } else {
+                            FindingLocationView(selection: $manager.userData.selectedTag,
+                                                nameCurrentLocation: $nameCurrentLocation,
+                                                weatherConditionID: $weatherConditionID, isShowLocalWeather: $isShowLocalWeather)
                                 .tabItem {
                                     Label(nameCurrentLocation, systemImage: "location")
                                 }
                                 .tag(Constant.tagCurrentLocation.rawValue)
                         }
-                        
-                    } else {
-                        FindingLocationView(selection: $manager.userData.selectedTag,
-                                            nameCurrentLocation: $nameCurrentLocation,
-                                            weatherConditionID: $weatherConditionID, isShowLocalWeather: $isShowLocalWeather)
-                            .tabItem {
-                                Label(nameCurrentLocation, systemImage: "location")
-                            }
-                            .tag(Constant.tagCurrentLocation.rawValue)
                     }
                     
                     ForEach(locations) { location in
@@ -70,10 +73,13 @@ struct StartTabView: View {
                     }
                     
                     
-                    SettingsView(temperature: $manager.userData.settings.temperature,
-                                 pressure: $manager.userData.settings.pressure)
-                        .tabItem { Image(systemName: "gearshape") }
-                        .tag("settings")
+                    SettingsView(
+                        showLocalWeather: $settings.settings.showLocalWeather,
+                        temperature: $settings.settings.temperature,
+                        pressure: $settings.settings.pressure
+                    )
+                    .tabItem { Image(systemName: "gearshape") }
+                    .tag("settings")
                 }
                 .ignoresSafeArea(.all, edges: .top)
                 
@@ -84,13 +90,20 @@ struct StartTabView: View {
         .onChange(of: manager.userData) { userData in
             DataManager.shared.save(userData)
         }
+        .onChange(of: settings.settings) { settings in
+            DataManager.shared.save(settings)
+        }
     }
 }
 
 extension StartTabView {
     
+    private var isShowLocal: Bool {
+        settings.settings.showLocalWeather
+    }
+    
     private var isShowSearchView: Bool {
-        locations.count < 5
+        locations.count < 4
     }
     
     private var currentLocation: Location? {

@@ -10,4 +10,5 @@ import Foundation
 struct Settings: Codable, Equatable {
     var temperature: TypeTemperature = .c
     var pressure: TypePressure = .mmHg
+    var showLocalWeather = true
 }

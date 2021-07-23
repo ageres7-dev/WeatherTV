@@ -18,6 +18,5 @@ final class UserManager: ObservableObject {
     init (userData: UserData) {
         self.userData = userData
     }
-   
 }
 

@@ -14,6 +14,7 @@ struct WeatherTVApp: App {
             StartTabView()
                 .environmentObject(LocationManager.shared)
                 .environmentObject(UserManager.shared)
+                .environmentObject(SettingsManager.shared)
         }
     }
 }

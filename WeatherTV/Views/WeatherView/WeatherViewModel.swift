@@ -15,6 +15,17 @@ class WeatherViewModel: ObservableObject {
     
     private let userManager = UserManager.shared
     private let locationManager = LocationManager.shared
+    private let settings = SettingsManager.shared
+    private var isFahrenheit: Bool {
+        settings.settings.temperature == .f
+    }
+    private var isPressureMmHg: Bool {
+        settings.settings.pressure == .mmHg
+    }
+    
+    var unitsTemp: String {
+        isFahrenheit ? "ºF" : "ºC"
+    }
     
     private var timerAutoUpdate: Timer?
     private let minTimeIntervalUpdateForecast = TimeInterval(60 * 60 * 4) // 4 часа 60 * 60 * 4
@@ -191,10 +202,14 @@ extension WeatherViewModel {
     }
     
     var todayForecasts: String {
-        guard let dayTemp = dailyForecasts.first?.temp?.day,
-              let nightTemp = dailyForecasts.first?.temp?.night else { return "" }
+        guard var dayTemp = dailyForecasts.first?.temp?.day,
+              var nightTemp = dailyForecasts.first?.temp?.night else { return "" }
+        if isFahrenheit {
+            dayTemp.convertCelsiusToFahrenheit()
+            nightTemp.convertCelsiusToFahrenheit()
+        }
         
-        return "\(lround(dayTemp)) / \(lround(nightTemp))ºС"
+        return "\(lround(dayTemp)) / \(lround(nightTemp))\(unitsTemp)"
     }
     
     var todayDate: String {
@@ -254,9 +269,15 @@ extension WeatherViewModel {
     var temp: String? {
         var temperature: String?
         
-        if let temp = currentWeather?.main?.temp {
+        if var temp = currentWeather?.main?.temp {
+            if isFahrenheit {
+                temp.convertCelsiusToFahrenheit()
+            }
             temperature = " \(lround(temp))º"
-        } else if let temp = forecastOneCalAPI?.current?.temp {
+        } else if var temp = forecastOneCalAPI?.current?.temp {
+            if isFahrenheit {
+                temp.convertCelsiusToFahrenheit()
+            }
             temperature = " \(lround(temp))º"
         }
         return temperature
@@ -271,13 +292,22 @@ extension WeatherViewModel {
     }
     
     var feelsLike: String {
-        guard let feelsLike = currentWeather?.main?.feelsLike else { return "" }
-        return "Feels like: \(lround(feelsLike))ºC"
+        guard var feelsLike = currentWeather?.main?.feelsLike else { return "" }
+        if isFahrenheit {
+            feelsLike.convertCelsiusToFahrenheit()
+        }
+        
+        return "Feels like: \(lround(feelsLike))\(unitsTemp)"
     }
     
     var pressure: String {
-        guard let pressure = currentWeather?.main?.pressure else { return "" }
-        return "Pressure: \(lround(pressure)) hPa"
+        guard var pressure = currentWeather?.main?.pressure else { return "" }
+        if isPressureMmHg {
+            pressure.convertHPaToMmHg()
+        }
+        let units = isPressureMmHg ? "mm Hg" : "hPa"
+        
+        return "Pressure: \(lround(pressure)) \(units)"
     }
     
     
