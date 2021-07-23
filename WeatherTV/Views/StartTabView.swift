@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StartTabView: View {
     @EnvironmentObject var manager: UserManager
+    @EnvironmentObject var settings: SettingsManager
     @State private var nameCurrentLocation = "My Location"
     @State private var weatherConditionID: Int? = nil
     @State private var isShowLocalWeather = false
@@ -69,6 +70,12 @@ struct StartTabView: View {
                             .tag(location.tag)
                     }
                     
+                    SettingsView(
+                        temperature: $settings.settings.temperature,
+                        pressure: $settings.settings.pressure
+                    )
+                    .tabItem { Image(systemName: "gearshape") }
+                    .tag("settings")
                 }
                 .ignoresSafeArea(.all, edges: .top)
                 
@@ -79,13 +86,17 @@ struct StartTabView: View {
         .onChange(of: manager.userData) { userData in
             DataManager.shared.save(userData)
         }
+        .onChange(of: settings.settings) { settings in
+            DataManager.shared.save(settings)
+        }
     }
+    
 }
 
 extension StartTabView {
     
     private var isShowSearchView: Bool {
-        locations.count < 5
+        locations.count < 4
     }
     
     private var currentLocation: Location? {

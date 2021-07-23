@@ -64,7 +64,7 @@ extension SearchView {
             isCleanText.toggle()
             return
         }
-        guard locations.count <= 5 else {
+        guard locations.count <= 4 else {
             alertText = "Maximum locations reached."
             isShowAlert.toggle()
             isCleanText.toggle()

@@ -7,6 +7,15 @@
 
 import Foundation
 class DayForecastViewModel {
+    private let settings = SettingsManager.shared
+    private var isFahrenheit: Bool {
+        settings.settings.temperature == .f
+    }
+    
+    var unitsTemp: String {
+        isFahrenheit ? "ºF" : "ºC"
+    }
+    
     private let daily: Daily?
     
     required init(daily: Daily?) {
@@ -29,18 +38,32 @@ extension DayForecastViewModel {
     
     
     var temp: String {
-        guard let nightTemp = daily?.temp?.night else { return "" }
-        guard let dayTemp = daily?.temp?.day else { return "" }
-        return "\(lround(dayTemp)) / \(lround(nightTemp))ºС"
+        guard var nightTemp = daily?.temp?.night,
+              var dayTemp = daily?.temp?.day else { return "" }
+        
+        if isFahrenheit {
+            nightTemp.convertCelsiusToFahrenheit()
+            dayTemp.convertCelsiusToFahrenheit()
+        }
+        
+        
+        return "\(lround(dayTemp)) / \(lround(nightTemp))\(unitsTemp)"
     }
 
     private var dayTemp: String {
-        guard let dayTemp = daily?.temp?.day else { return "" }
-        return "\(lround(dayTemp))ºС"
+        guard var dayTemp = daily?.temp?.day else { return "" }
+        if isFahrenheit {
+            dayTemp.convertCelsiusToFahrenheit()
+        }
+        return "\(lround(dayTemp))\(unitsTemp)"
     }
     
     private var nightTemp: String {
-        guard let nightTemp = daily?.temp?.night else { return "" }
-        return "\(lround(nightTemp))ºС"
+        guard var nightTemp = daily?.temp?.night else { return "" }
+        if isFahrenheit {
+            nightTemp.convertCelsiusToFahrenheit()
+        }
+        
+        return "\(lround(nightTemp))\(unitsTemp)"
     }
 }

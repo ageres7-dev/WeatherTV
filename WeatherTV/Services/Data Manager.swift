@@ -10,6 +10,7 @@ import SwiftUI
 
 class DataManager {
     @AppStorage("userData") var userData = Data()
+    @AppStorage("settings") var settings = Data()
     
     static let shared = DataManager()
     private init() {}
@@ -20,10 +21,23 @@ class DataManager {
     }
     
     func loadUserData() -> UserData {
-        guard let locations = try? JSONDecoder().decode(UserData.self, from: userData) else {
+        guard let userData = try? JSONDecoder().decode(UserData.self, from: userData) else {
             return UserData()
         }
-        return locations
+        return userData
+    }
+    
+    
+    func save(_ settings: Settings) -> Void {
+        guard let settings = try? JSONEncoder().encode(settings) else { return }
+        self.settings = settings
+    }
+    
+    func loadSettings() -> Settings {
+        guard let settings = try? JSONDecoder().decode(Settings.self, from: settings) else {
+            return Settings()
+        }
+        return settings
     }
 
 }

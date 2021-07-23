@@ -5,7 +5,6 @@
 //  Created by Sergey Dolgikh on 04.06.2021.
 //
 
-import Foundation
 import CoreLocation
 
 struct Location: Codable, Hashable, Identifiable {
@@ -46,6 +45,5 @@ extension Location {
             tag: tag
         )
     }
-    
     
 }

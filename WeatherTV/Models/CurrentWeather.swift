@@ -89,7 +89,3 @@ struct Sys: Codable, Hashable {
     let sunrise: Date?
     let sunset: Date?
 }
-
-
-
-

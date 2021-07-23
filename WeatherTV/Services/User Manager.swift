@@ -11,7 +11,6 @@ final class UserManager: ObservableObject {
     
     static let shared = UserManager()
   
-    
     private init() {
         userData = DataManager.shared.loadUserData()
     }
@@ -19,6 +18,5 @@ final class UserManager: ObservableObject {
     init (userData: UserData) {
         self.userData = userData
     }
-   
 }
 
