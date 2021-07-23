@@ -9,5 +9,4 @@ import Foundation
 
 enum API: String {
     case key = "insert your API key"
-
 }
