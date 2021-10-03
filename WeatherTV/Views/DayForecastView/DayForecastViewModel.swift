@@ -11,11 +11,7 @@ class DayForecastViewModel {
     private var isFahrenheit: Bool {
         settings.settings.temperature == .f
     }
-    
-    var unitsTemp: String {
-        isFahrenheit ? "ºF" : "ºC"
-    }
-    
+ 
     private let daily: Daily?
     
     required init(daily: Daily?) {
@@ -24,6 +20,10 @@ class DayForecastViewModel {
 }
 
 extension DayForecastViewModel {
+    
+    var unitsTemp: String {
+        isFahrenheit ? "ºF" : "ºC"
+    }
     
     var date: String {
         guard let dt = daily?.dt else { return "" }
@@ -49,7 +49,7 @@ extension DayForecastViewModel {
         
         return "\(lround(dayTemp)) / \(lround(nightTemp))\(unitsTemp)"
     }
-
+    
     private var dayTemp: String {
         guard var dayTemp = daily?.temp?.day else { return "" }
         if isFahrenheit {

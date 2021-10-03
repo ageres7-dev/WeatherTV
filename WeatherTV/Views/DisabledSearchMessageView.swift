@@ -16,33 +16,6 @@ struct DisabledSearchMessageView: View {
                 .font(.title2)
             Text("Please remove one of the cities to add a new one.")
                 .font(.title3)
-            /*
-             LazyHStack {
-             ForEach(citiesForRemove) { city in
-             
-             Button {
-             self.manager.userData.locations.removeAll(where: {
-             $0.id == city.id
-             })
-             } label: {
-             VStack {
-             Image(systemName: "trash")
-             .font(.title2)
-             .foregroundColor(.red)
-             .padding(.top)
-             .padding(.bottom)
-             
-             
-             Text("\(city.name ?? "")")
-             }
-             .frame(width: UIScreen.main.bounds.size.width / 7)
-             .padding()
-             }
-             .buttonStyle(CardButtonStyle())
-             }
-             }
-             .padding()
-             */
         }
     }
 }

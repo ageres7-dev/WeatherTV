@@ -49,10 +49,7 @@ struct SettingsView: View {
                         }
                     }
                     .pickerStyle(InlinePickerStyle())
-                    
-                   // Toggle("Show local weather", isOn: $showLocalWeather)
 
-                    
                 }
                 .listStyle(GroupedListStyle())
                 .frame(width: UIScreen.main.bounds.width / 2.2)
