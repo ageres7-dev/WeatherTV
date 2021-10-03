@@ -11,12 +11,10 @@ struct LogoDataProvider: View {
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
-        VStack(spacing: 0) {
-            HStack(spacing: 0) {
-                Spacer()
-                
-                HStack(spacing: 0) {
-                    VStack(alignment: .center) {
+        VStack() {
+            HStack() {
+                HStack() {
+                    VStack() {
                         
                         Image(colorScheme == .dark ? "logo_white" : "logo_dark" )
                             .resizable()
@@ -31,13 +29,13 @@ struct LogoDataProvider: View {
                         }
                         .font(.system(size: 16))
                     }
-                    .offset(x: -90, y: -30)
-                    
                     Spacer()
                 }
             }
             Spacer()
         }
+        .padding(.all, 20)
+        .ignoresSafeArea()
     }
 }
 

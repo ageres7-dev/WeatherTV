@@ -42,23 +42,11 @@ struct StartTabView: View {
                     
                     if isShowLocalWeather {
                         if let currentLocation = currentLocation {
-                            WeatherView(viewModel: WeatherViewModel(location: currentLocation ), weatherConditionID: $weatherConditionID,
-                                        selection: $manager.userData.selectedTag)
-                                
-                                .tabItem {
-                                    Label(nameCurrentLocation, systemImage: "location")
-                                }
-                                .tag(Constant.tagCurrentLocation.rawValue)
+                            weather(currentLocation: currentLocation)
                         }
                         
                     } else {
-                        FindingLocationView(selection: $manager.userData.selectedTag,
-                                            nameCurrentLocation: $nameCurrentLocation,
-                                            weatherConditionID: $weatherConditionID, isShowLocalWeather: $isShowLocalWeather)
-                            .tabItem {
-                                Label(nameCurrentLocation, systemImage: "location")
-                            }
-                            .tag(Constant.tagCurrentLocation.rawValue)
+                        findingLocation()
                     }
                     
                     ForEach(locations) { location in
@@ -80,6 +68,7 @@ struct StartTabView: View {
                 .ignoresSafeArea(.all, edges: .top)
                 
                 LogoDataProvider()
+                    .ignoresSafeArea()
             }
             
         }
@@ -94,6 +83,28 @@ struct StartTabView: View {
 }
 
 extension StartTabView {
+    
+    private func findingLocation() -> some View {
+        FindingLocationView(selection: $manager.userData.selectedTag,
+                            nameCurrentLocation: $nameCurrentLocation,
+                            weatherConditionID: $weatherConditionID,
+                            isShowLocalWeather: $isShowLocalWeather)
+            .tabItem {
+                Label(nameCurrentLocation, systemImage: "location")
+            }
+            .tag(Constant.tagCurrentLocation.rawValue)
+    }
+    
+    private func weather(currentLocation: Location) -> some View {
+        WeatherView(viewModel: WeatherViewModel(location: currentLocation),
+                    weatherConditionID: $weatherConditionID,
+                    selection: $manager.userData.selectedTag)
+            
+            .tabItem {
+                Label(nameCurrentLocation, systemImage: "location")
+            }
+            .tag(Constant.tagCurrentLocation.rawValue)
+    }
     
     private var isShowSearchView: Bool {
         locations.count < 4

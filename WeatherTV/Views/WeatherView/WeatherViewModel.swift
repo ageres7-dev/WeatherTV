@@ -5,7 +5,7 @@
 //  Created by Сергей on 10.03.2021.
 //
 
-import SwiftUI
+import Foundation
 
 class WeatherViewModel: ObservableObject {
     @Published var currentWeather: CurrentWeather?
@@ -23,10 +23,6 @@ class WeatherViewModel: ObservableObject {
         settings.settings.pressure == .mmHg
     }
     
-    var unitsTemp: String {
-        isFahrenheit ? "ºF" : "ºC"
-    }
-    
     private var timerAutoUpdate: Timer?
     private let minTimeIntervalUpdateForecast = TimeInterval(60 * 60 * 4) // 4 часа 60 * 60 * 4
     private let minTimeIntervalUpdateCurrentWeather = TimeInterval(60 * 15) //15 минут 60 * 15
@@ -42,10 +38,6 @@ class WeatherViewModel: ObservableObject {
     
     func onAppearAction() {
         print(nameLocationOpenWeather ?? "")
-//        guard location.tag == userManager.userData.selectedTag else {
-//            print("экран не виден, выходим из функции onAppearAction()")
-//            return
-//        }
         getCurrentWeatherIfEnoughTimeHasPassed()
         getForecastIfEnoughTimeHasPassed()
     }
@@ -84,15 +76,15 @@ class WeatherViewModel: ObservableObject {
         let intervalSinceLastUpdateForecast = currentDate.timeIntervalSince(dateLastUpdateForecast)
         print("\nintervalSinceLastUpdateForecast \(intervalSinceLastUpdateForecast)")
         print("\(intervalSinceLastUpdateForecast / 60) минут")
+        
         if intervalSinceLastUpdateForecast > minTimeIntervalUpdateForecast {
             fetchForecast()
             print("\(location.tag) прошло достаточно времени, получаем прогноз погоды")
         } else {
             print{"не обновляем прогноз"}
-            if forecastOneCalAPI == nil {
-                print("\(location.tag) берем прогноз из кеша")
-                forecastOneCalAPI = userManager.userData.locations[indexOfCurrentItem].forecastOneCalAPI
-            }
+            guard forecastOneCalAPI == nil else { return }
+            print("\(location.tag) берем прогноз из кеша")
+            forecastOneCalAPI = userManager.userData.locations[indexOfCurrentItem].forecastOneCalAPI
         }
     }
     
@@ -114,6 +106,7 @@ class WeatherViewModel: ObservableObject {
             
         default: return
         }
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.userManager.userData.locations.remove(at: indexOfCurrentItem)
         }
@@ -193,6 +186,11 @@ class WeatherViewModel: ObservableObject {
 }
 
 extension WeatherViewModel {
+    
+    var unitsTemp: String {
+        isFahrenheit ? "ºF" : "ºC"
+    }
+    
     var isShowDeleteBotton: Bool {
         location.tag != Constant.tagCurrentLocation.rawValue
     }
@@ -236,21 +234,7 @@ extension WeatherViewModel {
         forecastFromTomorrow.removeFirst()
         return forecastFromTomorrow
     }
-    
-    //
-    //    var locationName: String? {
-    //
-    //        if let location = location.name {
-    //            return location
-    //        } else if  let locality = locationManager.placemark?.locality {
-    //            return locality
-    //        } else if let locationFromCurrentWeather = currentWeather?.name {
-    //            return "\(locationFromCurrentWeather), \(currentWeather?.sys?.country ?? "")"
-    //        } else {
-    //            return nil
-    //        }
-    //    }
-    
+        
     var description: String {
         var description = ""
         if let descriptionCurrentWeather = currentWeather?.weather?.first?.description {

@@ -35,15 +35,15 @@ struct GearsView: View {
                     .frame(width: sizeLittleGear, height: sizeLittleGear)
             }
             .animation(
-                Animation.linear(duration: 55)
+                Animation.linear(duration: 180)
                     .repeatForever(autoreverses: false)
             )
             .frame(width: geometry.size.width,
                    height: geometry.size.height,
                    alignment: .center)
             
-            
             .onAppear{ isRotated = true }
+            .onDisappear { isRotated = false }
         }
     }
 }
