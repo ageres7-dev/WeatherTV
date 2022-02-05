@@ -22,10 +22,9 @@ struct DisabledSearchMessageView: View {
 
 extension DisabledSearchMessageView {
     var citiesForRemove: [Location] {
-        manager.userData.locations.filter({ $0.tag != Constant.tagCurrentLocation.rawValue })
+        manager.userData.locations.filter { $0.tag != Constant.tagCurrentLocation.rawValue }
     }
 }
-
 
 struct DisabledSearchMessageView_Previews: PreviewProvider {
     static var previews: some View {

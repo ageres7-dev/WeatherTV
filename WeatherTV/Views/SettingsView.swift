@@ -13,8 +13,8 @@ struct SettingsView: View {
     @Binding var temperature: TypeTemperature
     @Binding var pressure: TypePressure
     
-    let typeTemperature = [TypeTemperature.c, TypeTemperature.f]
-    let typePressure = [TypePressure.hPa, TypePressure.mmHg]
+    private let typeTemperature: [TypeTemperature] = [.c, .f]
+    let typePressure: [TypePressure] = [.hPa, .mmHg]
     
     private var animation: Animation {
         Animation.linear
@@ -35,7 +35,6 @@ struct SettingsView: View {
                 .padding(50)
                 
                 List {
-                    
                     Picker("Temperature", selection: $temperature) {
                         ForEach(typeTemperature, id: \.self) {
                             Text($0.rawValue)
@@ -57,16 +56,6 @@ struct SettingsView: View {
         }
         .padding()
         .ignoresSafeArea(.all, edges: .horizontal)
-    }
-    
-    
-    func convertTemp(temp: Double, from inputTempType: UnitTemperature, to outputTempType: UnitTemperature) -> String {
-        let mf = MeasurementFormatter()
-        mf.numberFormatter.maximumFractionDigits = 0
-        mf.unitOptions = .providedUnit
-        let input = Measurement(value: temp, unit: inputTempType)
-        let output = input.converted(to: outputTempType)
-        return mf.string(from: output)
     }
 }
 

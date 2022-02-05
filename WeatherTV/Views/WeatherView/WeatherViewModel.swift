@@ -118,7 +118,7 @@ class WeatherViewModel: ObservableObject {
     func startAutoUpdateWeather() {
         guard timerAutoUpdate == nil else { return }
         print("\(location.tag) старт таймера")
-        timerAutoUpdate = Timer.scheduledTimer(withTimeInterval: timeIntervalUpdateWeather, repeats: true) { _ in
+        timerAutoUpdate = Timer.scheduledTimer(withTimeInterval: timeIntervalUpdateWeather, repeats: true) { timer in
             
             print("\(self.location.tag) Действие по таймеру)")
             guard self.location.tag == self.userManager.userData.selectedTag else {
@@ -141,7 +141,6 @@ class WeatherViewModel: ObservableObject {
         guard let indexOfCurrentItem = indexOfCurrentItem else { return }
         userManager.userData.locations[indexOfCurrentItem].lastUpdateCurrentWeather = Date()
     }
-    
     
     private func fetchForecast() {
         let url = URLManager.shared.urlOneCallFrom(
@@ -179,6 +178,7 @@ class WeatherViewModel: ObservableObject {
     private func getCurrentDate() -> String {
         let date = Date()
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
         dateFormatter.dateFormat = "HH:mm:ss E, d MMM y"
         return dateFormatter.string(from: date)
     }
@@ -201,7 +201,7 @@ extension WeatherViewModel {
     
     var todayForecasts: String {
         guard var dayTemp = dailyForecasts.first?.temp?.day,
-              var nightTemp = dailyForecasts.first?.temp?.night else { return "" }
+              var nightTemp = dailyForecasts.first?.temp?.night else { return " " }
         if isFahrenheit {
             dayTemp.convertCelsiusToFahrenheit()
             nightTemp.convertCelsiusToFahrenheit()
@@ -211,8 +211,10 @@ extension WeatherViewModel {
     }
     
     var todayDate: String {
-        guard let dt = dailyForecasts.first?.dt else { return "" }
+        guard let dt = dailyForecasts.first?.dt else { return " " }
         let formatter = DateFormatter()
+        
+        formatter.locale = Locale(identifier: "en_US")
         formatter.dateFormat = "E, d MMM"
         return formatter.string(from: dt)
     }

@@ -8,8 +8,6 @@
 import SwiftUI
 
 
-// MARK: - Search
-
 class SearchState: NSObject, ObservableObject, UISearchResultsUpdating {
     @Published var text: String = ""
     
@@ -46,11 +44,9 @@ struct PageViewController: UIViewControllerRepresentable {
         searchController.searchResultsUpdater = state
         searchController.searchBar.placeholder = NSLocalizedString("Enter city", comment: "")
         
-        // Contain the `UISearchController` in a `UISearchContainerViewController`.
         let searchContainer = UISearchContainerViewController(searchController: searchController)
         searchContainer.title = NSLocalizedString("City search", comment: "")
 
-        // Finally contain the `UISearchContainerViewController` in a `UINavigationController`.
         let searchNavigationController = UINavigationController(rootViewController: searchContainer)
 
         return searchNavigationController

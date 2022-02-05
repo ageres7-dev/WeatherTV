@@ -9,17 +9,16 @@ import SwiftUI
 
 struct WeatherView: View {
     @StateObject var viewModel: WeatherViewModel
-    @State private var showingActionSheet = false
     @Binding var weatherConditionID: Int?
     @Binding var selection: String
+    @State private var showingActionSheet = false
     @State private var isFirstOnAppear = true
     
     var body: some View {
         VStack {
             
             HStack {
-//                Spacer()
-//                Text(viewModel.nameLocationOpenWeather ?? "")
+                
                 Spacer()
                 
                 Button(action: { showingActionSheet.toggle() }) {

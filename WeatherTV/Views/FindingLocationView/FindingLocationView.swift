@@ -10,7 +10,7 @@ import CoreLocation
 
 struct FindingLocationView: View {
     @EnvironmentObject var manager: UserManager
-    @EnvironmentObject var location: LocationManager
+    @EnvironmentObject var locationManager: LocationManager
     @State private var isFirsOnAppear = true
     @Binding var selection: String
     @Binding var nameCurrentLocation: String
@@ -38,14 +38,14 @@ struct FindingLocationView: View {
                     .progressViewStyle(CircularProgressViewStyle())
                     .onAppear {
                         if selection == Constant.tagCurrentLocation.rawValue {
-                            location.requestLocation()
-                            location.requestWhenInUseAuthorization()
+                            locationManager.requestLocation()
+                            locationManager.requestWhenInUseAuthorization()
                         }
                     }
                 
             } else {
                 
-                if let placemark = location.placemark {
+                if let placemark = locationManager.placemark {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
                         .onAppear {
@@ -57,9 +57,9 @@ struct FindingLocationView: View {
         .onChange(of: selection) { selection in
             guard isFirsOnAppear else { return }
             if selection == Constant.tagCurrentLocation.rawValue {
-                print(location.status.debugDescription.description )
-                location.requestWhenInUseAuthorization()
-                print(location.status .debugDescription.description)
+                print(locationManager.status.debugDescription.description )
+                locationManager.requestWhenInUseAuthorization()
+                print(locationManager.status .debugDescription.description)
                 isFirsOnAppear = false
             }
         }
@@ -117,11 +117,11 @@ extension FindingLocationView {
   
     
     private var isShowAllowAccess: Bool {
-        location.status == .denied || location.status == .none
+        locationManager.status == .denied || locationManager.status == .none
     }
     
     private var isFindingCurrentLocation: Bool {
-        location.location == nil  || location.status == .none // && !isShowAllowAccess
+        locationManager.location == nil  || locationManager.status == .none // && !isShowAllowAccess
     }
 }
 
