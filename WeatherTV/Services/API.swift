@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Токен можно получить на сайте https://openweathermap.org/appid
 enum API: String {
-    case key = "insert your API key"
+    case key = <#API_Key: String#>
 }
