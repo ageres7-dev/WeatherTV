@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -374,8 +374,9 @@
 		A597C23C25F63169002940BF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1240;
-				LastUpgradeCheck = 1240;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					A597C24325F63169002940BF = {
 						CreatedOnToolsVersion = 12.4;
@@ -669,6 +670,7 @@
 				DEVELOPMENT_TEAM = RNER64Q73Y;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "WeatherTV/Supporting Files/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -693,6 +695,7 @@
 				DEVELOPMENT_TEAM = RNER64Q73Y;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "WeatherTV/Supporting Files/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
