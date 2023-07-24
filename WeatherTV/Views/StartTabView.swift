@@ -10,7 +10,7 @@ import SwiftUI
 struct StartTabView: View {
     @EnvironmentObject var manager: UserManager
     @EnvironmentObject var settings: SettingsManager
-    @State private var nameCurrentLocation = "My Location"
+    @State private var nameCurrentLocation = "My Location".localized()
     @State private var weatherConditionID: Int? = nil
     @State private var isShowLocalWeather = false
     @State private var isCleanText = false

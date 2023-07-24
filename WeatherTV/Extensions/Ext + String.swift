@@ -45,5 +45,15 @@ extension String {
         
         return result
     }
+    
+    func localized() -> String {
+        NSLocalizedString(
+            self,
+            tableName: "Localizable",
+            bundle: .main,
+            value: self,
+            comment: self
+        )
+    }
 
 }

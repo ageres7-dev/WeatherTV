@@ -9,6 +9,5 @@ import Foundation
 
 struct UserData: Codable, Equatable {
     var locations: [Location] = []
-    var selectedTag: String = "My Location"
-//    var settings: Settings = Settings(temperature: .c, pressure: .hPa)
+    var selectedTag: String = "My Location".localized()
 }

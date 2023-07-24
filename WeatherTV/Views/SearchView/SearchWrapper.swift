@@ -42,10 +42,10 @@ struct PageViewController: UIViewControllerRepresentable {
         
         let searchController = UISearchController(searchResultsController: controller)
         searchController.searchResultsUpdater = state
-        searchController.searchBar.placeholder = NSLocalizedString("Enter city", comment: "")
+        searchController.searchBar.placeholder = "Enter city".localized()
         
         let searchContainer = UISearchContainerViewController(searchController: searchController)
-        searchContainer.title = NSLocalizedString("City search", comment: "")
+        searchContainer.title = "City search".localized()
 
         let searchNavigationController = UINavigationController(rootViewController: searchContainer)
 

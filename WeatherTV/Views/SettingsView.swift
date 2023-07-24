@@ -14,7 +14,7 @@ struct SettingsView: View {
     @Binding var pressure: TypePressure
     
     private let typeTemperature: [TypeTemperature] = [.c, .f]
-    let typePressure: [TypePressure] = [.hPa, .mmHg]
+    private let typePressure: [TypePressure] = [.hPa, .mmHg]
     
     private var animation: Animation {
         Animation.linear
@@ -26,7 +26,7 @@ struct SettingsView: View {
         NavigationView {
             HStack {
                 VStack {
-                    Text("Settings")
+                    Text("Settings".localized())
                         .font(.title2)
                     GearsView()
                         .offset(x: 0, y: -80)
@@ -35,16 +35,16 @@ struct SettingsView: View {
                 .padding(50)
                 
                 List {
-                    Picker("Temperature", selection: $temperature) {
+                    Picker("Temperature".localized(), selection: $temperature) {
                         ForEach(typeTemperature, id: \.self) {
-                            Text($0.rawValue)
+                            Text($0.rawValue.localized())
                         }
                     }
                     .pickerStyle(InlinePickerStyle())
                     
-                    Picker("Atmospheric pressure", selection: $pressure) {
+                    Picker("Atmospheric pressure".localized(), selection: $pressure) {
                         ForEach(typePressure, id: \.self) {
-                            Text($0.rawValue)
+                            Text($0.rawValue.localized())
                         }
                     }
                     .pickerStyle(InlinePickerStyle())

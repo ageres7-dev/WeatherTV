@@ -12,9 +12,14 @@ struct DisabledSearchMessageView: View {
     
     var body: some View {
         VStack {
-            Text("The maximum number of cities has been reached.")
+            Image(systemName: "cloud.sun.fill")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 450, height: 450)
+                
+            Text("The maximum number has been reached".localized())
                 .font(.title2)
-            Text("Please remove one of the cities to add a new one.")
+            Text("Please remove one of the cities to add a new one".localized())
                 .font(.title3)
         }
     }

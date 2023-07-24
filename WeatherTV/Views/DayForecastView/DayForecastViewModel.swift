@@ -30,7 +30,7 @@ extension DayForecastViewModel {
         guard let dt = daily?.dt else { return "" }
         let formatter = DateFormatter()
         formatter.dateFormat = "E, d MMM"
-        formatter.locale = Locale(identifier: "en_US")
+        
         return formatter.string(from: dt)
     }
     

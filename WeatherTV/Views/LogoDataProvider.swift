@@ -24,7 +24,7 @@ struct LogoDataProvider: View {
                             .shadow(radius: 30)
                         
                         Group {
-                            Text("Data source provider")
+                            Text("Data source provider".localized())
                             Text("openweathermap.org")
                         }
                         .font(.system(size: 16))

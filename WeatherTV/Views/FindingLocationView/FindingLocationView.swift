@@ -23,16 +23,16 @@ struct FindingLocationView: View {
 
             if isShowAllowAccess {
                 VStack {
-                    Text("Turning on location services allows us to show you local weather.")
+                    Text("Turning on location services allows us to show you local weather.".localized())
                         .font(.title2)
-                    Button("Open in settings") {
+                    Button("Open in settings".localized()) {
                         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                     }
                 }
                 
             } else if isFindingCurrentLocation {
                 
-                Text("Finding a location")
+                Text("Finding a location".localized())
                     .font(.title2)
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
@@ -105,7 +105,7 @@ extension FindingLocationView {
         
         let startIndex = manager.userData.locations.startIndex
         manager.userData.locations.insert(currentLocation, at: startIndex)
-        nameCurrentLocation = currentLocation.name ?? "My Location"
+        nameCurrentLocation = currentLocation.name ?? "My Location".localized()
         isShowLocalWeather = true
     }
     

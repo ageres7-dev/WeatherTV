@@ -28,7 +28,10 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     static let shared = LocationManager()
     private let manager = CLLocationManager()
     private let geocoder = CLGeocoder()
-    private let defaultLocale = Locale.init(identifier: "en_US")
+    
+    private var defaultLocale: Locale {
+        Locale.autoupdatingCurrent
+    }
     
     private let request = MKLocalSearch.Request()
     private var localSearch: MKLocalSearch?
