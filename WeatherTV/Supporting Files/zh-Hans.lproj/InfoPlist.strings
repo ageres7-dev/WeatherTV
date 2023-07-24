@@ -1,0 +1,11 @@
+/* 
+  InfoPlist.strings
+  WeatherTV
+
+  Created by Sergey Dolgikh on 24.07.2023.
+  
+*/
+
+
+NSLocationAlwaysAndWhenInUseUsageDescription = "打开定位服务可以让我们向您显示当地的天气。";
+NSLocationWhenInUseUsageDescription = "打开定位服务可以让我们向您显示当地的天气。";

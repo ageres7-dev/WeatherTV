@@ -1,0 +1,38 @@
+/* 
+  Localizable.strings
+  WeatherTV
+
+  Created by Sergey Dolgikh on 19.07.2023.
+  
+*/
+
+
+"Delete" = "Borrar";
+"Remove city from the list?" = "¿Quitar la ciudad de la lista?";
+"a city" = "una ciudad";
+
+"mm Hg" = "mm Hg";
+"hPa" = "hPa";
+"Fahrenheit" = "Fahrenheit";
+"Celsius" = "Celsius";
+
+"Feels like:" = "Se siente como: %@";
+"Pressure:" = "Presión: %@";
+"Humidity:" = "Humedad: %@%%";
+"Sunset time:" = "Hora del atardecer: %@";
+"Sunrise time:" = "Hora del amanecer: %@";
+
+"Settings" = "Ajustes";
+"Temperature" = "Temperatura";
+"Atmospheric pressure" = "Presión atmosférica";
+
+"Finding a location" = "Encontrar una ubicación";
+"Open in settings" = "Abierta en la configuración";
+"My Location" = "Mi ubicacion";
+"City search" = "Búsqueda de ciudad";
+"Enter city" = "Introduce la ciudad";
+
+"Data source provider" = "Proveedor de datos";
+
+"The maximum number has been reached" = "Se ha alcanzado el número máximo";
+"Please remove one of the cities to add a new one" = "Quite una de las ciudades para agregar una nueva";

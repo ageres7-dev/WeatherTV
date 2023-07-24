@@ -1,0 +1,11 @@
+/* 
+  InfoPlist.strings
+  WeatherTV
+
+  Created by Sergey Dolgikh on 24.07.2023.
+  
+*/
+
+
+NSLocationAlwaysAndWhenInUseUsageDescription = "Activar los servicios de ubicación nos permite mostrarte el clima local.";
+NSLocationWhenInUseUsageDescription = "Activar los servicios de ubicación nos permite mostrarte el clima local.";

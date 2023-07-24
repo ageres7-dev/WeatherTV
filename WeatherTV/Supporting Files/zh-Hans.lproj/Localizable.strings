@@ -1,0 +1,38 @@
+/* 
+  Localizable.strings
+  WeatherTV
+
+  Created by Sergey Dolgikh on 19.07.2023.
+  
+*/
+
+
+"Delete" = "删除";
+"Remove city from the list?" = "从列表中删除城市？";
+"a city" = "一座城市";
+
+"mm Hg" = "毫米汞柱";
+"hPa" = "百帕";
+"Fahrenheit" = "华氏度";
+"Celsius" = "摄氏度";
+
+"Feels like:" = "感觉像: %@";
+"Pressure:" = "压力: %@";
+"Humidity:" = "湿度: %@%%";
+"Sunset time:" = "日落时间: %@";
+"Sunrise time:" = "日出时间: %@";
+
+"Settings" = "设置";
+"Temperature" = "温度";
+"Atmospheric pressure" = "气压";
+
+"Finding a location" = "寻找地点";
+"Open in settings" = "在设置中打开";
+"My Location" = "我的位置";
+"City search" = "城市搜索";
+"Enter city" = "输入城市";
+
+"Data source provider" = "数据提供者";
+
+"The maximum number has been reached" = "已达到最大数量";
+"Please remove one of the cities to add a new one" = "请删除其中一个城市以添加新城市";
