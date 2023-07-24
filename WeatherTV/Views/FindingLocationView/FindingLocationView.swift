@@ -10,7 +10,7 @@ import CoreLocation
 
 struct FindingLocationView: View {
     @EnvironmentObject var manager: UserManager
-    @EnvironmentObject var location: LocationManager
+    @EnvironmentObject var locationManager: LocationManager
     @State private var isFirsOnAppear = true
     @Binding var selection: String
     @Binding var nameCurrentLocation: String
@@ -23,29 +23,29 @@ struct FindingLocationView: View {
 
             if isShowAllowAccess {
                 VStack {
-                    Text("Turning on location services allows us to show you local weather.")
+                    Text("Turning on location services allows us to show you local weather.".localized())
                         .font(.title2)
-                    Button("Open in settings") {
+                    Button("Open in settings".localized()) {
                         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                     }
                 }
                 
             } else if isFindingCurrentLocation {
                 
-                Text("Finding a location")
+                Text("Finding a location".localized())
                     .font(.title2)
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
                     .onAppear {
                         if selection == Constant.tagCurrentLocation.rawValue {
-                            location.requestLocation()
-                            location.requestWhenInUseAuthorization()
+                            locationManager.requestLocation()
+                            locationManager.requestWhenInUseAuthorization()
                         }
                     }
                 
             } else {
                 
-                if let placemark = location.placemark {
+                if let placemark = locationManager.placemark {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle())
                         .onAppear {
@@ -57,9 +57,9 @@ struct FindingLocationView: View {
         .onChange(of: selection) { selection in
             guard isFirsOnAppear else { return }
             if selection == Constant.tagCurrentLocation.rawValue {
-                print(location.status.debugDescription.description )
-                location.requestWhenInUseAuthorization()
-                print(location.status .debugDescription.description)
+                print(locationManager.status.debugDescription.description )
+                locationManager.requestWhenInUseAuthorization()
+                print(locationManager.status .debugDescription.description)
                 isFirsOnAppear = false
             }
         }
@@ -105,7 +105,7 @@ extension FindingLocationView {
         
         let startIndex = manager.userData.locations.startIndex
         manager.userData.locations.insert(currentLocation, at: startIndex)
-        nameCurrentLocation = currentLocation.name ?? "My Location"
+        nameCurrentLocation = currentLocation.name ?? "My Location".localized()
         isShowLocalWeather = true
     }
     
@@ -117,11 +117,11 @@ extension FindingLocationView {
   
     
     private var isShowAllowAccess: Bool {
-        location.status == .denied || location.status == .none
+        locationManager.status == .denied || locationManager.status == .none
     }
     
     private var isFindingCurrentLocation: Bool {
-        location.location == nil  || location.status == .none // && !isShowAllowAccess
+        locationManager.location == nil  || locationManager.status == .none // && !isShowAllowAccess
     }
 }
 

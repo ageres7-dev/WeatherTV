@@ -1,0 +1,11 @@
+/* 
+  InfoPlist.strings
+  WeatherTV
+
+  Created by Sergey Dolgikh on 24.07.2023.
+  
+*/
+
+
+NSLocationAlwaysAndWhenInUseUsageDescription = "Включение служб определения местоположения позволяет нам показывать вам местную погоду.";
+NSLocationWhenInUseUsageDescription = "Включение служб определения местоположения позволяет нам показывать вам местную погоду.";

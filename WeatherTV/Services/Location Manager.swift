@@ -5,19 +5,33 @@
 //  Created by Сергей on 01.04.2021.
 //
 import Foundation
+import Combine
 import CoreLocation
 import MapKit
 
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-    @Published var location: CLLocation?
-    @Published var status: CLAuthorizationStatus?
-    @Published var placemark: CLPlacemark?
+    let objectWillChange = PassthroughSubject<Void, Never>()
+    
+    @Published var location: CLLocation? {
+        didSet { objectWillChange.send() }
+    }
+    
+    @Published var status: CLAuthorizationStatus? {
+        didSet { objectWillChange.send() }
+    }
+    
+    @Published var placemark: CLPlacemark? {
+        didSet { objectWillChange.send() }
+    }
     
     static let shared = LocationManager()
     private let manager = CLLocationManager()
     private let geocoder = CLGeocoder()
-    private let defaultLocale = Locale.init(identifier: "en_US")
+    
+    private var defaultLocale: Locale {
+        Locale.autoupdatingCurrent
+    }
     
     private let request = MKLocalSearch.Request()
     private var localSearch: MKLocalSearch?
@@ -26,7 +40,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         super.init()
         manager.delegate = self
     }
-    
     
     func findLocationMap(from string: String, completion: @escaping ([CLPlacemark]?) -> Void) {
         request.resultTypes = .address
@@ -43,7 +56,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
    
-    
     func requestLocation() {
         manager.requestLocation()
     }
@@ -52,7 +64,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         manager.requestWhenInUseAuthorization()
     }
 
-    
     func findLocation(from string: String, completion: @escaping ([CLPlacemark]?) -> Void) {
         geocoder.geocodeAddressString(string, in: nil, preferredLocale: defaultLocale) { placemarks, _ in
             completion(placemarks)
@@ -85,41 +96,3 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         print("Failed to find location: \(error.localizedDescription)")
     }
 }
-
-
-
-
-
-
-
-
-/*
- import CoreLocation
- 
- class LocationFetcher: NSObject, CLLocationManagerDelegate, ObservableObject {
- let manager = CLLocationManager()
- @Published var lastKnownLocation: CLLocationCoordinate2D?
- 
- override init() {
- super.init()
- manager.delegate = self
- manager.desiredAccuracy = kCLLocationAccuracyBest
- }
- 
- func start() {
- manager.requestWhenInUseAuthorization()
- //        manager.startUpdatingLocation()
- manager.requestLocation()
- 
- }
- 
- func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
- 
- lastKnownLocation = locations.first?.coordinate
- }
- }
- */
-
-
-
-

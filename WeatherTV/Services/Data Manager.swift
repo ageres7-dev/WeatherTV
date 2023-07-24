@@ -27,7 +27,6 @@ class DataManager {
         return userData
     }
     
-    
     func save(_ settings: Settings) -> Void {
         guard let settings = try? JSONEncoder().encode(settings) else { return }
         self.settings = settings
@@ -39,5 +38,4 @@ class DataManager {
         }
         return settings
     }
-
 }

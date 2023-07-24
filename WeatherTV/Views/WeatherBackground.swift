@@ -119,8 +119,6 @@ extension WeatherBackground {
     }
 }
 
-
-
 struct WeatherBackgroundView_Previews: PreviewProvider {
     static var previews: some View {
         WeatherBackground(conditionID: 300)

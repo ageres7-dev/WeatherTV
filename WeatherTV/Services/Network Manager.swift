@@ -14,17 +14,15 @@ class NetworkManager {
     
     func fetchCurrentWeather(from url: URL?, completion: @escaping (_ weather: CurrentWeather)->()) {
         guard let url = url else { return }
-//        print(url)
+
         fetchObject(CurrentWeather.self, from: url) { weather in
             completion(weather)
         }
 
     }
     
-    
     func fetchForecast(from url: URL?, completion: @escaping (_ forecast: Forecast)->()) {
         guard let url = url else { return }
-        
         
         fetchObject(Forecast.self, from: url) { forecast in
             completion(forecast)
@@ -32,14 +30,12 @@ class NetworkManager {
     
     }
     
-    
     func fetchForecastSevenDays(from url: URL?, completion: @escaping (_ forecast: ForecastOneCalAPI)->()) {
         guard let url = url else { return }
         fetchObject(ForecastOneCalAPI.self, from: url) { forecast in
             completion(forecast)
         }
     }
-    
     
     func fetchCitys(complition: @escaping ([City]) -> Void) {
         let url = Bundle.main.url(forResource: "city.list.json", withExtension: nil)
@@ -65,7 +61,6 @@ class NetworkManager {
                 decode.keyDecodingStrategy = .convertFromSnakeCase
                 decode.dateDecodingStrategy = .secondsSince1970
                 let object = try decode.decode(T.self, from: data)
-//                print(object)
                 DispatchQueue.main.async {
                     completion(object)
                 }

@@ -57,7 +57,6 @@ class WeatherViewModel: ObservableObject {
             fetchCurrentWeather()
             print("\(location.tag) получаем погоду текущую")
         } else {
-            print{"не обновляем погоду"}
             if currentWeather == nil {
                 print("\(location.tag) берем погоду из кеша")
                 currentWeather = userManager.userData.locations[indexOfCurrentItem].currentWeather
@@ -81,7 +80,6 @@ class WeatherViewModel: ObservableObject {
             fetchForecast()
             print("\(location.tag) прошло достаточно времени, получаем прогноз погоды")
         } else {
-            print{"не обновляем прогноз"}
             guard forecastOneCalAPI == nil else { return }
             print("\(location.tag) берем прогноз из кеша")
             forecastOneCalAPI = userManager.userData.locations[indexOfCurrentItem].forecastOneCalAPI
@@ -118,7 +116,7 @@ class WeatherViewModel: ObservableObject {
     func startAutoUpdateWeather() {
         guard timerAutoUpdate == nil else { return }
         print("\(location.tag) старт таймера")
-        timerAutoUpdate = Timer.scheduledTimer(withTimeInterval: timeIntervalUpdateWeather, repeats: true) { _ in
+        timerAutoUpdate = Timer.scheduledTimer(withTimeInterval: timeIntervalUpdateWeather, repeats: true) { timer in
             
             print("\(self.location.tag) Действие по таймеру)")
             guard self.location.tag == self.userManager.userData.selectedTag else {
@@ -142,9 +140,8 @@ class WeatherViewModel: ObservableObject {
         userManager.userData.locations[indexOfCurrentItem].lastUpdateCurrentWeather = Date()
     }
     
-    
     private func fetchForecast() {
-        let url = URLManager.shared.urlOneCallFrom(
+        let url = URLManager.urlOneCallFrom(
             latitude: location.latitude,
             longitude: location.longitude
         )
@@ -160,7 +157,7 @@ class WeatherViewModel: ObservableObject {
     }
     
     private func fetchCurrentWeather() {
-        let url = URLManager.shared.urlCurrentWeatherFrom(
+        let url = URLManager.urlCurrentWeatherFrom(
             latitude: location.latitude,
             longitude: location.longitude
         )
@@ -180,6 +177,7 @@ class WeatherViewModel: ObservableObject {
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm:ss E, d MMM y"
+        
         return dateFormatter.string(from: date)
     }
     
@@ -201,7 +199,7 @@ extension WeatherViewModel {
     
     var todayForecasts: String {
         guard var dayTemp = dailyForecasts.first?.temp?.day,
-              var nightTemp = dailyForecasts.first?.temp?.night else { return "" }
+              var nightTemp = dailyForecasts.first?.temp?.night else { return " " }
         if isFahrenheit {
             dayTemp.convertCelsiusToFahrenheit()
             nightTemp.convertCelsiusToFahrenheit()
@@ -211,8 +209,9 @@ extension WeatherViewModel {
     }
     
     var todayDate: String {
-        guard let dt = dailyForecasts.first?.dt else { return "" }
+        guard let dt = dailyForecasts.first?.dt else { return " " }
         let formatter = DateFormatter()
+        
         formatter.dateFormat = "E, d MMM"
         return formatter.string(from: dt)
     }
@@ -270,7 +269,8 @@ extension WeatherViewModel {
     var humidity: String {
         var result = ""
         if let humidity = currentWeather?.main?.humidity {
-            result = "Humidity: \(lround(humidity))%"
+            
+            result = String(format: "Humidity:".localized(), String(lround(humidity)))
         }
         return result
     }
@@ -281,7 +281,7 @@ extension WeatherViewModel {
             feelsLike.convertCelsiusToFahrenheit()
         }
         
-        return "Feels like: \(lround(feelsLike))\(unitsTemp)"
+        return String(format: "Feels like:".localized(), "\(lround(feelsLike))\(unitsTemp)")
     }
     
     var pressure: String {
@@ -289,9 +289,9 @@ extension WeatherViewModel {
         if isPressureMmHg {
             pressure.convertHPaToMmHg()
         }
-        let units = isPressureMmHg ? "mm Hg" : "hPa"
+        let units = isPressureMmHg ? "mm Hg".localized() : "hPa".localized()
         
-        return "Pressure: \(lround(pressure)) \(units)"
+        return String(format: "Pressure:".localized(), "\(lround(pressure)) \(units)")
     }
     
     
@@ -314,7 +314,8 @@ extension WeatherViewModel {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         formatter.timeZone = TimeZone(secondsFromGMT: timeZone)
-        return "Sunset time: \(formatter.string(from: date))"
+        
+        return String(format: "Sunset time:".localized(), formatter.string(from: date))
     }
     
     var sunriseTime: String? {
@@ -323,7 +324,8 @@ extension WeatherViewModel {
         let formatter = DateFormatter()
         formatter.timeZone = TimeZone(secondsFromGMT: timeZone)
         formatter.dateFormat = "HH:mm"
-        return "Sunrise time: \(formatter.string(from: date))"
+        
+        return String(format: "Sunrise time:".localized(), formatter.string(from: date))
     }
     
     var weatherConditionID: Int? {

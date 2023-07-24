@@ -9,17 +9,16 @@ import SwiftUI
 
 struct WeatherView: View {
     @StateObject var viewModel: WeatherViewModel
-    @State private var showingActionSheet = false
     @Binding var weatherConditionID: Int?
     @Binding var selection: String
+    @State private var showingActionSheet = false
     @State private var isFirstOnAppear = true
     
     var body: some View {
         VStack {
             
             HStack {
-//                Spacer()
-//                Text(viewModel.nameLocationOpenWeather ?? "")
+                
                 Spacer()
                 
                 Button(action: { showingActionSheet.toggle() }) {
@@ -27,12 +26,16 @@ struct WeatherView: View {
                 }
                 .opacity(viewModel.isShowDeleteBotton ? 1 : 0)
                 .actionSheet(isPresented: $showingActionSheet) {
-                    ActionSheet(title: Text("Remove \(viewModel.location.name ?? "a city") from the list?"), buttons: [
-                        .destructive(Text("Delete")) {
-                            viewModel.deleteAction()
-                        },
-                        .cancel()
-                    ])
+                    let city = viewModel.location.name ?? "a city".localized()
+                    let deleteTitle = String(format: "Remove city from the list?".localized(), city)
+                    
+                    return ActionSheet(
+                        title: Text(deleteTitle),
+                        buttons: [
+                            .destructive(Text("Delete".localized()), action: viewModel.deleteAction),
+                            .cancel()
+                        ]
+                    )
                 }
             }
             Spacer()

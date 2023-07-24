@@ -1,0 +1,39 @@
+/* 
+  Localizable.strings
+  WeatherTV
+
+  Created by Sergey Dolgikh on 19.07.2023.
+  
+*/
+
+
+"Delete" = "Удалить";
+"Remove city from the list?" = "Удалить \%@ из списка?";
+"a city" = "город";
+
+"mm Hg" = "мм рт.ст.";
+"hPa" = "гПа";
+"Fahrenheit" = "Фаренгейт";
+"Celsius" = "Цельсия";
+
+"Feels like:" = "Ощущается как: %@";
+"Pressure:" = "Давление: %@";
+"Humidity:" = "Влажность: %@%%";
+"Sunset time:" = "Время заката: %@";
+"Sunrise time:" = "Время восхода: %@";
+
+"Settings" = "Настройки";
+"Temperature" = "Температура";
+"Atmospheric pressure" = "Атмосферное давление";
+
+"Finding a location" = "Поиск местоположения";
+"Open in settings" = "Открыть в настройках";
+"My Location" = "Мое местонахождение";
+"City search" = "Поиск города";
+"Enter city" = "Введите город";
+
+"Data source provider" = "Поставщик данных";
+
+"The maximum number has been reached" = "Достигнуто максимальное количество";
+"Please remove one of the cities to add a new one" = "Удалите один из городов, чтобы добавить новый";
+
