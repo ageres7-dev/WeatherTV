@@ -23,45 +23,79 @@ struct SettingsView: View {
     
     var body: some View {
         
-        NavigationView {
-            HStack {
-                VStack {
-                    Text("Settings".localized())
-                        .font(.title2)
-                    GearsView()
-                        .offset(x: 0, y: -80)
-                    Spacer()
-                }
-                .padding(50)
-                
-                List {
-                    Picker("Temperature".localized(), selection: $temperature) {
-                        ForEach(typeTemperature, id: \.self) {
-                            Text($0.rawValue.localized())
-                        }
+        if #available(tvOS 17.0, *) {
+            NavigationView {
+                ZStack {
+                    HStack {
+                        gearsView
+                            .padding(.horizontal, 50)
+                            .frame(width: UIScreen.main.bounds.width / 2.2)
+                        Spacer()
                     }
-                    .pickerStyle(InlinePickerStyle())
-                    
-                    Picker("Atmospheric pressure".localized(), selection: $pressure) {
-                        ForEach(typePressure, id: \.self) {
-                            Text($0.rawValue.localized())
-                        }
-                    }
-                    .pickerStyle(InlinePickerStyle())
-
+                    listView
+                        .safeAreaPadding(EdgeInsets(
+                            top: 0,
+                            leading: UIScreen.main.bounds.width / 2.2,
+                            bottom: 0,
+                            trailing: 0
+                        ))
                 }
-                .listStyle(GroupedListStyle())
-                .frame(width: UIScreen.main.bounds.width / 2.2)
             }
+        } else {
+            NavigationView {
+                HStack {
+                    gearsView
+                        .padding(.horizontal, 50)
+                    
+                    listView
+                        .frame(width: UIScreen.main.bounds.width / 2.2)
+                }
+            }
+            .padding()
+            .ignoresSafeArea(.all, edges: .horizontal)
         }
-        .padding()
-        .ignoresSafeArea(.all, edges: .horizontal)
     }
 }
 
 
-//struct SettingsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SettingsView()
-//    }
-//}
+extension SettingsView {
+    
+    @ViewBuilder var gearsView: some View {
+        VStack {
+            Text("Settings".localized())
+                .font(.title2)
+            GearsView()
+                .offset(x: 0, y: -100)
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder var listView: some View {
+        List {
+            Picker("Temperature".localized(), selection: $temperature) {
+                ForEach(typeTemperature, id: \.self) {
+                    Text($0.rawValue.localized())
+                }
+            }
+            .pickerStyle(InlinePickerStyle())
+            
+            Picker("Atmospheric pressure".localized(), selection: $pressure) {
+                ForEach(typePressure, id: \.self) {
+                    Text($0.rawValue.localized())
+                }
+            }
+            .pickerStyle(InlinePickerStyle())
+            
+        }
+        .listStyle(GroupedListStyle())
+    }
+}
+
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView(temperature: .constant(.c), pressure: .constant(.mmHg))
+            .environmentObject(LocationManager.shared)
+            .environmentObject(UserManager.shared)
+            .environmentObject(SettingsManager.shared)
+    }
+}

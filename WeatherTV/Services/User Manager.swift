@@ -16,7 +16,7 @@ final class UserManager: ObservableObject {
         userData = DataManager.shared.loadUserData()
     }
     
-    init (userData: UserData) {
+    init(userData: UserData) {
         self.userData = userData
     }
 }
