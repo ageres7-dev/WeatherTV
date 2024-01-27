@@ -37,3 +37,5 @@
 "The maximum number has been reached" = "Достигнуто максимальное количество";
 "Please remove one of the cities to add a new one" = "Удалите один из городов, чтобы добавить новый";
 
+"This city has already been added." = "Этот город уже добавлен.";
+"Maximum locations reached." = "Достигнуто максимальное количество мест.";
