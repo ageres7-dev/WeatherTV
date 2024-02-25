@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-
+@MainActor
 class SearchState: NSObject, ObservableObject, UISearchResultsUpdating {
     @Published var text: String = ""
     
     func updateSearchResults(for searchController: UISearchController) {
-        let searchBar = searchController.searchBar
-        text = searchBar.text ?? ""
+        Task { @MainActor in
+            text = searchController.searchBar.text ?? ""
+        }
     }
 }
 
@@ -53,8 +54,6 @@ struct PageViewController: UIViewControllerRepresentable {
     }
     
     func updateUIViewController(_ searchContainer: UINavigationController, context: Context) {
-        print("Update Page Search Controller")
-    
         let vc = searchContainer.children.first as? UISearchContainerViewController
         
         if isCleanText {

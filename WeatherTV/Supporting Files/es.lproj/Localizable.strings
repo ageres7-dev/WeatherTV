@@ -36,3 +36,6 @@
 
 "The maximum number has been reached" = "Se ha alcanzado el número máximo";
 "Please remove one of the cities to add a new one" = "Quite una de las ciudades para agregar una nueva";
+
+"This city has already been added." = "Esta ciudad ya ha sido agregada.";
+"Maximum locations reached." = "Ubicaciones máximas alcanzadas.";

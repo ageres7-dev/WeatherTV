@@ -39,8 +39,12 @@ struct SearchView: View {
             Alert(title: Text(alertText))
         }
         .onChange(of: state.text) { text in
+            guard !text.isEmpty else {
+                cities = []
+                return
+            }
             location.findLocation(from: text) { placemarks in
-                guard let placemarks = placemarks else {
+                guard let placemarks, !state.text.isEmpty else {
                     cities = []
                     return
                 }
@@ -58,14 +62,15 @@ extension SearchView {
         guard !locations.contains(where: {
             $0.tag == newLocation.tag
         }) else {
-            alertText = "\(newLocation.name ?? "This city") has already been added." //"This city has already been added."
+            
+            alertText = "This city has already been added.".localized()
             selection = newLocation.tag
             isShowAlert.toggle()
             isCleanText.toggle()
             return
         }
         guard locations.count <= 4 else {
-            alertText = "Maximum locations reached."
+            alertText = "Maximum locations reached.".localized()
             isShowAlert.toggle()
             isCleanText.toggle()
             return
@@ -84,14 +89,8 @@ extension SearchView {
     
     private func locationString(from city: CLPlacemark) -> String {
         city.getTag()
-        //        let name = city.name ?? ""
-        //        let locality = city.locality != nil ? "\(city.locality!), " : ""
-        //        let administrativeArea = city.administrativeArea != nil ? "\(city.administrativeArea!), " : ""
-        //        let country = city.country != nil ? "\(city.country!)" : ""
-        //        return name + locality + administrativeArea + country
-        
-        
     }
+    
     private var filteredCitiesFound: [CLPlacemark] {
         cities.filter({ $0.locality != nil })
     }

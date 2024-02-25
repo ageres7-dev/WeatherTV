@@ -36,3 +36,6 @@
 
 "The maximum number has been reached" = "已达到最大数量";
 "Please remove one of the cities to add a new one" = "请删除其中一个城市以添加新城市";
+
+"This city has already been added." = "该城市已被添加。";
+"Maximum locations reached." = "已达到最大值。";
