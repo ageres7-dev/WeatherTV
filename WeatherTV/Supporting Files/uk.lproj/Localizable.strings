@@ -1,0 +1,41 @@
+  /* 
+  Localizable.strings
+  WeatherTV
+
+  Created by Sergey Dolgikh on 19.07.2023.
+  
+*/
+
+
+"Delete" = "Видалити";
+"Remove city from the list?" = "Видалити \%@ зі списку?";
+"a city" = "місто";
+
+"mm Hg" = "мм рт.ст.";
+"hPa" = "гПа";
+"Fahrenheit" = "Фаренгейт";
+"Celsius" = "Цельсій";
+
+"Feels like:" = "Відчувається як: %@";
+"Pressure:" = "Тиск: %@";
+"Humidity:" = "Вологість: %@%%";
+"Sunset time:" = "Захід сонця: %@";
+"Sunrise time:" = "Схід сонця: %@";
+
+"Settings" = "Налаштування";
+"Temperature" = "Температура";
+"Atmospheric pressure" = "Атмосферний тиск";
+
+"Finding a location" = "Пошук розташування";
+"Open in settings" = "Відкрити в налаштуваннях";
+"My Location" = "Моє розташування";
+"City search" = "Пошук міста";
+"Enter city" = "Напишіть місто";
+
+"Data source provider" = "Постачальник даних";
+
+"The maximum number has been reached" = "Досягнуто максимальної кількості";
+"Please remove one of the cities to add a new one" = "Видаліть одне з міст, щоб додати нове";
+
+"This city has already been added." = "Це місто вже додано.";
+"Maximum locations reached." = "Досягнуто максимальної кількості місць.";
