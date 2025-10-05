@@ -60,8 +60,12 @@ struct WeatherView: View {
                     VStack {
                         Text(temp)
                             .font(.system(size: 180))
-                        Text(viewModel.todayForecasts)
-                        Text(viewModel.todayDate)
+                        if let todayForecasts = viewModel.todayForecasts {
+                            Text(todayForecasts)
+                        }
+                        if let todayDate = viewModel.todayDate {
+                            Text(todayDate)
+                        }
                     }
                 } else {
                     ProgressView()
@@ -93,13 +97,16 @@ struct WeatherView: View {
             .padding()
             
             Spacer()
-            LazyHStack {
-                ForEach((viewModel.forecastFromTomorrow), id: \.self) { day in
-                    DayForecastView(viewModel: DayForecastViewModel(daily: day))
+            
+            if !viewModel.forecastFromTomorrow.isEmpty {
+                LazyHStack {
+                    ForEach((viewModel.forecastFromTomorrow), id: \.self) { day in
+                        DayForecastView(viewModel: DayForecastViewModel(daily: day))
+                    }
                 }
+                .frame(height: 130)
+                .offset(x: 0, y: -60)
             }
-            .frame(height: 130)
-            .offset(x: 0, y: -60)
         }
         
         .onReceive(viewModel.$conditionCode) { code in

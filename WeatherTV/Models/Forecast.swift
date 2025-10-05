@@ -12,33 +12,36 @@ import Foundation
 // MARK: - Forecast
 struct Forecast: Decodable, Hashable {
     let cod: String?
-    let cnt: Int? //Количество временных меток, возвращенных в ответе API
-    let list: [List1]?
+    //Количество временных меток, возвращенных в ответе API
+    let cnt: Int?
+    let list: [List]?
     let city: City?
-    
 }
-// MARK: - List
-struct List1: Decodable, Hashable {
-    let dt: Int?
-    let main: Main?
-    let weather: [Weather]?
-    let clouds: Clouds?
-    let wind: Wind?
-    let visibility: Double?
-    let pop: Double?
-    let sys: SysForecast?
-    let dtTxt: String?
 
-    enum CodingKeys: String, CodingKey {
-        case dt
-        case main
-        case weather
-        case clouds
-        case wind
-        case visibility
-        case pop
-        case sys
-        case dtTxt = "dt_txt"
+extension Forecast {
+    // MARK: - List
+    struct List: Decodable, Hashable {
+        let dt: Int?
+        let main: Main?
+        let weather: [Weather]?
+        let clouds: Clouds?
+        let wind: Wind?
+        let visibility: Double?
+        let pop: Double?
+        let sys: SysForecast?
+        let dtTxt: String?
+        
+        enum CodingKeys: String, CodingKey {
+            case dt
+            case main
+            case weather
+            case clouds
+            case wind
+            case visibility
+            case pop
+            case sys
+            case dtTxt = "dt_txt"
+        }
     }
 }
 
