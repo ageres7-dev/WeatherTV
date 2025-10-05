@@ -47,7 +47,7 @@ struct SettingsView: View {
                     gearsView
                         .padding(.horizontal, 50)
                     
-                    listView
+                    listViewLegacy
                         .frame(width: UIScreen.main.bounds.width / 2.2)
                 }
             }
@@ -70,7 +70,7 @@ extension SettingsView {
         }
     }
     
-    @ViewBuilder var listView: some View {
+    @ViewBuilder var listViewLegacy: some View {
         List {
             Picker("Temperature".localized(), selection: $temperature) {
                 ForEach(typeTemperature, id: \.self) {
@@ -85,6 +85,46 @@ extension SettingsView {
                 }
             }
             .pickerStyle(InlinePickerStyle())
+            
+        }
+        .listStyle(GroupedListStyle())
+    }
+    
+    @ViewBuilder var listView: some View {
+        List {
+            Section(header: Text("Temperature".localized())) {
+                ForEach(typeTemperature, id: \.self) { value in
+                    Button(action: {
+                        temperature = value
+                    }) {
+                        HStack {
+                            Text(value.rawValue.localized())
+                            Spacer()
+                            if temperature == value {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.accentColor)
+                            }
+                        }
+                    }
+                }
+            }
+            
+            Section(header: Text("Atmospheric pressure".localized())) {
+                ForEach(typePressure, id: \.self) { value in
+                    Button(action: {
+                        pressure = value
+                    }) {
+                        HStack {
+                            Text(value.rawValue.localized())
+                            Spacer()
+                            if pressure == value {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.accentColor)
+                            }
+                        }
+                    }
+                }
+            }
             
         }
         .listStyle(GroupedListStyle())
