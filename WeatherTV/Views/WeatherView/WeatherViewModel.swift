@@ -194,12 +194,12 @@ extension WeatherViewModel {
     }
     
     var nameLocationOpenWeather: String? {
-        currentWeather?.name //+ currentWeather?.sys?.country
+        currentWeather?.name
     }
     
-    var todayForecasts: String {
+    var todayForecasts: String? {
         guard var dayTemp = dailyForecasts.first?.temp?.day,
-              var nightTemp = dailyForecasts.first?.temp?.night else { return " " }
+              var nightTemp = dailyForecasts.first?.temp?.night else { return nil }
         if isFahrenheit {
             dayTemp.convertCelsiusToFahrenheit()
             nightTemp.convertCelsiusToFahrenheit()
@@ -208,8 +208,8 @@ extension WeatherViewModel {
         return "\(lround(dayTemp)) / \(lround(nightTemp))\(unitsTemp)"
     }
     
-    var todayDate: String {
-        guard let dt = dailyForecasts.first?.dt else { return " " }
+    var todayDate: String? {
+        guard let dt = dailyForecasts.first?.dt else { return nil }
         let formatter = DateFormatter()
         
         formatter.dateFormat = "E, d MMM"

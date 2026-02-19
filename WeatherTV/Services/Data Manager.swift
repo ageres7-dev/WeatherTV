@@ -15,7 +15,7 @@ class DataManager {
     static let shared = DataManager()
     private init() {}
     
-    func save(_ userData: UserData) -> Void {
+    func save(_ userData: UserData) {
         guard let userData = try? JSONEncoder().encode(userData) else { return }
         self.userData = userData
     }
@@ -27,7 +27,7 @@ class DataManager {
         return userData
     }
     
-    func save(_ settings: Settings) -> Void {
+    func save(_ settings: Settings) {
         guard let settings = try? JSONEncoder().encode(settings) else { return }
         self.settings = settings
     }

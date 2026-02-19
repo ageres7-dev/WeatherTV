@@ -40,6 +40,21 @@ struct URLManager {
         return components?.url
     }
     
+    static func urlForecastFrom(latitude: Double, longitude: Double) -> URL? {
+        let queryItems = [
+            URLQueryItem(name: "lat", value: String(latitude)),
+            URLQueryItem(name: "lon", value: String(longitude)),
+            URLQueryItem(name: "appid", value: API.key.rawValue),
+            URLQueryItem(name: "units", value: "metric"),
+            URLQueryItem(name: "lang", value: getCurrentLocaleCode())
+        ]
+        
+        var components = URLComponents(string: Constant.forecast.rawValue)
+        components?.queryItems = queryItems
+        
+        return components?.url
+    }
+    
     private static func getCurrentLocaleCode() -> String {
         let currentLocale = Locale.autoupdatingCurrent.identifier
         switch currentLocale {

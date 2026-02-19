@@ -10,5 +10,6 @@ import Foundation
 enum Constant: String {
     case oneCallURL = "https://api.openweathermap.org/data/2.5/onecall"
     case currentWeatherURL = "https://api.openweathermap.org/data/2.5/weather"
+    case forecast = "https://api.openweathermap.org/data/2.5/forecast"
     case tagCurrentLocation = "currentLocation"
 }
