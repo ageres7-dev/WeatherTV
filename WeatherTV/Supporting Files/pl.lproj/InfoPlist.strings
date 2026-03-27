@@ -1,0 +1,11 @@
+/* 
+  InfoPlist.strings
+  WeatherTV
+
+  Created by Sergey Dolgikh on 24.07.2023.
+  
+*/
+
+
+NSLocationAlwaysAndWhenInUseUsageDescription = "Włączenie usług lokalizacyjnych pozwala nam wyświetlać lokalną pogodę.";
+NSLocationWhenInUseUsageDescription = "Włączenie usług lokalizacyjnych pozwala nam wyświetlać lokalną pogodę.";
